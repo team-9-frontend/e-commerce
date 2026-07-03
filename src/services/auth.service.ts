@@ -1,0 +1,1 @@
+import api from "../api/interceptors"; import {ENDPOINTS} from "../api/endpoints"; export const AuthService={login:(d:any)=>api.post(ENDPOINTS.AUTH.LOGIN,d),me:()=>api.get(ENDPOINTS.AUTH.ME)};

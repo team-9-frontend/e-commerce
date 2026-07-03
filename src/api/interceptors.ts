@@ -1,0 +1,1 @@
+import api from "./axios"; api.interceptors.request.use(c=>{const t=localStorage.getItem("token"); if(t){c.headers.Authorization=`Bearer ${t}`;} return c;}); api.interceptors.response.use(r=>r.data,e=>Promise.reject({status:e.response?.status,message:e.response?.data?.message||e.message})); export default api;

@@ -1,0 +1,1 @@
+import api from "../api/interceptors"; import {ENDPOINTS} from "../api/endpoints"; export const ProductsService={getAll:(params?:any)=>api.get(ENDPOINTS.PRODUCTS.LIST,{params}),getById:(id:string)=>api.get(ENDPOINTS.PRODUCTS.DETAILS(id))};
