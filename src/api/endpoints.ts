@@ -1,1 +1,0 @@
-export const ENDPOINTS={AUTH:{LOGIN:"/auth/login",ME:"/auth/me"},PRODUCTS:{LIST:"/products",DETAILS:(id:string)=>`/products/${id}`},CART:{ROOT:"/carts"},ORDERS:{ROOT:"/orders"},WISHLIST:{MY:"/wishlists/my"}};
