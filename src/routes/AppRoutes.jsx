@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import MainLayout from 'src/layouts/MainLayout'
 import Home from 'src/pages/e-commerce/Home'
 import NotFound from 'src/pages/e-commerce/NotFound'
 import ForgetPassword from 'src/pages/e-commerce/auth/ForgetPassword'
@@ -22,29 +23,31 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/products" element={<Products />} />
-        <Route path="/products/:id" element={<DynamicProduct />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:id" element={<DynamicProduct />} />
 
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/orders" element={<Orders />} />
-        <Route path="/profile/orders/:id" element={<DynamicOrder />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/orders" element={<Orders />} />
+          <Route path="/profile/orders/:id" element={<DynamicOrder />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/cart" element={<Cart />} />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
 
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-success" element={<OrderSuccess />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
+
+          <Route path="*" element={<NotFound />} />
+        </Route>
 
         <Route path="/dashboard/*" element={<DashboardRoutes />} />
-
-        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
