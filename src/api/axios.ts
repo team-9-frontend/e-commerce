@@ -1,1 +1,0 @@
-import axios from "axios"; export const api=axios.create({baseURL:"https://e-commerce-api-3wara.vercel.app",timeout:15000}); export default api;

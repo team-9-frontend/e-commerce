@@ -1,1 +1,0 @@
-Enterprise React Axios Layer for Koda Store API based on Swagger.
