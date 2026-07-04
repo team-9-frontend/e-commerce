@@ -8,7 +8,7 @@ import DashboardRoutes from "./DashboardRoutes";
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -17,6 +17,5 @@ export default function AppRoutes() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
   );
 }
