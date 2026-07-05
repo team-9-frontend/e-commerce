@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 import { login } from '@/api/authApi'
-import { getAdminTest } from '@/api/authApi'
 
-export default function AdminLogin() {
+export default function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -20,7 +19,7 @@ export default function AdminLogin() {
       if (data.user.role === 'admin') {
         navigate('/dashboard')
       } else {
-        alert('Access Denied')
+        navigate('/')
       }
     } catch (error) {
       alert(error.response?.data?.message || 'Login Failed')
@@ -31,31 +30,31 @@ export default function AdminLogin() {
 
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center bg-gray-100">
-        <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
-          <h1 className="mb-6 text-center text-3xl font-bold">Login</h1>
+      <div className="flex-center flex-1">
+        <div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-6 text-neutral-950 dark:bg-neutral-100">
+          <h1 className="mb-8 text-center text-3xl font-bold">Login</h1>
 
-          <form onSubmit={handleLogin}>
-            <div className="mb-4">
-              <label className="mb-2 block">Email</label>
+          <form onSubmit={handleLogin} className="grid grid-cols-[auto_1fr] gap-4">
+            <div className="col-span-2 grid grid-cols-subgrid items-center">
+              <label>Email:</label>
 
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full rounded-lg border p-3 outline-none"
+                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 outline-none"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
-            <div className="mb-6">
-              <label className="mb-2 block">Password</label>
+            <div className="col-span-2 grid grid-cols-subgrid items-center">
+              <label>Password:</label>
 
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="w-full rounded-lg border p-3 outline-none"
+                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 outline-none"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -65,7 +64,7 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-blue-600 p-3 text-white hover:bg-blue-700 disabled:bg-gray-400"
+              className="bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 col-span-2 rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50"
             >
               {loading ? 'Loading...' : 'Login'}
             </button>

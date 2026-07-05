@@ -5,7 +5,7 @@ import { StrictMode } from 'react'
 import { ThemeProvider } from 'next-themes'
 
 import '@/index.css'
-import AppRoutes from '@/routes/AppRoutes'
+import AppRoutes from '@/routes'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
