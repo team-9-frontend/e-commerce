@@ -4,10 +4,8 @@ import { login } from "../../../api/authApi";
 
 export default function Login() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
@@ -15,12 +13,10 @@ export default function Login() {
 
     try {
       setLoading(true);
-
      const { data } = await login({
         email,
         password,
       });
-
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
@@ -40,9 +36,6 @@ export default function Login() {
       setLoading(false);
     }
   };
-
-
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">

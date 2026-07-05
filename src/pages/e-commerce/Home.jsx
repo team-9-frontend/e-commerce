@@ -1,8 +1,6 @@
-
 import { logout } from "../../api/authApi";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 export default function Home() {
   const navigate = useNavigate();
@@ -14,7 +12,6 @@ export default function Home() {
       navigate("/login");
     }
   }, [navigate]);
-
 
   const handleLogout = async () => {
   try {
