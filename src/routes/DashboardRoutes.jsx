@@ -4,11 +4,12 @@ import AdminCart from 'src/pages/dashboard/Cart'
 import AdminDashboard from 'src/pages/dashboard/Dashboard'
 import AdminLogin from 'src/pages/dashboard/Login'
 import AdminUsers from 'src/pages/dashboard/Users'
-import AdminDynamicOrder from 'src/pages/dashboard/orders/DynamicOrders'
-import AdminOrders from 'src/pages/dashboard/orders/Orders'
+import AdminDynamicOrder from 'src/pages/dashboard/orders.jsx/DynamicOrder'
+import AdminOrders from 'src/pages/dashboard/orders.jsx/Orders'
 import AdminProducts from 'src/pages/dashboard/products/Products'
-import AdminProductCreate from 'src/pages/dashboard/products/ProductsCreate'
-import AdminProductEdit from 'src/pages/dashboard/products/ProductsEdit'
+import AdminProductCreate from 'src/pages/dashboard/products/ProductCreate'
+import AdminProductEdit from 'src/pages/dashboard/products/ProductEdit'
+
 
 export default function DashboardRoutes() {
   return (
