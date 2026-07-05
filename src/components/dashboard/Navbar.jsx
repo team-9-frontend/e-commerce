@@ -11,12 +11,18 @@ import {
 import { useTheme } from 'next-themes'
 
 import ToolTip from '@/components/ToolTip'
+import { cn } from '@/utils/cn'
 
-export default function Navbar({ open, setOpen }) {
+export default function Navbar({ className, open, setOpen }) {
   const { theme, setTheme } = useTheme()
 
   return (
-    <nav className="flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 text-neutral-950 dark:bg-neutral-100">
+    <nav
+      className={cn(
+        'flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 text-neutral-950 dark:bg-neutral-100',
+        className,
+      )}
+    >
       <div className="flex-center gap-4">
         <button
           onClick={() => setOpen(!open)}
@@ -58,7 +64,6 @@ export default function Navbar({ open, setOpen }) {
 
           <div>
             <h3 className="font-semibold text-neutral-950">username</h3>
-
             <p className="text-muted text-xs">role</p>
           </div>
         </div>

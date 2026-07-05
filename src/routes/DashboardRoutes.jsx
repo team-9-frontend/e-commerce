@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import DashboardLayout from '@/layouts/DashboardLayout'
-import AdminCart from '@/pages/dashboard/Cart'
+import AdminCarts from '@/pages/dashboard/Carts'
 import AdminDashboard from '@/pages/dashboard/Dashboard'
 import AdminLogin from '@/pages/dashboard/Login'
 import AdminUsers from '@/pages/dashboard/Users'
@@ -20,11 +20,11 @@ export default function DashboardRoutes() {
         <Route index element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="products/:id/edit" element={<AdminProductEdit />} />
-        <Route path="products/new" element={<AdminProductCreate />} />
+        <Route path="products/create" element={<AdminProductCreate />} />
         <Route path="orders" element={<AdminOrders />} />
         <Route path="orders/:id" element={<AdminDynamicOrder />} />
         <Route path="users" element={<AdminUsers />} />
-        <Route path="cart" element={<AdminCart />} />
+        <Route path="carts" element={<AdminCarts />} />
       </Route>
     </Routes>
   )
