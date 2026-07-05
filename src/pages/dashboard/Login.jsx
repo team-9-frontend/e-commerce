@@ -13,26 +13,17 @@ export default function AdminLogin() {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-
     try {
       setLoading(true)
-      const { data } = await login({
-        email,
-        password,
-      })
+      const { data } = await login({ email, password })
       localStorage.setItem('token', data.token)
-      const isAdmin = await getAdminTest()
-
-      if (isAdmin) {
-        navigate('/dashboard/')
+      if (data.user.role === 'admin') {
+        navigate('/dashboard')
       } else {
-        navigate('/')
+        alert('Access Denied')
       }
     } catch (error) {
       alert(error.response?.data?.message || 'Login Failed')
-
-      console.log(error.response.data)
-      console.log(error.response.status)
     } finally {
       setLoading(false)
     }
