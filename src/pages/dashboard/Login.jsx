@@ -1,4 +1,3 @@
-
-export default function Login() {
-  return <h1>Dashboard Login</h1>;
+export default function AdminLogin() {
+  return <h1>Dashboard Login</h1>
 }
