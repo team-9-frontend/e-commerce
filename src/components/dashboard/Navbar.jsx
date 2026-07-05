@@ -10,7 +10,7 @@ import {
 
 import { useTheme } from 'next-themes'
 
-import ToolTip from './ToolTip'
+import ToolTip from '@/components/ToolTip'
 
 export default function Navbar({ open, setOpen }) {
   const { theme, setTheme } = useTheme()
