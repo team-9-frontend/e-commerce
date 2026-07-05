@@ -28,9 +28,23 @@
   --color-neutral-950: var(--color-gray-950);
 
   --color-muted: color-mix(in oklab, var(--color-neutral-950) 50%, transparent);
+
+  --font-bodoni: 'Libre Bodoni', serif;
 }
 
 .dark {
+  --color-accent-50: var(--color-indigo-950);
+  --color-accent-100: var(--color-indigo-900);
+  --color-accent-200: var(--color-indigo-800);
+  --color-accent-300: var(--color-indigo-700);
+  --color-accent-400: var(--color-indigo-600);
+  --color-accent-500: var(--color-indigo-500);
+  --color-accent-600: var(--color-indigo-400);
+  --color-accent-700: var(--color-indigo-300);
+  --color-accent-800: var(--color-indigo-200);
+  --color-accent-900: var(--color-indigo-100);
+  --color-accent-950: var(--color-indigo-50);
+
   --color-neutral-50: var(--color-gray-950);
   --color-neutral-100: var(--color-gray-900);
   --color-neutral-200: var(--color-gray-800);

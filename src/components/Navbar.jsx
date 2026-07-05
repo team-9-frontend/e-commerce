@@ -5,6 +5,7 @@ import {
   FaRegSun,
   FaRegUserCircle,
   FaSignOutAlt,
+  FaTimes,
 } from 'react-icons/fa'
 
 import { useTheme } from 'next-themes'
@@ -15,18 +16,23 @@ export default function Navbar({ open, setOpen }) {
   const { theme, setTheme } = useTheme()
 
   return (
-    <nav className="flex items-center justify-between bg-white px-4 py-2 text-neutral-950 dark:bg-neutral-100 border-b border-neutral-200">
+    <nav className="flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 text-neutral-950 dark:bg-neutral-100">
       <div className="flex-center gap-4">
-        <button onClick={() => setOpen(!open)} className="cursor-pointer lg:hidden">
-          <FaBars size={20} />
+        <button
+          onClick={() => setOpen(!open)}
+          className="hover:text-accent-600 cursor-pointer lg:hidden"
+        >
+          {open ? <FaTimes size={20} /> : <FaBars size={20} />}
         </button>
 
-        <h2 className="text-3xl font-bold">Logo</h2>
+        <h1 className="font-bodoni hidden pt-1 text-2xl font-bold sm:block">
+          LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
+        </h1>
       </div>
 
       <div className="flex-center gap-4">
         {/* Notification */}
-        <button className="group relative cursor-pointer">
+        <button className="group hover:text-accent-600 relative cursor-pointer">
           <FaRegBell size={20} />
           <ToolTip position="bottom">Notifications</ToolTip>
         </button>
@@ -34,7 +40,7 @@ export default function Navbar({ open, setOpen }) {
         {/* Theme */}
         <button
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="group relative cursor-pointer"
+          className="group hover:text-accent-600 relative cursor-pointer"
         >
           {theme === 'dark' ? <FaRegSun size={20} /> : <FaRegMoon size={20} />}
           <ToolTip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</ToolTip>
