@@ -4,23 +4,29 @@ import { useState } from 'react'
 
 import Navbar from '../components/Navbar'
 import Sidebar from '../components/Sidebar'
+import { cn } from '../utils/cn'
 
-const DashboardLayout = () => {
+export default function DashboardLayout() {
   const [open, setOpen] = useState(true)
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-zinc-900 transition-colors duration-300 dark:bg-zinc-950 dark:text-white">
-      {' '}
-      <Sidebar open={open} setOpen={setOpen} />
-      <div className="flex-1 lg:ml-64">
+    <div className="grid min-h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">
+      <div className="realtive z-50 col-start-1 col-end-3 row-start-1 row-end-2 lg:col-start-2">
         <Navbar open={open} setOpen={setOpen} />
-
-        <main className="p-4 pt-16 md:p-6">
-          <Outlet />
-        </main>
       </div>
+
+      <aside
+        className={cn(
+          'relative z-40 col-start-1 col-end-2 row-start-1 row-end-3 grid grid-rows-subgrid bg-white text-neutral-950 transition-all dark:bg-neutral-100',
+          open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+        )}
+      >
+        <Sidebar open={open} setOpen={setOpen} />
+      </aside>
+
+      <main className="col-start-1 col-end-3 row-start-2 row-end-3 lg:col-start-2">
+        <Outlet />
+      </main>
     </div>
   )
 }
-
-export default DashboardLayout

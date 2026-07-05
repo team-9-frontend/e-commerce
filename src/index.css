@@ -2,7 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@layer theme {
+@theme {
   --color-accent-50: var(--color-indigo-50);
   --color-accent-100: var(--color-indigo-100);
   --color-accent-200: var(--color-indigo-200);
@@ -15,13 +15,41 @@
   --color-accent-900: var(--color-indigo-900);
   --color-accent-950: var(--color-indigo-950);
 
-  --color-dark: var(--color-indigo-950);
-  --color-light: var(--color-indigo-50);
-  --color-muted: color-mix(in oklab, var(--color-indigo-950) 50%, transparent);
+  --color-neutral-50: var(--color-gray-50);
+  --color-neutral-100: var(--color-gray-100);
+  --color-neutral-200: var(--color-gray-200);
+  --color-neutral-300: var(--color-gray-300);
+  --color-neutral-400: var(--color-gray-400);
+  --color-neutral-500: var(--color-gray-500);
+  --color-neutral-600: var(--color-gray-600);
+  --color-neutral-700: var(--color-gray-700);
+  --color-neutral-800: var(--color-gray-800);
+  --color-neutral-900: var(--color-gray-900);
+  --color-neutral-950: var(--color-gray-950);
+
+  --color-muted: color-mix(in oklab, var(--color-neutral-950) 50%, transparent);
 }
 
 .dark {
-  --color-dark: var(--color-indigo-50);
-  --color-light: var(--color-indigo-950);
-  --color-muted: color-mix(in oklab, var(--color-indigo-950) 50%, transparent);
+  --color-neutral-50: var(--color-gray-950);
+  --color-neutral-100: var(--color-gray-900);
+  --color-neutral-200: var(--color-gray-800);
+  --color-neutral-300: var(--color-gray-700);
+  --color-neutral-400: var(--color-gray-600);
+  --color-neutral-500: var(--color-gray-500);
+  --color-neutral-600: var(--color-gray-400);
+  --color-neutral-700: var(--color-gray-300);
+  --color-neutral-800: var(--color-gray-200);
+  --color-neutral-900: var(--color-gray-100);
+  --color-neutral-950: var(--color-gray-50);
+}
+
+@layer base {
+  * {
+    @apply transition-colors;
+  }
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
 }
