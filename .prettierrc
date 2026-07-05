@@ -1,0 +1,24 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^react(-dom)?$",
+    "^next(.*)$",
+    "^@/(.*)$",
+    "^\\.\\./",
+    "^\\./",
+    "^.+\\.(css|scss|sass)$"
+  ],
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
+  "printWidth": 100,
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "tailwindFunctions": ["cn", "clsx", "tw"],
+  "trailingComma": "all"
+}
