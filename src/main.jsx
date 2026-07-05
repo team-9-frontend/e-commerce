@@ -1,15 +1,22 @@
-import { createRoot } from "react-dom/client";
+import { createRoot } from 'react-dom/client'
 
-import { StrictMode } from "react";
+import { StrictMode } from 'react'
 
-import "./index.css";
-import AppRoutes from "./routes/AppRoutes";
-import Themeprovider from "./contex/Themeprovider";
+import { ThemeProvider } from 'next-themes'
 
-createRoot(document.getElementById("root")).render(
+import './index.css'
+import AppRoutes from './routes/AppRoutes'
+
+createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Themeprovider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="light"
+      forcedTheme={undefined}
+      enableSystem={false}
+      disableTransitionOnChange={false}
+    >
       <AppRoutes />
-    </Themeprovider>
+    </ThemeProvider>
   </StrictMode>,
-);
+)

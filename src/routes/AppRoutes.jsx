@@ -1,24 +1,24 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import MainLayout from "../layouts/MainLayout";
-import NotFound from "../pages/e-commerce/NotFound";
-import ForgetPassword from "../pages/e-commerce/auth/ForgetPassword";
-import Login from "../pages/e-commerce/auth/Login";
-import Register from "../pages/e-commerce/auth/Register";
-import VerifyOTP from "../pages/e-commerce/auth/VerifyOTP";
-import Checkout from "../pages/e-commerce/checkout/Checkout";
-import OrderSuccess from "../pages/e-commerce/checkout/OrderSuccess";
-import Payment from "../pages/e-commerce/checkout/Payment";
-import DynamicProduct from "../pages/e-commerce/products/DynamicProduct";
-import Products from "../pages/e-commerce/products/Products";
-import Cart from "../pages/e-commerce/user/Cart";
-import DynamicOrder from "../pages/e-commerce/user/DynamicOrder";
-import Orders from "../pages/e-commerce/user/Orders";
-import Profile from "../pages/e-commerce/user/Profile";
-import Wishlist from "../pages/e-commerce/user/Wishlist";
+import DashboardLayout from '../layouts/DashboardLayout'
+import MainLayout from '../layouts/MainLayout'
+import NotFound from '../pages/e-commerce/NotFound'
+import ForgetPassword from '../pages/e-commerce/auth/ForgetPassword'
+import Login from '../pages/e-commerce/auth/Login'
+import Register from '../pages/e-commerce/auth/Register'
+import VerifyOTP from '../pages/e-commerce/auth/VerifyOTP'
+import Checkout from '../pages/e-commerce/checkout/Checkout'
+import OrderSuccess from '../pages/e-commerce/checkout/OrderSuccess'
+import Payment from '../pages/e-commerce/checkout/Payment'
+import DynamicProduct from '../pages/e-commerce/products/DynamicProduct'
+import Products from '../pages/e-commerce/products/Products'
+import Cart from '../pages/e-commerce/user/Cart'
+import DynamicOrder from '../pages/e-commerce/user/DynamicOrder'
+import Orders from '../pages/e-commerce/user/Orders'
+import Profile from '../pages/e-commerce/user/Profile'
+import Wishlist from '../pages/e-commerce/user/Wishlist'
 
-import DashboardRoutes from "./DashboardRoutes";
-import DashboardLayout from "../layouts/DashboardLayout";
+import DashboardRoutes from './DashboardRoutes'
 
 export default function AppRoutes() {
   return (
@@ -51,5 +51,5 @@ export default function AppRoutes() {
         <Route path="/dashboard/*" element={<DashboardRoutes />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }

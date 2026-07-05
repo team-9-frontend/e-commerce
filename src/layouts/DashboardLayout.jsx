@@ -1,63 +1,26 @@
-/*import { useState } from "react";
+import { Outlet } from 'react-router-dom'
 
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
+import { useState } from 'react'
 
-import { Outlet } from "react-router-dom";
-
-const DashboardLayout = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="min-h-screen bg-gray-100 dark:bg-zinc-900">
-      <Sidebar open={open} setOpen={setOpen} />
-
-      <Navbar open={open} setOpen={setOpen} />
-
-      <main
-        className={`
-          pt-20
-          transition-all
-          duration-300
-
-          ${open ? "lg:ml-64" : "lg:ml-20"}
-
-          ml-0
-        `}
-      >
-        <div className="p-4 md:p-6">
-          <Outlet />
-        </div>
-      </main>
-    </div>
-  );
-};
-
-export default DashboardLayout;
-*/
-
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
+import Navbar from '../components/Navbar'
+import Sidebar from '../components/Sidebar'
 
 const DashboardLayout = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(true)
 
   return (
-    <div className="flex min-h-screen bg-gray-100 dark:bg-zinc-950 text-zinc-900 dark:text-white transition-colors duration-300">
-      {" "}
+    <div className="flex min-h-screen bg-gray-100 text-zinc-900 transition-colors duration-300 dark:bg-zinc-950 dark:text-white">
+      {' '}
       <Sidebar open={open} setOpen={setOpen} />
       <div className="flex-1 lg:ml-64">
         <Navbar open={open} setOpen={setOpen} />
 
-        <main className="pt-16 p-4 md:p-6">
+        <main className="p-4 pt-16 md:p-6">
           <Outlet />
         </main>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

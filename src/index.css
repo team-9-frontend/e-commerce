@@ -1,1 +1,27 @@
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer theme {
+  --color-accent-50: var(--color-indigo-50);
+  --color-accent-100: var(--color-indigo-100);
+  --color-accent-200: var(--color-indigo-200);
+  --color-accent-300: var(--color-indigo-300);
+  --color-accent-400: var(--color-indigo-400);
+  --color-accent-500: var(--color-indigo-500);
+  --color-accent-600: var(--color-indigo-600);
+  --color-accent-700: var(--color-indigo-700);
+  --color-accent-800: var(--color-indigo-800);
+  --color-accent-900: var(--color-indigo-900);
+  --color-accent-950: var(--color-indigo-950);
+
+  --color-dark: var(--color-indigo-950);
+  --color-light: var(--color-indigo-50);
+  --color-muted: color-mix(in oklab, var(--color-indigo-950) 50%, transparent);
+}
+
+.dark {
+  --color-dark: var(--color-indigo-50);
+  --color-light: var(--color-indigo-950);
+  --color-muted: color-mix(in oklab, var(--color-indigo-950) 50%, transparent);
+}
