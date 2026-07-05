@@ -1,38 +1,13 @@
 import { Outlet } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 
 import { useState } from 'react'
-import { useEffect } from 'react'
 
-import { logout } from '@/api/authApi'
 import Navbar from '@/components/dashboard/Navbar'
 import Sidebar from '@/components/dashboard/Sidebar'
 import { cn } from '@/utils/cn'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (!token) {
-      navigate('/login')
-    }
-  }, [navigate])
-
-  const handleLogout = async () => {
-    try {
-      await logout()
-    } catch (error) {
-      console.log(error)
-    } finally {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-
-      navigate('/login')
-    }
-  }
 
   return (
     <div className="grid min-h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">

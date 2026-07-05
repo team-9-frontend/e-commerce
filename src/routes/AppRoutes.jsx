@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import MainLayout from '@/layouts/MainLayout'
+import Home from '@/pages/e-commerce/Home'
 import NotFound from '@/pages/e-commerce/NotFound'
 import ForgetPassword from '@/pages/e-commerce/auth/ForgetPassword'
 import Login from '@/pages/e-commerce/auth/Login'

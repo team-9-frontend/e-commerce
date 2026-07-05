@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 import { login } from '@/api/authApi'
+import { getAdminTest } from '@/api/authApi'
 
 export default function AdminLogin() {
   const navigate = useNavigate()
@@ -20,14 +21,15 @@ export default function AdminLogin() {
         password,
       })
       localStorage.setItem('token', data.token)
-      localStorage.setItem('user', JSON.stringify(data.user))
+      const isAdmin = await getAdminTest()
 
-      alert('Login Successfully')
-
-      navigate('/')
+      if (isAdmin) {
+        navigate('/dashboard/')
+      } else {
+        navigate('/')
+      }
     } catch (error) {
       alert(error.response?.data?.message || 'Login Failed')
-      // console.log(error);
 
       console.log(error.response.data)
       console.log(error.response.status)
@@ -35,6 +37,7 @@ export default function AdminLogin() {
       setLoading(false)
     }
   }
+
   return (
     <>
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
