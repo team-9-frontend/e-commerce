@@ -15,7 +15,7 @@ export default function Login() {
     try {
       setLoading(true)
       const { data } = await login({ email, password })
-      localStorage.setItem('token', data.token)
+      if (!data.success) return alert(data.message)
       if (data.user.role === 'admin') {
         navigate('/dashboard')
       } else {
