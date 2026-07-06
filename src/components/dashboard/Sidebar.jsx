@@ -76,7 +76,7 @@ export default function Sidebar({ className, open }) {
             className={cn(
               'flex items-center gap-2 rounded-xl px-4 py-2',
               pathname === item.path
-                ? 'bg-accent-500 text-neutral-50'
+                ? 'bg-accent-500 text-neutral-50 dark:text-neutral-950'
                 : 'text-neutral-950 hover:bg-neutral-200',
             )}
           >

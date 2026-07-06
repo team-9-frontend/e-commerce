@@ -32,7 +32,8 @@ export default function Login() {
     <>
       <div className="flex-center flex-1">
         <div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-6 text-neutral-950 dark:bg-neutral-100">
-          <h1 className="mb-8 text-center text-3xl font-bold">Login</h1>
+          <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
+          <p className="text-muted mb-8 text-center">Please log in to continue.</p>
 
           <form onSubmit={handleLogin} className="grid grid-cols-[auto_1fr] gap-4">
             <div className="col-span-2 grid grid-cols-subgrid items-center">
@@ -64,7 +65,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 col-span-2 rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50"
+              className="bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 col-span-2 rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950"
             >
               {loading ? 'Loading...' : 'Login'}
             </button>

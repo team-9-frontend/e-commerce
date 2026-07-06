@@ -1,8 +1,8 @@
-import DashboardStats from '../../components/dashboard/stats/DashboardStats'
-import StatsSkeleton from '../../components/dashboard/stats/StatsSkeleton'
-import RecentOrders from '../../components/dashboard/stats/RecentOrders'
-import TopProducts from '../../components/dashboard/stats/TopProducts'
-import OrderStatus from '../../components/dashboard/stats/OrderStatus'
+import DashboardStats from '@/components/dashboard/stats/DashboardStats'
+import OrderStatus from '@/components/dashboard/stats/OrderStatus'
+import RecentOrders from '@/components/dashboard/stats/RecentOrders'
+import StatsSkeleton from '@/components/dashboard/stats/StatsSkeleton'
+import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
   const loading = false
