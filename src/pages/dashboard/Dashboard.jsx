@@ -5,7 +5,7 @@ import StatsSkeleton from '@/components/dashboard/stats/StatsSkeleton'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
-  const loading = false
+  const loading = true
   const stats = {
     orders: {
       total: 0,
