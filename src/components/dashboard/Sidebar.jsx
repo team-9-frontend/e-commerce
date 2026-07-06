@@ -1,17 +1,27 @@
 import {
   LuFileText,
   LuHouse,
+  LuLogOut,
   LuPackage,
   LuPlus,
   LuSettings,
   LuShoppingCart,
   LuUsers,
 } from 'react-icons/lu'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
+import { logout } from '@/api/authApi'
 import { cn } from '@/utils/cn'
 
 export default function Sidebar({ className, open }) {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    navigate('/login')
+    await logout()
+  }
+
   const sidebarData = [
     {
       title: 'Dashboard',
@@ -50,8 +60,6 @@ export default function Sidebar({ className, open }) {
     },
   ]
 
-  const { pathname } = useLocation()
-
   return (
     <aside
       className={cn(
@@ -69,7 +77,7 @@ export default function Sidebar({ className, open }) {
               'flex items-center gap-2 rounded-xl px-4 py-2',
               pathname === item.path
                 ? 'bg-accent-500 text-neutral-50'
-                : 'text-neutral-950 hover:bg-neutral-100',
+                : 'text-neutral-950 hover:bg-neutral-200',
             )}
           >
             <span className="flex-center gap-2">
@@ -78,6 +86,14 @@ export default function Sidebar({ className, open }) {
             </span>
           </Link>
         ))}
+        <div className="flex-1"></div>
+        <button
+          className="flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400"
+          onClick={handleLogout}
+        >
+          <LuLogOut size={20} />
+          Logout
+        </button>
       </nav>
     </aside>
   )

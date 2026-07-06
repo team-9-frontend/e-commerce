@@ -8,6 +8,7 @@ import AdminProductCreate from '@/pages/dashboard/ProductCreate'
 import AdminProductEdit from '@/pages/dashboard/ProductEdit'
 import AdminProductView from '@/pages/dashboard/ProductView'
 import AdminProducts from '@/pages/dashboard/Products'
+import AdminSettings from '@/pages/dashboard/Settings'
 import AdminUsers from '@/pages/dashboard/Users'
 
 export default function DashboardRoutes() {
@@ -22,6 +23,7 @@ export default function DashboardRoutes() {
         <Route path="orders" element={<AdminOrders />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="carts" element={<AdminCarts />} />
+        <Route path="settings" element={<AdminSettings />} />
       </Route>
     </Routes>
   )
