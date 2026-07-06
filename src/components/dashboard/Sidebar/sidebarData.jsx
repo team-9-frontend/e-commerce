@@ -26,7 +26,7 @@ import {
     },
     {
       title: "Add Product",
-      path: "/dashboard/products/new",
+      path: "/dashboard/products/create",
       icon: <FaPlusSquare />,
     },
     {
@@ -36,7 +36,7 @@ import {
     },
     {
       title: "Carts",
-      path: "/dashboard/cart",
+      path: "/dashboard/carts",
       icon: <FaShoppingCart />,
     },
     {
