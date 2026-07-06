@@ -14,6 +14,14 @@ import { logout } from '@/api/authApi'
 import { cn } from '@/utils/cn'
 
 export default function Sidebar({ className, open }) {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    navigate('/login')
+    await logout()
+  }
+
   const sidebarData = [
     {
       title: 'Dashboard',
@@ -52,13 +60,6 @@ export default function Sidebar({ className, open }) {
     },
   ]
 
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
-  const handleLogout = async () => {
-    navigate('/login')
-    await logout()
-  }
-
   return (
     <aside
       className={cn(
@@ -87,7 +88,7 @@ export default function Sidebar({ className, open }) {
         ))}
         <div className="flex-1"></div>
         <button
-          className="flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-neutral-200 hover:text-red-600 dark:hover:text-red-400"
+          className="flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400"
           onClick={handleLogout}
         >
           <LuLogOut size={20} />
