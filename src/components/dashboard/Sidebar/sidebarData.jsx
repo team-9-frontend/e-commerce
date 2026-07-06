@@ -8,7 +8,7 @@ import {
     FaCog,
   } from "react-icons/fa";
   
-  export const sidebarData = [
+  export const sidebarData =[
     {
       title: "Dashboard",
       path: "/dashboard",
@@ -16,32 +16,32 @@ import {
     },
     {
       title: "Users",
-      path: "/users",
+      path: "/dashboard/users",
       icon: <FaUsers />,
     },
     {
       title: "Products",
-      path: "/products",
+      path: "/dashboard/products",
       icon: <FaBoxOpen />,
     },
     {
       title: "Add Product",
-      path: "/products/add",
+      path: "/dashboard/products/new",
       icon: <FaPlusSquare />,
     },
     {
       title: "Orders",
-      path: "/orders",
+      path: "/dashboard/orders",
       icon: <FaClipboardList />,
     },
     {
       title: "Carts",
-      path: "/carts",
+      path: "/dashboard/cart",
       icon: <FaShoppingCart />,
     },
     {
       title: "Settings",
-      path: "/settings",
+      path: "/dashboard/settings",
       icon: <FaCog />,
     },
   ];

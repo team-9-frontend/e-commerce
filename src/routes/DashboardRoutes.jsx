@@ -10,6 +10,7 @@ import AdminOrders from '@/pages/dashboard/orders/Orders'
 import AdminProductCreate from '@/pages/dashboard/products/ProductCreate'
 import AdminProductEdit from '@/pages/dashboard/products/ProductEdit'
 import AdminProducts from '@/pages/dashboard/products/Products'
+import AdminSettings from '../pages/dashboard/Settings'
 
 export default function DashboardRoutes() {
   return (
@@ -25,6 +26,7 @@ export default function DashboardRoutes() {
         <Route path="orders/:id" element={<AdminDynamicOrder />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="cart" element={<AdminCart />} />
+        <Route path="settings" element={<AdminSettings />} />
       </Route>
     </Routes>
   )

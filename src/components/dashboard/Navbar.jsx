@@ -11,9 +11,12 @@ import {
 import { useTheme } from 'next-themes'
 
 import ToolTip from '@/components/ToolTip'
+import { handleLogout } from "@/utils/logout";
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar({ open, setOpen }) {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
 
   return (
     <nav className="flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 text-neutral-950 dark:bg-neutral-100">
@@ -47,7 +50,7 @@ export default function Navbar({ open, setOpen }) {
         </button>
 
         {/* Logout */}
-        <button className="group relative cursor-pointer text-neutral-950 hover:text-red-400">
+        <button className="group relative cursor-pointer text-neutral-950 hover:text-red-400" onClick={() => handleLogout(navigate)}>
           <FaSignOutAlt size={20} />
           <ToolTip position="bottom">Logout</ToolTip>
         </button>
