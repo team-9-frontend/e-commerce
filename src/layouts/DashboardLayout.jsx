@@ -2,23 +2,39 @@ import { Outlet } from 'react-router-dom'
 
 import { useState } from 'react'
 
-import Navbar from '@/components/dashboard/Navbar'
+import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
+import { cn } from '@/utils/cn'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
+  const [minimized, setMinimized] = useState(false)
 
   return (
-    <div className="grid min-h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">
-      <Navbar
+    <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">
+      <Header
         open={open}
         setOpen={setOpen}
-        className="realtive z-50 col-start-1 col-end-3 row-start-1 row-end-2"
+        minimized={minimized}
+        setMinimized={setMinimized}
+        className="relative z-50 col-start-1 col-end-3 row-start-1 row-end-2"
       />
 
-      <Sidebar open={open} className="relative z-40 col-start-1 col-end-2 row-start-2 row-end-3" />
+      <Sidebar
+        open={open}
+        minimized={minimized}
+        className="relative z-50 col-start-1 col-end-2 row-start-2 row-end-3"
+      />
 
-      <main className="col-start-1 col-end-3 row-start-2 row-end-3 lg:col-start-2">
+      <button
+        onClick={() => setOpen(!open)}
+        className={cn(
+          'fixed inset-0 z-10 cursor-default bg-black/50 lg:hidden',
+          open ? 'block' : 'hidden',
+        )}
+      ></button>
+
+      <main className="col-start-1 col-end-3 row-start-2 row-end-3 overflow-y-scroll lg:col-start-2">
         <Outlet />
       </main>
     </div>
