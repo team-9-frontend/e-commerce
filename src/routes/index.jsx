@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import MainLayout from '@/layouts/MainLayout'
 import NotFound from '@/pages/NotFound'
-import ForgetPassword from '@/pages/auth/ForgetPassword'
+import ForgotPassword from '@/pages/auth/ForgotPassword'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
 import VerifyOTP from '@/pages/auth/VerifyOTP'
@@ -38,7 +38,7 @@ export default function AppRoutes() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
 
           <Route path="/payment" element={<Payment />} />
