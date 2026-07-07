@@ -10,8 +10,7 @@ import { cn } from '@/utils/cn'
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
-  const { data, isLoading, isError } = useCurrentUser()
-  const user = data?.user
+  const { data: user, isLoading, isError } = useCurrentUser()
   const navigate = useNavigate()
 
   useEffect(() => {

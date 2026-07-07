@@ -17,8 +17,7 @@ import { cn } from '@/utils/cn'
 
 export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
   const { theme, setTheme } = useTheme()
-  const { data } = useCurrentUser()
-  const user = data?.user
+  const { data: user } = useCurrentUser()
 
   return (
     <header

@@ -10,6 +10,8 @@ export const useCurrentUser = () => {
   return useQuery({
     queryKey: ['user'],
     queryFn: () => api.get('/auth/me').then((res) => res.data),
+    select: (data) => data.user,
+    staleTime: Infinity,
     retry: false,
   })
 }
