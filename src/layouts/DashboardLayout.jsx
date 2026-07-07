@@ -2,7 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 
 import { useEffect, useState } from 'react'
 
-import { useCurrentUser } from '@/api/authApi'
+import { useCurrentUser } from '@/api'
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
 import { cn } from '@/utils/cn'

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { useLogin } from '@/api/authApi'
+import { useLogin } from '@/api'
 import { cn } from '@/utils/cn'
 
 export default function Login() {

@@ -11,7 +11,7 @@ import {
 
 import { useTheme } from 'next-themes'
 
-import { useCurrentUser } from '@/api/authApi'
+import { useCurrentUser } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils/cn'
 

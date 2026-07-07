@@ -10,7 +10,7 @@ import {
 } from 'react-icons/lu'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { useLogout } from '@/api/authApi'
+import { useLogout } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils/cn'
 

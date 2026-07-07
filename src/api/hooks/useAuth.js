@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import api from './axios'
+import { authService } from '../services/authService'
+import { authKeys } from '../keys/authKeys'
 
 // ----------------------------------
 // QUERIES (GET Requests)
@@ -8,18 +9,16 @@ import api from './axios'
 
 export const useCurrentUser = () => {
   return useQuery({
-    queryKey: ['user'],
-    queryFn: () => api.get('/auth/me').then((res) => res.data),
-    select: (data) => data.user,
-    staleTime: Infinity,
+    queryKey: authKeys.currentUser,
+    queryFn: authService.getCurrentUser,
     retry: false,
   })
 }
 
 export const useAdminTest = () => {
   return useQuery({
-    queryKey: ['user', 'adminTest'],
-    queryFn: () => api.get('/auth/admin-test').then((res) => res.data),
+    queryKey: authKeys.adminTest,
+    queryFn: authService.adminTest,
   })
 }
 
@@ -31,10 +30,10 @@ export const useLogin = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data) => api.post('/auth/login', data).then((res) => res.data),
+    mutationFn: authService.login,
     onSuccess: (data) => {
       localStorage.setItem('token', data.token)
-      queryClient.invalidateQueries({ queryKey: ['user'] })
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
     },
   })
 }
@@ -43,7 +42,7 @@ export const useLogout = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: () => api.post('/auth/logout').then((res) => res.data),
+    mutationFn: authService.logout,
     onSuccess: () => {
       localStorage.removeItem('token')
       queryClient.clear()
@@ -55,34 +54,26 @@ export const useUpdateUserRole = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data) => api.patch('/auth/change-role', data),
+    mutationFn: authService.updateUserRole,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] })
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
     },
   })
 }
 
-// Simple Mutations (No cache invalidation needed)
+// Simple mutations (no cache invalidation needed)
 export const useSendRegisterOtp = () => {
-  return useMutation({
-    mutationFn: (data) => api.post('/auth/register/send-otp', data),
-  })
+  return useMutation({ mutationFn: authService.sendRegisterOtp })
 }
 
 export const useVerifyRegisterOtp = () => {
-  return useMutation({
-    mutationFn: (data) => api.post('/auth/register/verify-otp', data),
-  })
+  return useMutation({ mutationFn: authService.verifyRegisterOtp })
 }
 
 export const useForgotPasswordOtp = () => {
-  return useMutation({
-    mutationFn: (data) => api.post('/auth/forgot-password/send-otp', data),
-  })
+  return useMutation({ mutationFn: authService.sendForgotPasswordOtp })
 }
 
 export const useVerifyForgotPasswordOtp = () => {
-  return useMutation({
-    mutationFn: (data) => api.post('/auth/forgot-password/verify-otp', data),
-  })
+  return useMutation({ mutationFn: authService.verifyForgotPasswordOtp })
 }
