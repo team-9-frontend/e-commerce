@@ -17,7 +17,7 @@ export default function DashboardLayout() {
     if (isLoading) return
     if (isError || !user) return navigate('/login')
     if (user.role === 'admin') {
-      return navigate('/dashboard')
+      navigate('/dashboard')
     } else navigate('/')
   }, [user, isLoading, isError])
 
