@@ -6,7 +6,7 @@ import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function Login() {
-  const { user, refreshUser } = useUserContext()
+  const { refreshUser } = useUserContext()
   const navigate = useNavigate()
 
   const {
@@ -20,17 +20,21 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const { data: responseData } = await login({ email: data.email, password: data.password })
-      if (!responseData.success) {
+      const {
+        data: { success, user },
+      } = await login({ email: data.email, password: data.password })
+      if (!success) {
         return setError('root', {
           type: 'invalid_credentials',
           message: 'Invalid credentials. Please try again.',
         })
       }
       refreshUser()
-      if (user.role === 'admin') {
+      if (user?.role === 'admin') {
         return navigate('/dashboard')
-      } else navigate('/')
+      } else {
+        navigate('/')
+      }
     } catch (error) {
       setError('root', {
         type: error.response?.status || 'error',
