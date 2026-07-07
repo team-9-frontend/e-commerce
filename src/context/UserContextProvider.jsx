@@ -8,13 +8,23 @@ import { getAllWishlist, getWishlist, getWishlistStates } from '@/api/wishlistAp
 
 const userContext = createContext()
 
-export const userContextProvider = ({ children }) => {
+export default function userContextProvider({ children }) {
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState(null)
   const [adminData, setAdminData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const fetchCurrentUser = async () => {
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      setUser(null)
+      setUserData(null)
+      setAdminData(null)
+      setLoading(false)
+      return
+    }
+
     try {
       const { data: userResponse } = await getCurrentUser()
       if (!userResponse.success) return

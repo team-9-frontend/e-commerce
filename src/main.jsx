@@ -4,7 +4,7 @@ import { StrictMode } from 'react'
 
 import { ThemeProvider } from 'next-themes'
 
-import { UserContextProvider } from '@/context/UserContextProvider'
+import UserContextProvider from '@/context/UserContextProvider'
 import '@/index.css'
 import AppRoutes from '@/routes'
 
