@@ -6,8 +6,8 @@ import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function Login() {
+  const { user, refreshUser } = useUserContext()
   const navigate = useNavigate()
-  const { refreshUser } = useUserContext()
 
   const {
     register,
@@ -20,10 +20,8 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const {
-        data: { success, user },
-      } = await login({ email: data.email, password: data.password })
-      if (!success) {
+      const { data: responseData } = await login({ email: data.email, password: data.password })
+      if (!responseData.success) {
         return setError('root', {
           type: 'invalid_credentials',
           message: 'Invalid credentials. Please try again.',
@@ -31,10 +29,8 @@ export default function Login() {
       }
       refreshUser()
       if (user.role === 'admin') {
-        navigate('/dashboard')
-      } else {
-        navigate('/')
-      }
+        return navigate('/dashboard')
+      } else navigate('/')
     } catch (error) {
       setError('root', {
         type: error.response?.status || 'error',
@@ -52,7 +48,7 @@ export default function Login() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
             <div className="flex flex-col gap-1">
-              <label for="email" className="w-fit cursor-pointer font-medium">
+              <label htmlFor="email" className="w-fit cursor-pointer font-medium">
                 Email
               </label>
 
@@ -77,7 +73,7 @@ export default function Login() {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label for="password" className="w-fit cursor-pointer font-medium">
+              <label htmlFor="password" className="w-fit cursor-pointer font-medium">
                 Password
               </label>
 
@@ -98,7 +94,7 @@ export default function Login() {
               )}
             </div>
 
-            <div className="flex flex-col gap-1 text-sm">
+            <div className="flex flex-col items-start gap-1 text-sm">
               <span>
                 Dont have an account?{' '}
                 <Link to="/register" className="text-accent-600 hover:underline">

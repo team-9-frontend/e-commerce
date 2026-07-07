@@ -10,21 +10,22 @@ import {
 } from 'react-icons/lu'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { useEffect } from 'react'
-
 import { logout } from '@/api/authApi'
 import Tooltip from '@/components/ui/Tooltip'
+import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function Sidebar({ className, open, minimized }) {
+  const { refreshUser } = useUserContext()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
       await logout()
+      refreshUser()
       navigate('/login')
     } catch (error) {
-      console.error('Logout error:', error)
+      console.error(error)
     }
   }
 

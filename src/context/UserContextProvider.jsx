@@ -1,51 +1,30 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+
+import { createContext, useContext, useState } from 'react'
 
 import { getCurrentUser } from '@/api/authApi'
 
 const userContext = createContext()
-
 export const useUserContext = () => useContext(userContext)
 
-export default function userContextProvider({ children }) {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+export default function UserContextProvider({ children }) {
+  const [token, setToken] = useState(() => localStorage.getItem('token'))
 
-  const fetchCurrentUser = async () => {
-    const token = localStorage.getItem('token')
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['currentUser', token],
+    queryFn: getCurrentUser,
+    enabled: !!token,
+    retry: false,
+  })
 
-    if (!token) {
-      setUser(null)
-      setLoading(false)
-      return
-    }
+  const user = data?.data?.success ? data.data.user : null
 
-    try {
-      const {
-        data: { success, user },
-      } = await getCurrentUser()
-      if (!success) return
-      setUser(user)
-    } catch (error) {
-      console.error(error)
-      setUser(null)
-    } finally {
-      setLoading(false)
-    }
+  const refreshUser = () => {
+    setToken(localStorage.getItem('token'))
+    refetch()
   }
 
-  useEffect(() => {
-    fetchCurrentUser()
-  }, [])
-
   return (
-    <userContext.Provider
-      value={{
-        user,
-        loading,
-        refreshUser: fetchCurrentUser,
-      }}
-    >
-      {children}
-    </userContext.Provider>
+    <userContext.Provider value={{ user, isLoading, refreshUser }}>{children}</userContext.Provider>
   )
 }
