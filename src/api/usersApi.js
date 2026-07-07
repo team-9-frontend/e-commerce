@@ -1,14 +1,56 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
 import api from './axios'
 
-// post requests
-export const addUser = (data) => api.post('/users/add', data)
+// ----------------------------------
+// QUERIES (GET Requests)
+// ----------------------------------
 
-// get requests
-export const getAllUsers = () => api.get('/users/all')
-export const getUserById = (id) => api.get(`/users/${id}`)
+export const useGetAllUsers = () => {
+  return useQuery({
+    queryKey: ['admin', 'users', 'list'],
+    queryFn: () => api.get('/users/all').then((res) => res.data),
+  })
+}
 
-// patch requests
-export const updateUser = (id, data) => api.patch(`/users/${id}`, data)
+export const useGetUserById = (id) => {
+  return useQuery({
+    queryKey: ['admin', 'users', 'detail', id],
+    queryFn: () => api.get(`/users/${id}`).then((res) => res.data),
+    enabled: !!id,
+  })
+}
 
-// delete requests
-export const deleteUser = (id) => api.delete(`/users/${id}`)
+// ----------------------------------
+// MUTATIONS (POST / PATCH / DELETE)
+// ----------------------------------
+
+export const useAddUser = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (data) => api.post('/users/add', data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] })
+    },
+  })
+}
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, data }) => api.patch(`/users/${id}`, data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] })
+    },
+  })
+}
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id) => api.delete(`/users/${id}`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] })
+    },
+  })
+}

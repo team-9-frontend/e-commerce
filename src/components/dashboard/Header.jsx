@@ -11,13 +11,15 @@ import {
 
 import { useTheme } from 'next-themes'
 
+import { useCurrentUser } from '@/api/authApi'
 import Tooltip from '@/components/ui/Tooltip'
-import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
   const { theme, setTheme } = useTheme()
-  const { user } = useUserContext()
+  const { data } = useCurrentUser()
+  const user = data?.user
+
   return (
     <header
       className={cn(

@@ -1,13 +1,65 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
 import api from './axios'
 
-// post requests
-export const addToWishlist = (productId) => api.post(`/wishlists/add/${productId}`)
+// ----------------------------------
+// QUERIES (GET Requests)
+// ----------------------------------
 
-// get requests
-export const getWishlist = () => api.get('/wishlists/my')
-export const getAllWishlist = () => api.get('/wishlists/admin/all')
-export const getWishlistStates = () => api.get('/wishlists/admin/stats')
+export const useGetWishlist = () => {
+  return useQuery({
+    queryKey: ['user', 'wishlist'],
+    queryFn: () => api.get('/wishlists/my').then((res) => res.data),
+  })
+}
 
-// delete requests
-export const removeFromWishlist = (productId) => api.delete(`/wishlists/remove/${productId}`)
-export const clearWishlist = () => api.delete('/wishlists/clear')
+export const useGetAllWishlist = () => {
+  return useQuery({
+    queryKey: ['admin', 'wishlist', 'all'],
+    queryFn: () => api.get('/wishlists/admin/all').then((res) => res.data),
+  })
+}
+
+export const useGetWishlistStats = () => {
+  return useQuery({
+    queryKey: ['admin', 'wishlist', 'stats'],
+    queryFn: () => api.get('/wishlists/admin/stats').then((res) => res.data),
+  })
+}
+
+// ----------------------------------
+// MUTATIONS (POST / PATCH / DELETE)
+// ----------------------------------
+
+export const useAddToWishlist = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (productId) => api.post(`/wishlists/add/${productId}`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'wishlist'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'wishlist'] })
+    },
+  })
+}
+
+export const useRemoveFromWishlist = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (productId) => api.delete(`/wishlists/remove/${productId}`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'wishlist'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'wishlist'] })
+    },
+  })
+}
+
+export const useClearWishlist = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => api.delete('/wishlists/clear').then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'wishlist'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'wishlist'] })
+    },
+  })
+}

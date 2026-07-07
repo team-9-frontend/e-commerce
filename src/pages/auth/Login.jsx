@@ -1,13 +1,12 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { login } from '@/api/authApi'
-import { useUserContext } from '@/context/UserContextProvider'
+import { useLogin } from '@/api/authApi'
 import { cn } from '@/utils/cn'
 
 export default function Login() {
-  const { refreshUser } = useUserContext()
   const navigate = useNavigate()
+  const { mutateAsync: login } = useLogin()
 
   const {
     register,
@@ -20,16 +19,13 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const {
-        data: { success, user },
-      } = await login({ email: data.email, password: data.password })
+      const { success, user } = await login({ email: data.email, password: data.password })
       if (!success) {
         return setError('root', {
           type: 'invalid_credentials',
           message: 'Invalid credentials. Please try again.',
         })
       }
-      refreshUser()
       if (user?.role === 'admin') {
         return navigate('/dashboard')
       } else {

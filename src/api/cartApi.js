@@ -1,16 +1,84 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
 import api from './axios'
 
-// post requests
-export const addToCart = (data) => api.post('/carts/items', data)
-export const applyCoupon = (data) => api.post('/carts/coupon', data)
+// ----------------------------------
+// QUERIES (GET Requests)
+// ----------------------------------
 
-// get requests
-export const getCart = () => api.get('/carts')
+export const useGetCart = () => {
+  return useQuery({
+    queryKey: ['user', 'cart'],
+    queryFn: () => api.get('/carts').then((res) => res.data),
+  })
+}
 
-// patch requests
-export const updateCartItem = (data) => api.patch('/carts/items', data)
+// ----------------------------------
+// MUTATIONS (POST / PATCH Requests)
+// ----------------------------------
 
-// delete requests
-export const clearCart = () => api.delete('/carts/clear')
-export const removeCoupon = () => api.delete('/carts/coupon')
-export const removeCartItem = (id) => api.delete(`/carts/items/${id}`)
+export const useAddToCart = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data) => api.post('/carts/items', data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'cart'] })
+    },
+  })
+}
+
+export const useApplyCoupon = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data) => api.post('/carts/coupon', data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'cart'] })
+    },
+  })
+}
+
+export const useUpdateCartItem = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data) => api.patch('/carts/items', data).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'cart'] })
+    },
+  })
+}
+
+export const useRemoveCartItem = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (id) => api.delete(`/carts/items/${id}`).then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'cart'] })
+    },
+  })
+}
+
+export const useClearCart = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: () => api.delete('/carts/clear').then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'cart'] })
+    },
+  })
+}
+
+export const useRemoveCoupon = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: () => api.delete('/carts/coupon').then((res) => res.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'cart'] })
+    },
+  })
+}
