@@ -8,18 +8,24 @@ import {
   LuShoppingCart,
   LuUsers,
 } from 'react-icons/lu'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+
+import { useEffect } from 'react'
 
 import { logout } from '@/api/authApi'
+import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils/cn'
 
-export default function Sidebar({ className, open }) {
-  const { pathname } = useLocation()
+export default function Sidebar({ className, open, minimized }) {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
-    navigate('/login')
-    await logout()
+    try {
+      await logout()
+      navigate('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
   }
 
   const sidebarData = [
@@ -63,38 +69,47 @@ export default function Sidebar({ className, open }) {
   return (
     <aside
       className={cn(
-        'grid min-w-56 grid-rows-subgrid border-r border-neutral-200 bg-white text-neutral-950 transition-all dark:bg-neutral-100',
         className,
+        'flex flex-col gap-2 border-r border-neutral-200 bg-white p-3 text-neutral-950 transition-all dark:bg-neutral-100',
         open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
       )}
     >
-      <nav className="flex flex-col gap-2 p-4">
-        {sidebarData.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={cn(
-              'flex items-center gap-2 rounded-xl px-4 py-2',
-              pathname === item.path
-                ? 'bg-accent-500 text-neutral-50 dark:text-neutral-950'
+      {sidebarData.map((item) => (
+        <NavLink
+          key={item.path}
+          to={item.path}
+          end
+          className={({ isActive }) =>
+            cn(
+              'group relative flex items-center gap-2 rounded-xl px-4 py-2 transition-all',
+              isActive
+                ? 'bg-accent-500 min-w-48 font-medium text-neutral-50 dark:text-neutral-950'
                 : 'text-neutral-950 hover:bg-neutral-200',
-            )}
-          >
-            <span className="flex-center gap-2">
-              {item.icon}
-              {item.title}
-            </span>
-          </Link>
-        ))}
-        <div className="flex-1"></div>
-        <button
-          className="flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400"
-          onClick={handleLogout}
+              minimized ? 'p-2' : '',
+            )
+          }
         >
-          <LuLogOut size={20} />
+          {item.icon}
+          <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>{item.title}</span>
+          <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
+            {item.title}
+          </Tooltip>
+        </NavLink>
+      ))}
+      <div className="flex-1"></div>
+      <button
+        onClick={handleLogout}
+        className={cn(
+          'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400',
+          minimized ? 'p-2' : '',
+        )}
+      >
+        <LuLogOut size={20} />
+        <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>
+        <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
           Logout
-        </button>
-      </nav>
+        </Tooltip>
+      </button>
     </aside>
   )
 }

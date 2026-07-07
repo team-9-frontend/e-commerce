@@ -60,11 +60,11 @@
 
 @layer base {
   * {
-    @apply transition-colors;
+    @apply transition-colors duration-300;
   }
 
   body {
-    @apply bg-neutral-50 text-neutral-950;
+    @apply selection:bg-accent-500/50 bg-neutral-50 text-neutral-950;
   }
 }
 

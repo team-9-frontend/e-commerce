@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 import { login } from '@/api/authApi'
+import { cn } from '@/utils/cn'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -65,7 +66,10 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 col-span-2 rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950"
+              className={cn(
+                'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 col-span-2 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
+                loading && 'cursor-default opacity-50',
+              )}
             >
               {loading ? 'Loading...' : 'Login'}
             </button>
