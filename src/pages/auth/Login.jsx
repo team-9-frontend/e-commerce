@@ -43,7 +43,7 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 outline-none"
+                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 bg-neutral-50 dark:bg-neutral-200 outline-none"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -56,7 +56,7 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 outline-none"
+                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 bg-neutral-50 dark:bg-neutral-200 outline-none"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

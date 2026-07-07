@@ -1,7 +1,7 @@
 export default function TopProducts({ topProducts }) {
   return (
     <div className="card border-accent-100 dark:border-accent-50 flex flex-col gap-3 rounded-3xl border bg-white p-6 shadow-lg dark:bg-neutral-100">
-      <p className="text-accent-800 text-xs sm:text-sm tracking-wider uppercase">Top products</p>
+      <p className="text-accent-800 text-xs tracking-wider uppercase sm:text-sm">Top products</p>
       <h2 className="mb-4 text-xl sm:text-2xl">Best sellers</h2>
       <div className="space-y-3">
         {topProducts?.map((product) => {

@@ -4,6 +4,7 @@ import { StrictMode } from 'react'
 
 import { ThemeProvider } from 'next-themes'
 
+import UserContextProvider from '@/context/UserContextProvider'
 import '@/index.css'
 import AppRoutes from '@/routes'
 
@@ -16,7 +17,9 @@ createRoot(document.getElementById('root')).render(
       enableSystem={false}
       disableTransitionOnChange={false}
     >
-      <AppRoutes />
+      <UserContextProvider>
+        <AppRoutes />
+      </UserContextProvider>
     </ThemeProvider>
   </StrictMode>,
 )
