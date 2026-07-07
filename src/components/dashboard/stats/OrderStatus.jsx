@@ -39,7 +39,7 @@ export default function OrderStatus({ orders }) {
   ]
   return (
     <div className="card border-accent-100 dark:border-accent-50 flex flex-col gap-3 rounded-3xl border bg-white p-6 shadow-lg dark:bg-neutral-100">
-      <p className="text-accent-800 text-xs sm:text-sm tracking-wider uppercase">Order status</p>
+      <p className="text-accent-800 text-xs tracking-wider uppercase sm:text-sm">Order status</p>
       <h2 className="mb-4 text-xl sm:text-2xl">Live fulfillment breakdown</h2>
       <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-3">
         {orderData.map((order) => {
