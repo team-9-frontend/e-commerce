@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { authService } from '../services/authService'
 import { authKeys } from '../keys/authKeys'
+import { authService } from '../services/authService'
 
 // ----------------------------------
 // QUERIES (GET Requests)

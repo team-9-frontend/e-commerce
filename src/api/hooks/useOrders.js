@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { ordersService } from '../services/ordersService'
-import { orderKeys } from '../keys/orderKeys'
 import { cartKeys } from '../keys/cartKeys'
+import { orderKeys } from '../keys/orderKeys'
+import { ordersService } from '../services/ordersService'
 
 // ----------------------------------
 // ADMIN QUERIES

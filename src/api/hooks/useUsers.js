@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { usersService } from '../services/usersService'
 import { userKeys } from '../keys/userKeys'
+import { usersService } from '../services/usersService'
 
 // ----------------------------------
 // QUERIES (GET Requests)
@@ -38,7 +38,6 @@ const useUserMutation = (mutationFn) => {
 
 export const useAddUser = () => useUserMutation(usersService.add)
 
-export const useUpdateUser = () =>
-  useUserMutation(({ id, data }) => usersService.update(id, data))
+export const useUpdateUser = () => useUserMutation(({ id, data }) => usersService.update(id, data))
 
 export const useDeleteUser = () => useUserMutation((id) => usersService.remove(id))

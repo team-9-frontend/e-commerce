@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { wishlistService } from '../services/wishlistService'
 import { wishlistKeys } from '../keys/wishlistKeys'
+import { wishlistService } from '../services/wishlistService'
 
 // ----------------------------------
 // QUERIES (GET Requests)
