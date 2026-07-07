@@ -1,31 +1,45 @@
-import { useNavigate } from 'react-router-dom'
-
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { login } from '@/api/authApi'
+import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function Login() {
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const { refreshUser } = useUserContext()
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    mode: 'onTouched',
+  })
+
+  const onSubmit = async (data) => {
     try {
-      setLoading(true)
-      const { data } = await login({ email, password })
-      if (!data.success) return alert(data.message)
-      if (data.user.role === 'admin') {
+      const {
+        data: { success, user },
+      } = await login({ email: data.email, password: data.password })
+      if (!success) {
+        return setError('root', {
+          type: 'invalid_credentials',
+          message: 'Invalid credentials. Please try again.',
+        })
+      }
+      refreshUser()
+      if (user.role === 'admin') {
         navigate('/dashboard')
       } else {
         navigate('/')
       }
     } catch (error) {
-      alert(error.response?.data?.message || 'Login Failed')
-    } finally {
-      setLoading(false)
+      setError('root', {
+        type: error.response?.status || 'error',
+        message: error.response?.data?.message || 'Login Failed',
+      })
     }
   }
 
@@ -34,45 +48,84 @@ export default function Login() {
       <div className="flex-center flex-1">
         <div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-6 text-neutral-950 dark:bg-neutral-100">
           <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
-          <p className="text-muted mb-8 text-center">Please log in to continue.</p>
+          <p className="text-muted mb-2 text-center">Please log in to continue.</p>
 
-          <form onSubmit={handleLogin} className="grid grid-cols-[auto_1fr] gap-4">
-            <div className="col-span-2 grid grid-cols-subgrid items-center">
-              <label>Email:</label>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
+              <label for="email" className="w-fit cursor-pointer font-medium">
+                Email
+              </label>
 
               <input
                 type="email"
+                id="email"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address',
+                  },
+                })}
                 placeholder="Enter your email"
-                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 bg-neutral-50 dark:bg-neutral-200 outline-none"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 outline-none dark:bg-neutral-200"
               />
+              {errors.email && (
+                <span className="col-start-2 text-sm font-medium text-red-600 dark:text-red-400">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
 
-            <div className="col-span-2 grid grid-cols-subgrid items-center">
-              <label>Password:</label>
+            <div className="flex flex-col gap-1">
+              <label for="password" className="w-fit cursor-pointer font-medium">
+                Password
+              </label>
 
               <input
                 type="password"
+                id="password"
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: { value: 8, message: 'Must be at least 8 characters' },
+                })}
                 placeholder="Enter your password"
-                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 px-4 py-2 bg-neutral-50 dark:bg-neutral-200 outline-none"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
+                className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 outline-none dark:bg-neutral-200"
               />
+              {errors.password && (
+                <span className="col-start-2 text-sm font-medium text-red-600 dark:text-red-400">
+                  {errors.password.message}
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1 text-sm">
+              <span>
+                Dont have an account?{' '}
+                <Link to="/register" className="text-accent-600 hover:underline">
+                  Register
+                </Link>
+              </span>
+              <Link to="/forgot-password" className="text-accent-600 hover:underline">
+                Forgot password?
+              </Link>
             </div>
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className={cn(
-                'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 col-span-2 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
-                loading && 'cursor-default opacity-50',
+                'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
+                isSubmitting && 'cursor-default opacity-50',
               )}
             >
-              {loading ? 'Loading...' : 'Login'}
+              {isSubmitting ? 'Loading...' : 'Login'}
             </button>
+
+            {errors.root?.message && (
+              <span className="mt-2 text-center text-sm font-medium text-red-600 dark:text-red-400">
+                {errors.root.message}
+              </span>
+            )}
           </form>
         </div>
       </div>
