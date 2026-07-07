@@ -1,14 +1,27 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { useState } from 'react'
 
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
+import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
+  const { user, loading } = useUserContext()
+  const navigate = useNavigate()
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (user && user.role !== 'admin') {
+    return navigate('/')
+  } else if (!user) {
+    return navigate('/login')
+  }
 
   return (
     <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">

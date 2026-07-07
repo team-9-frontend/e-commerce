@@ -12,10 +12,12 @@ import {
 import { useTheme } from 'next-themes'
 
 import Tooltip from '@/components/ui/Tooltip'
+import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
   const { theme, setTheme } = useTheme()
+  const { user } = useUserContext()
   return (
     <header
       className={cn(
@@ -61,8 +63,8 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           <LuCircleUserRound size={26} />
 
           <div>
-            <h3 className="font-semibold text-neutral-950">username</h3>
-            <p className="text-muted text-xs">role</p>
+            <h3 className="font-semibold text-neutral-950">{user?.username || 'username'}</h3>
+            <p className="text-muted text-xs">{user?.role || 'guest'}</p>
           </div>
         </div>
       </div>
