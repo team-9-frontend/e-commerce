@@ -8,16 +8,8 @@ import StatsSkeleton from '@/components/dashboard/stats/StatsSkeleton'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
-  const { data, isLoading, isError, refetch } = useGetOrdersStats()
+  const { data, isLoading, isError } = useGetOrdersStats()
   const stats = data?.dashboard
-
-  useEffect(() => {
-    const refreshTimer = setInterval(() => {
-      if (!isLoading) refetch()
-    }, 60000)
-
-    return () => clearInterval(refreshTimer)
-  }, [isLoading])
 
   return (
     <div className="container my-6 space-y-6">
@@ -31,14 +23,6 @@ export default function AdminDashboard() {
             Monitor your storefront with AI-style clarity and live API metrics.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={refetch}
-          className="btn btn-sm bg-accent-800 rounded-lg px-3 py-2 text-white"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Refreshing...' : 'Refresh'}
-        </button>
       </div>
 
       {isError ? (
