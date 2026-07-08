@@ -1,7 +1,7 @@
 import api from '../client'
 
 export const wishlistService = {
-  getMy: () => api.get('/wishlists/my').then((res) => res.data),
+  getMyWishlist: () => api.get('/wishlists/my').then((res) => res.data),
   getAllAdmin: () => api.get('/wishlists/admin/all').then((res) => res.data),
   getStats: () => api.get('/wishlists/admin/stats').then((res) => res.data),
 

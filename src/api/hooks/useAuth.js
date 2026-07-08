@@ -4,7 +4,7 @@ import { authKeys } from '../keys/authKeys'
 import { authService } from '../services/authService'
 
 // ----------------------------------
-// QUERIES (GET Requests)
+// QUERIES
 // ----------------------------------
 
 export const useCurrentUser = () => {
@@ -23,7 +23,7 @@ export const useAdminTest = () => {
 }
 
 // ----------------------------------
-// MUTATIONS (POST / PATCH Requests)
+// MUTATIONS
 // ----------------------------------
 
 export const useLogin = () => {
@@ -62,18 +62,9 @@ export const useUpdateUserRole = () => {
 }
 
 // Simple mutations (no cache invalidation needed)
-export const useSendRegisterOtp = () => {
-  return useMutation({ mutationFn: authService.sendRegisterOtp })
-}
-
-export const useVerifyRegisterOtp = () => {
-  return useMutation({ mutationFn: authService.verifyRegisterOtp })
-}
-
-export const useForgotPasswordOtp = () => {
-  return useMutation({ mutationFn: authService.sendForgotPasswordOtp })
-}
-
-export const useVerifyForgotPasswordOtp = () => {
-  return useMutation({ mutationFn: authService.verifyForgotPasswordOtp })
-}
+export const useSendRegisterOtp = () => useMutation({ mutationFn: authService.sendRegisterOtp })
+export const useVerifyRegisterOtp = () => useMutation({ mutationFn: authService.verifyRegisterOtp })
+export const useForgotPasswordOtp = () =>
+  useMutation({ mutationFn: authService.sendForgotPasswordOtp })
+export const useVerifyForgotPasswordOtp = () =>
+  useMutation({ mutationFn: authService.verifyForgotPasswordOtp })

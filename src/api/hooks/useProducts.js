@@ -4,7 +4,7 @@ import { productKeys } from '../keys/productKeys'
 import { productsService } from '../services/productsService'
 
 // ----------------------------------
-// QUERIES (GET Requests)
+// QUERIES
 // ----------------------------------
 
 export const useSearchProducts = (params) => {
@@ -31,7 +31,7 @@ export const useGetProductById = (id) => {
 }
 
 // ----------------------------------
-// MUTATIONS (POST / PATCH / DELETE)
+// MUTATIONS
 // ----------------------------------
 
 const useProductMutation = (mutationFn) => {
@@ -45,8 +45,6 @@ const useProductMutation = (mutationFn) => {
 }
 
 export const useCreateProduct = () => useProductMutation(productsService.create)
-
 export const useUpdateProduct = () =>
   useProductMutation(({ id, data }) => productsService.update(id, data))
-
 export const useDeleteProduct = () => useProductMutation((id) => productsService.remove(id))

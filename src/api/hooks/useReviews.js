@@ -4,7 +4,7 @@ import { reviewKeys } from '../keys/reviewKeys'
 import { reviewsService } from '../services/reviewsService'
 
 // ----------------------------------
-// QUERIES (GET Requests)
+// QUERIES
 // ----------------------------------
 
 export const useGetReviews = (productId) => {
@@ -16,14 +16,14 @@ export const useGetReviews = (productId) => {
 }
 
 // ----------------------------------
-// MUTATIONS (POST / PATCH / DELETE)
+// MUTATIONS
 // ----------------------------------
 
 export const usePostReview = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, data }) => reviewsService.create(id, data),
+    mutationFn: ({ productId, data }) => reviewsService.create(productId, data),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: reviewKeys.list(variables.id) })
     },
@@ -34,7 +34,7 @@ export const useDeleteReview = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, reviewId }) => reviewsService.remove(id, reviewId),
+    mutationFn: ({ productId, reviewId }) => reviewsService.remove(productId, reviewId),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: reviewKeys.list(variables.id) })
     },

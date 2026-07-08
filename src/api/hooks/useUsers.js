@@ -4,7 +4,7 @@ import { userKeys } from '../keys/userKeys'
 import { usersService } from '../services/usersService'
 
 // ----------------------------------
-// QUERIES (GET Requests)
+// QUERIES
 // ----------------------------------
 
 export const useGetAllUsers = () => {
@@ -23,7 +23,7 @@ export const useGetUserById = (id) => {
 }
 
 // ----------------------------------
-// MUTATIONS (POST / PATCH / DELETE)
+// MUTATIONS
 // ----------------------------------
 
 const useUserMutation = (mutationFn) => {
@@ -37,7 +37,5 @@ const useUserMutation = (mutationFn) => {
 }
 
 export const useAddUser = () => useUserMutation(usersService.add)
-
 export const useUpdateUser = () => useUserMutation(({ id, data }) => usersService.update(id, data))
-
 export const useDeleteUser = () => useUserMutation((id) => usersService.remove(id))

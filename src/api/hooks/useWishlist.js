@@ -4,13 +4,13 @@ import { wishlistKeys } from '../keys/wishlistKeys'
 import { wishlistService } from '../services/wishlistService'
 
 // ----------------------------------
-// QUERIES (GET Requests)
+// QUERIES
 // ----------------------------------
 
 export const useGetWishlist = () => {
   return useQuery({
     queryKey: wishlistKeys.user,
-    queryFn: wishlistService.getMy,
+    queryFn: wishlistService.getMyWishlist,
   })
 }
 
@@ -29,7 +29,7 @@ export const useGetWishlistStats = () => {
 }
 
 // ----------------------------------
-// MUTATIONS (POST / PATCH / DELETE)
+// MUTATIONS
 // ----------------------------------
 
 const useWishlistMutation = (mutationFn) => {

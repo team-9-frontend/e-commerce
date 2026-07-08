@@ -4,7 +4,7 @@ import { cartKeys } from '../keys/cartKeys'
 import { cartService } from '../services/cartService'
 
 // ----------------------------------
-// QUERIES (GET Requests)
+// QUERIES
 // ----------------------------------
 
 export const useGetCart = () => {
@@ -15,7 +15,7 @@ export const useGetCart = () => {
 }
 
 // ----------------------------------
-// MUTATIONS (POST / PATCH / DELETE)
+// MUTATIONS
 // ----------------------------------
 
 const useCartMutation = (mutationFn) => {
