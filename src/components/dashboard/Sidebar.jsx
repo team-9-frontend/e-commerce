@@ -10,21 +10,20 @@ import {
 } from 'react-icons/lu'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { useEffect } from 'react'
-
-import { logout } from '@/api/authApi'
+import { useLogout } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils/cn'
 
 export default function Sidebar({ className, open, minimized }) {
   const navigate = useNavigate()
+  const { mutateAsync: logout } = useLogout()
 
   const handleLogout = async () => {
     try {
       await logout()
       navigate('/login')
     } catch (error) {
-      console.error('Logout error:', error)
+      console.error(error)
     }
   }
 
@@ -83,9 +82,9 @@ export default function Sidebar({ className, open, minimized }) {
             cn(
               'group relative flex items-center gap-2 rounded-xl px-4 py-2 transition-all',
               isActive
-                ? 'bg-accent-500 min-w-48 font-medium text-neutral-50 dark:text-neutral-950'
+                ? 'bg-accent-500 font-medium text-neutral-50 dark:text-neutral-950'
                 : 'text-neutral-950 hover:bg-neutral-200',
-              minimized ? 'p-2' : '',
+              minimized ? 'p-2' : 'min-w-48',
             )
           }
         >

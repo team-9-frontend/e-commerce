@@ -1,13 +1,12 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { login } from '@/api/authApi'
-import { useUserContext } from '@/context/UserContextProvider'
+import { useLogin } from '@/api'
 import { cn } from '@/utils/cn'
 
 export default function Login() {
   const navigate = useNavigate()
-  const { refreshUser } = useUserContext()
+  const { mutateAsync: login } = useLogin()
 
   const {
     register,
@@ -20,18 +19,15 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const {
-        data: { success, user },
-      } = await login({ email: data.email, password: data.password })
+      const { success, user } = await login({ email: data.email, password: data.password })
       if (!success) {
         return setError('root', {
           type: 'invalid_credentials',
           message: 'Invalid credentials. Please try again.',
         })
       }
-      refreshUser()
-      if (user.role === 'admin') {
-        navigate('/dashboard')
+      if (user?.role === 'admin') {
+        return navigate('/dashboard')
       } else {
         navigate('/')
       }
@@ -51,7 +47,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <div className="flex flex-col gap-1">
-            <label for="email" className="w-fit cursor-pointer font-medium">
+            <label htmlFor="email" className="w-fit cursor-pointer font-medium">
               Email
             </label>
 
@@ -76,7 +72,7 @@ export default function Login() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label for="password" className="w-fit cursor-pointer font-medium">
+            <label htmlFor="password" className="w-fit cursor-pointer font-medium">
               Password
             </label>
 
@@ -99,21 +95,16 @@ export default function Login() {
 
           <div className="flex flex-col gap-1 text-sm">
             <span>
-              Dont have an account?{' '}
-              <Link to="/register" className="text-accent-600 hover:underline">
-                Register
-              </Link>
+              Dont have an account? <Link to="/register">Register</Link>
             </span>
-            <Link to="/forgot-password" className="text-accent-600 hover:underline">
-              Forgot password?
-            </Link>
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
             className={cn(
-              'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
+              'bg-accent-500 hover:bg-accent-600 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
               isSubmitting && 'cursor-default opacity-50',
             )}
           >

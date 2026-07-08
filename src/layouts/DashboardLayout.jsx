@@ -1,26 +1,28 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { useCurrentUser } from '@/api'
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
-import { useUserContext } from '@/context/UserContextProvider'
 import { cn } from '@/utils/cn'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
-  const { user, loading } = useUserContext()
+  const { data: user, isLoading, isError } = useCurrentUser()
   const navigate = useNavigate()
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
+  useEffect(() => {
+    if (isLoading) return
+    if (isError || !user) return navigate('/login')
+    if (user.role === 'admin') {
+      navigate('/dashboard')
+    } else navigate('/')
+  }, [user, isLoading, isError])
 
-  if (user && user.role !== 'admin') {
-    return navigate('/')
-  } else if (!user) {
-    return navigate('/login')
+  if (isLoading) {
+    return <div>Loading...</div>
   }
 
   return (
