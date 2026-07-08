@@ -64,11 +64,21 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
         </button>
 
         <div className="flex-center gap-2 rounded-xl border border-neutral-300 bg-neutral-100 px-2 py-1 dark:bg-neutral-200">
-          <LuCircleUserRound size={26} />
+          {user.avatar ? (
+            <img
+              src={user.avatar}
+              width={28}
+              height={28}
+              alt="avatar"
+              className="rounded-full border border-neutral-300"
+            />
+          ) : (
+            <LuCircleUserRound size={28} />
+          )}
 
           <div>
-            <h3 className="font-semibold text-neutral-950">{user?.username || 'username'}</h3>
-            <p className="text-muted text-xs">{user?.role || 'guest'}</p>
+            <h3 className="font-semibold text-neutral-950">{user.username || 'username'}</h3>
+            <p className="text-muted text-xs">{user.role || 'guest'}</p>
           </div>
         </div>
       </div>
