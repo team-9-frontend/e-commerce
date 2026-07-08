@@ -6,7 +6,7 @@ export const orderKeys = {
   },
   admin: {
     all: ['admin', 'orders'],
-    dashboard: ['admin', 'orders', 'states'],
+    dashboard: ['admin', 'orders', 'stats'],
     list: (params) => [...orderKeys.admin.all, 'list', params],
     detail: (id) => [...orderKeys.admin.all, 'details', id],
   },

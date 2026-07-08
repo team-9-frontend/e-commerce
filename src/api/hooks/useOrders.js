@@ -8,7 +8,7 @@ import { ordersService } from '../services/ordersService'
 // ADMIN QUERIES
 // ----------------------------------
 
-export const useGetOrdersStates = () => {
+export const useGetOrdersStats = () => {
   return useQuery({
     queryKey: orderKeys.admin.dashboard,
     queryFn: ordersService.getOrdersDashboard,

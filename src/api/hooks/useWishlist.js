@@ -24,7 +24,7 @@ export const useGetAllWishlist = () => {
 export const useGetWishlistStats = () => {
   return useQuery({
     queryKey: wishlistKeys.admin.stats,
-    queryFn: wishlistService.getStats,
+    queryFn: wishlistService.getWishlistStats,
   })
 }
 
