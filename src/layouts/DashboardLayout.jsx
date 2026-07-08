@@ -16,9 +16,9 @@ export default function DashboardLayout() {
   useEffect(() => {
     if (isLoading) return
     if (isError || !user) return navigate('/login')
-    if (user.role === 'admin') {
-      navigate('/dashboard')
-    } else navigate('/')
+    if (user.role !== 'admin') {
+      navigate('/')
+    }
   }, [user, isLoading, isError])
 
   if (isLoading) {
@@ -50,7 +50,9 @@ export default function DashboardLayout() {
       ></button>
 
       <main className="col-start-1 col-end-3 row-start-2 row-end-3 overflow-y-scroll lg:col-start-2">
-        <Outlet />
+        <div className="flex min-h-screen flex-col lg:container">
+          <Outlet />
+        </div>
       </main>
     </div>
   )
