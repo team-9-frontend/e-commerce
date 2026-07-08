@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { useGetOrdersStats } from '@/api'
 import DashboardStats from '@/components/dashboard/stats/DashboardStats'
 import OrderStatus from '@/components/dashboard/stats/OrderStatus'
