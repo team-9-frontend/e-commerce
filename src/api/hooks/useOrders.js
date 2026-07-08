@@ -12,6 +12,7 @@ export const useGetOrdersStats = () => {
   return useQuery({
     queryKey: orderKeys.admin.dashboard,
     queryFn: ordersService.getOrdersDashboard,
+    refetchInterval: 30000,
   })
 }
 
@@ -20,6 +21,7 @@ export const useGetAdminOrderById = (id) => {
     queryKey: orderKeys.admin.detail(id),
     queryFn: () => ordersService.getAdminOrderById(id),
     enabled: !!id,
+    refetchInterval: 30000,
   })
 }
 
@@ -27,6 +29,7 @@ export const useGetAllOrders = (params) => {
   return useQuery({
     queryKey: orderKeys.admin.list(params),
     queryFn: () => ordersService.getAllOrders(params),
+    refetchInterval: 30000,
   })
 }
 
@@ -34,6 +37,7 @@ export const useGetAdminCarts = (params) => {
   return useQuery({
     queryKey: orderKeys.adminCarts(params),
     queryFn: () => ordersService.getAdminCarts(params),
+    refetchInterval: 30000,
   })
 }
 

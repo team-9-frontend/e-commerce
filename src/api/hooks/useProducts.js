@@ -27,6 +27,7 @@ export const useGetProductById = (id) => {
     queryKey: productKeys.detail(id),
     queryFn: () => productsService.getById(id),
     enabled: !!id,
+    refetchInterval: 30000,
   })
 }
 

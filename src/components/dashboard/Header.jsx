@@ -8,6 +8,7 @@ import {
   LuSun,
   LuX,
 } from 'react-icons/lu'
+import { Link } from 'react-router-dom'
 
 import { useTheme } from 'next-themes'
 
@@ -41,9 +42,11 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           {minimized ? <LuSquareChevronRight size={20} /> : <LuSquareChevronLeft size={20} />}
         </button>
 
-        <h1 className="font-bodoni hidden pt-1 text-xl font-bold sm:block">
-          LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
-        </h1>
+        <Link to="/" className="text-neutral-950">
+          <h1 className="font-bodoni hidden pt-1 text-xl font-bold sm:block">
+            LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
+          </h1>
+        </Link>
       </div>
 
       <div className="flex-center gap-4">

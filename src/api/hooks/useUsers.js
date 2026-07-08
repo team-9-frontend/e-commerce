@@ -11,6 +11,7 @@ export const useGetAllUsers = () => {
   return useQuery({
     queryKey: userKeys.lists(),
     queryFn: usersService.getAll,
+    refetchInterval: 30000,
   })
 }
 
@@ -19,6 +20,7 @@ export const useGetUserById = (id) => {
     queryKey: userKeys.detail(id),
     queryFn: () => usersService.getById(id),
     enabled: !!id,
+    refetchInterval: 30000,
   })
 }
 

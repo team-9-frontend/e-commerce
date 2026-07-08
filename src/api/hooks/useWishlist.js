@@ -17,7 +17,8 @@ export const useGetWishlist = () => {
 export const useGetAllWishlist = () => {
   return useQuery({
     queryKey: wishlistKeys.admin.list,
-    queryFn: wishlistService.getAllAdmin,
+    queryFn: wishlistService.getAllWishlist,
+    refetchInterval: 30000,
   })
 }
 
@@ -25,6 +26,7 @@ export const useGetWishlistStats = () => {
   return useQuery({
     queryKey: wishlistKeys.admin.stats,
     queryFn: wishlistService.getWishlistStats,
+    refetchInterval: 30000,
   })
 }
 

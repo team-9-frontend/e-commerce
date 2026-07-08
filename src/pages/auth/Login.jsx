@@ -95,21 +95,16 @@ export default function Login() {
 
           <div className="flex flex-col gap-1 text-sm">
             <span>
-              Dont have an account?{' '}
-              <Link to="/register" className="text-accent-600 hover:underline">
-                Register
-              </Link>
+              Dont have an account? <Link to="/register">Register</Link>
             </span>
-            <Link to="/forgot-password" className="text-accent-600 hover:underline">
-              Forgot password?
-            </Link>
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
             className={cn(
-              'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
+              'bg-accent-500 hover:bg-accent-600 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
               isSubmitting && 'cursor-default opacity-50',
             )}
           >
