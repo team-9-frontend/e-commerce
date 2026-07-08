@@ -1,42 +1,32 @@
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { useLogin } from '@/api'
 import { cn } from '@/utils/cn'
 
 export default function Login() {
-  const navigate = useNavigate()
-  const { mutateAsync: login } = useLogin()
+  const { mutate: login, isPending } = useLogin()
 
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     mode: 'onTouched',
   })
 
-  const onSubmit = async (data) => {
-    try {
-      const { success, user } = await login({ email: data.email, password: data.password })
-      if (!success) {
-        return setError('root', {
-          type: 'invalid_credentials',
-          message: 'Invalid credentials. Please try again.',
-        })
-      }
-      if (user?.role === 'admin') {
-        return navigate('/dashboard')
-      } else {
-        navigate('/')
-      }
-    } catch (error) {
-      setError('root', {
-        type: error.response?.status || 'error',
-        message: error.response?.data?.message || 'Login Failed',
-      })
-    }
+  const onSubmit = ({ email, password }) => {
+    login(
+      { email, password },
+      {
+        onError: (error) => {
+          setError('root', {
+            message: error.response?.data?.message || 'Invalid credentials',
+          })
+        },
+      },
+    )
   }
 
   return (
@@ -102,17 +92,16 @@ export default function Login() {
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isPending}
             className={cn(
-              'bg-accent-500 hover:bg-accent-600 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:opacity-50 dark:text-neutral-950',
-              isSubmitting && 'cursor-default opacity-50',
+              'bg-accent-500 hover:bg-accent-600 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-950',
             )}
           >
-            {isSubmitting ? 'Loading...' : 'Login'}
+            {isPending ? 'Loading...' : 'Login'}
           </button>
 
           {errors.root?.message && (
-            <span className="mt-2 text-center text-sm font-medium text-red-600 dark:text-red-400">
+            <span className="mt-4 text-center text-sm font-medium text-red-600 dark:text-red-400">
               {errors.root.message}
             </span>
           )}

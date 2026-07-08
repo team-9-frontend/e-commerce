@@ -10,22 +10,19 @@ import { cn } from '@/utils/cn'
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
-  const { data: user, isLoading, isError } = useCurrentUser()
+
+  const { data: user, isPending } = useCurrentUser()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isLoading) return
-    if (isError || !user) return navigate('/login')
-    if (user.role === 'admin') {
-      navigate('/dashboard')
-    } else navigate('/')
-  }, [user, isLoading, isError])
+    if (isPending) return
+    if (!user) return navigate('/login')
+    if (user.role !== 'admin') return navigate('/')
+  }, [user, isPending])
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  return (
+  return isPending ? (
+    <div>Loading...</div>
+  ) : (
     <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">
       <Header
         open={open}

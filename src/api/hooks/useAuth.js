@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 
 import { authKeys } from '../keys/authKeys'
 import { authService } from '../services/authService'
@@ -11,6 +12,7 @@ export const useCurrentUser = () => {
   return useQuery({
     queryKey: authKeys.currentUser,
     queryFn: authService.getCurrentUser,
+    staleTime: Infinity,
     retry: false,
   })
 }
@@ -28,24 +30,32 @@ export const useAdminTest = () => {
 
 export const useLogin = () => {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      localStorage.setItem('token', data.token)
       queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
+      localStorage.setItem('token', data.token)
+      if (data.user.role === 'admin') {
+        navigate('/dashboard')
+      } else {
+        navigate('/')
+      }
     },
   })
 }
 
 export const useLogout = () => {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   return useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
-      localStorage.removeItem('token')
       queryClient.clear()
+      localStorage.removeItem('token')
+      navigate('/login')
     },
   })
 }
