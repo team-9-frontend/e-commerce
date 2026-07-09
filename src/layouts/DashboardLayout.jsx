@@ -15,19 +15,10 @@ export default function DashboardLayout() {
   const navigate = useNavigate()
 
   useEffect(() => {
-<<<<<<< HEAD
-    if (isLoading) return
-    if (isError || !user) return navigate('/login')
-    if (user.role !== 'admin') {
-      navigate('/')
-    }
-  }, [user, isLoading, isError])
-=======
     if (isPending) return
     if (!user) return navigate('/login')
     if (user.role !== 'admin') return navigate('/')
   }, [user, isPending])
->>>>>>> main
 
   return isPending ? (
     <div>Loading...</div>
