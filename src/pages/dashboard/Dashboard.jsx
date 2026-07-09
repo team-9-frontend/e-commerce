@@ -6,7 +6,7 @@ import StatsSkeleton from '@/components/dashboard/stats/StatsSkeleton'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
-  const { data, isLoading, isError, refetch } = useGetOrdersStats()
+  const { data, isPending, isError, refetch } = useGetOrdersStats()
   const stats = data?.dashboard
 
   return (
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
             </button>
           </div>
         </div>
-      ) : isLoading ? (
+      ) : isPending ? (
         <StatsSkeleton />
       ) : (
         <>

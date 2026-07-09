@@ -8,24 +8,14 @@ import {
   LuShoppingCart,
   LuUsers,
 } from 'react-icons/lu'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { useLogout } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils/cn'
 
 export default function Sidebar({ className, open, minimized }) {
-  const navigate = useNavigate()
-  const { mutateAsync: logout } = useLogout()
-
-  const handleLogout = async () => {
-    try {
-      await logout()
-      navigate('/login')
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const { mutate: logout, isPending } = useLogout()
 
   const sidebarData = [
     {
@@ -97,9 +87,10 @@ export default function Sidebar({ className, open, minimized }) {
       ))}
       <div className="flex-1"></div>
       <button
-        onClick={handleLogout}
+        onClick={() => logout()}
+        disabled={isPending}
         className={cn(
-          'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400',
+          'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 disabled:pointer-events-none disabled:opacity-50 dark:hover:text-red-400',
           minimized ? 'p-2' : '',
         )}
       >
