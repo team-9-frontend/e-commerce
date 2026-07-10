@@ -1,11 +1,11 @@
-import { Outlet, useNavigate } from 'react-router-dom'
-
 import { useEffect, useState } from 'react'
+
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { useCurrentUser } from '@/api'
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
@@ -23,7 +23,7 @@ export default function DashboardLayout() {
   return isPending ? (
     <div>Loading...</div>
   ) : (
-    <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 text-neutral-950 dark:bg-neutral-50">
+    <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 dark:bg-neutral-50">
       <Header
         open={open}
         setOpen={setOpen}
@@ -35,7 +35,7 @@ export default function DashboardLayout() {
       <Sidebar
         open={open}
         minimized={minimized}
-        className="relative z-50 col-start-1 col-end-2 row-start-2 row-end-3"
+        className="relative z-40 col-start-1 col-end-2 row-start-2 row-end-3"
       />
 
       <button
@@ -47,7 +47,7 @@ export default function DashboardLayout() {
       ></button>
 
       <main className="col-start-1 col-end-3 row-start-2 row-end-3 overflow-y-scroll lg:col-start-2">
-        <div className="flex min-h-screen flex-col lg:container">
+        <div className="container flex flex-col py-6">
           <Outlet />
         </div>
       </main>
