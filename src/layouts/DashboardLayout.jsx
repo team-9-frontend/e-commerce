@@ -7,6 +7,8 @@ import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
 import { cn } from '@/utils'
 
+import LoadingSpinner from '../components/ui/LoadingSpinner'
+
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
@@ -21,7 +23,9 @@ export default function DashboardLayout() {
   }, [user, isPending])
 
   return isPending ? (
-    <div>Loading...</div>
+    <div className="flex-center min-h-screen">
+      <LoadingSpinner className="size-24" />
+    </div>
   ) : (
     <div className="grid h-screen grid-cols-[auto_1fr] grid-rows-[auto_1fr] bg-neutral-100 dark:bg-neutral-50">
       <Header
