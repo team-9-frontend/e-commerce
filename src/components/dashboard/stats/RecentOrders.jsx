@@ -59,7 +59,7 @@ export default function RecentOrders({ className, recentOrders }) {
                 </div>
               </div>
             ))
-          : Array.from({ length: 6 }).map((_, i) => (
+          : Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="card flex items-center gap-4 p-4 dark:bg-neutral-200">
                 <div className="flex-1">
                   <Skeleton width="35%" className="sm:text-lg" />
