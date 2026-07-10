@@ -39,9 +39,10 @@
   --color-neutral-900: var(--color-gray-900);
   --color-neutral-950: var(--color-gray-950);
 
-  --color-muted: color-mix(in oklab, var(--color-neutral-950) 40%, transparent);
+  --color-muted: color-mix(in oklab, var(--color-neutral-950) 45%, transparent);
 
-  --font-bodoni: 'Libre Bodoni', serif;
+  --font-fancy: 'Libre Bodoni', serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 .dark {
@@ -88,11 +89,17 @@
   }
 
   body {
-    @apply selection:bg-accent-500/50 bg-neutral-50 text-neutral-950;
+    @apply selection:bg-accent-500/20 bg-neutral-50 text-neutral-950;
   }
 
   a {
     @apply text-accent-600 hover:text-tertiary-600;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-neutral-200 bg-white shadow-md dark:bg-neutral-100 dark:shadow-none;
   }
 }
 
@@ -101,12 +108,5 @@
 }
 
 @utility container {
-  margin-inline: auto;
-  padding-inline: 2rem;
-  @media (width >= --theme(--breakpoint-sm)) {
-    max-width: none;
-  }
-  @media (width >= 1400px) {
-    max-width: 1400px;
-  }
+  @apply mx-auto px-6;
 }

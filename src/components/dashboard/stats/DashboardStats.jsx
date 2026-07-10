@@ -1,87 +1,142 @@
-import {
-  FaCalendarAlt,
-  FaClock,
-  FaCrown,
-  FaDollarSign,
-  FaShoppingCart,
-  FaUsers,
-} from 'react-icons/fa'
+import { LuCalendar, LuClock, LuCrown, LuDollarSign, LuShoppingCart, LuUsers } from 'react-icons/lu'
 
-export default function DashboardStats({
-  totalOrders,
-  pendingOrders,
-  revenue,
-  salesForMonth,
-  topProduct,
-  users,
-}) {
-  const stats = [
-    {
-      label: 'Total Orders',
-      value: totalOrders,
-      description: 'All orders received',
-      icon: FaShoppingCart,
-      color: 'bg-green-500',
-    },
-    {
-      label: 'Pending Orders',
-      value: pendingOrders,
-      description: 'Awaiting action',
-      icon: FaClock,
-      color: 'bg-orange-500',
-    },
-    {
-      label: 'Revenue',
-      value: `$${revenue}`,
-      description: 'Total gross revenue',
-      icon: FaDollarSign,
-      color: 'bg-indigo-500',
-    },
-    {
-      label: 'This Month',
-      value: `$${salesForMonth}`,
-      description: 'Monthly sales target',
-      icon: FaCalendarAlt,
-      color: 'bg-cyan-500',
-    },
-    {
-      label: 'Top Product',
-      value: topProduct?.name,
-      description: `${topProduct?.totalSold} sold`,
-      icon: FaCrown,
-      color: 'bg-purple-500',
-    },
-    {
-      label: 'Users',
-      value: users,
-      description: 'Registered customers',
-      icon: FaUsers,
-      color: 'bg-gray-500',
-    },
-  ]
+import Skeleton from '@/components/ui/Skeleton'
+import { cn } from '@/utils'
+
+export function TotalOrders({ className, totalOrders }) {
   return (
-    <section className="grid gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
-      {stats.map((stat) => (
-        <article
-          key={stat.label}
-          className={`card relative flex justify-between gap-3 overflow-hidden rounded-2xl bg-white p-6 pb-10 shadow-xl dark:bg-neutral-100`}
-        >
-          <div className={`absolute top-0 left-0 ${stat.color} h-1 w-full`} />
-          <div className="relative">
-            <h2 className="text-accent-900 mb-3 text-sm font-semibold sm:text-base">
-              {' '}
-              {stat.label}
-            </h2>
-            <span className="mb-2 block text-xl font-bold sm:text-2xl">{stat.value}</span>
-            <span className="text-xs text-gray-500 sm:text-sm">{stat.description}</span>
-          </div>
-          <div
-            className={`${stat.color} flex-center size-10 shrink-0 rounded-lg sm:size-14 sm:rounded-2xl`}
-          >
-            <stat.icon className="text-lg text-white sm:text-2xl" />
-          </div>
-        </article>
-      ))}
-    </section>
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 border-t-teal-500 p-4 transition-all hover:-translate-y-1',
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">total orders</h2>
+        <div className="rounded-2xl bg-linear-to-br from-teal-300 to-teal-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
+          <LuShoppingCart size={28} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="text-2xl font-bold">{totalOrders || <Skeleton />}</p>
+        <p className="text-muted text-sm font-light">All orders received</p>
+      </div>
+    </div>
+  )
+}
+
+export function PendingOrders({ className, pendingOrders }) {
+  return (
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 border-t-amber-500 p-4 transition-all hover:-translate-y-1',
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">pending orders</h2>
+        <div className="rounded-2xl bg-linear-to-br from-amber-300 to-amber-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
+          <LuClock size={28} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="text-2xl font-bold">{pendingOrders || <Skeleton />}</p>
+        <p className="text-muted text-sm font-light">Awaiting action</p>
+      </div>
+    </div>
+  )
+}
+
+export function Revenue({ className, revenue }) {
+  return (
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 border-t-rose-500 p-4 transition-all hover:-translate-y-1',
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">revenue</h2>
+        <div className="rounded-2xl bg-linear-to-br from-rose-300 to-rose-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
+          <LuDollarSign size={28} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="text-2xl font-bold">
+          {revenue && '$'}
+          {revenue || <Skeleton />}
+        </p>
+        <p className="text-muted text-sm font-light">Total gross revenue</p>
+      </div>
+    </div>
+  )
+}
+
+export function ThisMonth({ className, salesThisMonth }) {
+  return (
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 border-t-sky-500 p-4 transition-all hover:-translate-y-1',
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">this month</h2>
+        <div className="rounded-2xl bg-linear-to-br from-sky-300 to-sky-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
+          <LuCalendar size={28} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="text-2xl font-bold">
+          {salesThisMonth && '$'}
+          {salesThisMonth || <Skeleton />}
+        </p>
+        <p className="text-muted text-sm font-light">Monthly sales target</p>
+      </div>
+    </div>
+  )
+}
+
+export function TopProduct({ className, topProduct, sales }) {
+  return (
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 border-t-purple-500 p-4 transition-all hover:-translate-y-1',
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">top product</h2>
+        <div className="rounded-2xl bg-linear-to-br from-purple-300 to-purple-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
+          <LuCrown size={28} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="line-clamp-1 text-2xl font-bold">{topProduct || <Skeleton />}</p>
+        <p className="text-muted text-sm font-light">{sales || 0} sold</p>
+      </div>
+    </div>
+  )
+}
+
+export function TotalUsers({ className, totalUsers }) {
+  return (
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 border-t-lime-500 p-4 transition-all hover:-translate-y-1',
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">total users</h2>
+        <div className="rounded-2xl bg-linear-to-br from-lime-300 to-lime-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
+          <LuUsers size={28} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="text-2xl font-bold">{totalUsers || <Skeleton />}</p>
+        <p className="text-muted text-sm font-light">Registered customers</p>
+      </div>
+    </div>
   )
 }

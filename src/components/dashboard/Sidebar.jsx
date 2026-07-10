@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom'
 
 import { useLogout } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 
 export default function Sidebar({ className, open, minimized }) {
   const { mutate: logout, isPending } = useLogout()
@@ -58,9 +58,9 @@ export default function Sidebar({ className, open, minimized }) {
   return (
     <aside
       className={cn(
-        className,
-        'flex flex-col gap-2 border-r border-neutral-200 bg-white p-3 text-neutral-950 transition-all dark:bg-neutral-100',
+        'flex flex-col gap-2 border-r border-neutral-200 bg-white p-4 shadow transition-all dark:bg-neutral-100 dark:shadow-none',
         open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+        className,
       )}
     >
       {sidebarData.map((item) => (
@@ -70,9 +70,9 @@ export default function Sidebar({ className, open, minimized }) {
           end
           className={({ isActive }) =>
             cn(
-              'group relative flex items-center gap-2 rounded-xl px-4 py-2 transition-all',
+              'group relative flex items-center gap-2 rounded-xl px-4 py-3 transition-all',
               isActive
-                ? 'bg-accent-500 font-medium text-neutral-50 dark:text-neutral-950'
+                ? 'dark:bg-accent-500 bg-neutral-800 font-medium text-neutral-50 dark:text-neutral-950'
                 : 'text-neutral-950 hover:bg-neutral-200',
               minimized ? 'p-2' : 'min-w-48',
             )
@@ -90,7 +90,7 @@ export default function Sidebar({ className, open, minimized }) {
         onClick={() => logout()}
         disabled={isPending}
         className={cn(
-          'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-neutral-950 hover:bg-red-500/25 hover:text-red-600 disabled:pointer-events-none disabled:opacity-50 dark:hover:text-red-400',
+          'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 hover:bg-red-500/25 hover:text-red-600 disabled:pointer-events-none disabled:opacity-50 dark:hover:text-red-400',
           minimized ? 'p-2' : '',
         )}
       >

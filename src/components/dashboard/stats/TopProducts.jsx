@@ -1,29 +1,53 @@
-export default function TopProducts({ topProducts }) {
+import Skeleton from '@/components/ui/Skeleton'
+import { cn } from '@/utils'
+
+export default function TopProducts({ className, topProducts }) {
   return (
-    <div className="card border-accent-100 dark:border-accent-50 flex flex-col gap-3 rounded-3xl border bg-white p-6 shadow-lg dark:bg-neutral-100">
-      <p className="text-accent-800 text-xs tracking-wider uppercase sm:text-sm">Top products</p>
-      <h2 className="mb-4 text-xl sm:text-2xl">Best sellers</h2>
-      <div className="space-y-3">
-        {topProducts?.map((product) => {
-          return (
-            <div
-              key={product._id}
-              className="border-accent-200 group bg-accent-100/20 flex items-center justify-between gap-3 rounded-2xl border p-4 transition-all duration-300 hover:-translate-y-0.5"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="size-10 rounded-xl object-cover"
-              />
-              <div className="flex-1 space-y-1">
-                <h3 className="group-hover:text-accent-900 text-lg font-bold">{product.name}</h3>
-                <span className="text-sm text-neutral-700">
-                  {product.totalSold} units sold - ${product.revenue} revenue
-                </span>
+    <div className={cn('card flex flex-col gap-4 p-4', className)}>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-accent-600 mb-1 font-mono text-sm tracking-wider uppercase">
+            top products
+          </p>
+          <h2 className="text-xl">Best sellers</h2>
+        </div>
+        <span className="bg-accent-500/15 border-accent-500/25 text-accent-600 rounded-full border px-2 py-0.5 text-xs tracking-wider">
+          {topProducts?.length || 0} products
+        </span>
+      </div>
+
+      <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
+        {topProducts
+          ? topProducts.map((product) => (
+              <div
+                key={product._id}
+                className="card flex items-center gap-4 p-4 shadow-sm dark:bg-neutral-200"
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  width={48}
+                  height={48}
+                  className="size-12 rounded-lg bg-neutral-300 object-cover"
+                />
+                <div>
+                  <h3 className="line-clamp-1 font-bold sm:text-lg">{product.name}</h3>
+                  <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
+                    {product.totalSold} units sold • revenue: ${product.revenue}
+                  </p>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            ))
+          : Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="card flex items-center gap-4 p-4 dark:bg-neutral-200">
+                <Skeleton width={44} height={44} />
+
+                <div className="flex-1">
+                  <Skeleton width="35%" className="sm:text-lg" />
+                  <Skeleton width="50%" className="text-sm" />
+                </div>
+              </div>
+            ))}
       </div>
     </div>
   )

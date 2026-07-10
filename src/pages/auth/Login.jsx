@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { useLogin } from '@/api'
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 
 export default function Login() {
   const { mutate: login, isPending } = useLogin()
@@ -22,7 +22,7 @@ export default function Login() {
       {
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Invalid credentials',
+            message: error.response?.data?.message || 'Login failed!',
           })
         },
       },
@@ -31,13 +31,13 @@ export default function Login() {
 
   return (
     <div className="flex-center flex-1">
-      <div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-6 text-neutral-950 dark:bg-neutral-100">
+      <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
-        <p className="text-muted mb-2 text-center">Please log in to continue.</p>
+        <p className="text-muted mb-6 text-center">Please log in to continue.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="w-fit cursor-pointer font-medium">
+            <label htmlFor="email" className="w-fit cursor-pointer text-sm font-medium">
               Email
             </label>
 
@@ -62,7 +62,7 @@ export default function Login() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="w-fit cursor-pointer font-medium">
+            <label htmlFor="password" className="w-fit cursor-pointer text-sm font-medium">
               Password
             </label>
 
@@ -99,13 +99,12 @@ export default function Login() {
           >
             {isPending ? 'Loading...' : 'Login'}
           </button>
-
-          {errors.root?.message && (
-            <span className="mt-4 text-center text-sm font-medium text-red-600 dark:text-red-400">
-              {errors.root.message}
-            </span>
-          )}
         </form>
+        {errors.root && (
+          <span className="mt-6 text-center text-sm font-medium text-red-600 dark:text-red-400">
+            {errors.root.message}
+          </span>
+        )}
       </div>
     </div>
   )
