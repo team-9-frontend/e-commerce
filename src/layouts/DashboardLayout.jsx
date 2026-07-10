@@ -33,6 +33,7 @@ export default function DashboardLayout() {
         setOpen={setOpen}
         minimized={minimized}
         setMinimized={setMinimized}
+        user={user}
         className="relative z-50 col-start-1 col-end-3 row-start-1 row-end-2"
       />
 

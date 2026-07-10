@@ -1,3 +1,4 @@
+import Badge from '@/components/ui/Badge'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
@@ -11,9 +12,7 @@ export default function TopProducts({ className, topProducts }) {
           </p>
           <h2 className="text-xl">Best sellers</h2>
         </div>
-        <span className="bg-accent-500/15 border-accent-500/25 text-accent-600 rounded-full border px-2 py-0.5 text-xs tracking-wider">
-          {topProducts?.length || 0} products
-        </span>
+        <Badge>{topProducts?.length || 0} products</Badge>
       </div>
 
       <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
@@ -39,7 +38,10 @@ export default function TopProducts({ className, topProducts }) {
               </div>
             ))
           : Array.from({ length: 5 }).map((_, i) => (
-              <div key={i} className="card flex items-center gap-4 p-4 dark:bg-neutral-200">
+              <div
+                key={i}
+                className="card flex items-center gap-4 p-4 shadow-sm dark:bg-neutral-200"
+              >
                 <Skeleton width={44} height={44} />
 
                 <div className="flex-1">

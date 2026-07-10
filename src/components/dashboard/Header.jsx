@@ -11,13 +11,11 @@ import {
 } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
-import { useCurrentUser } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils'
 
-export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
+export default function Navbar({ className, open, setOpen, minimized, setMinimized, user }) {
   const { theme, setTheme } = useTheme()
-  const { data: user } = useCurrentUser()
 
   return (
     <header
