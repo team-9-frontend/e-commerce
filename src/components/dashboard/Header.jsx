@@ -1,3 +1,4 @@
+import { useTheme } from 'next-themes'
 import {
   LuBell,
   LuCircleUserRound,
@@ -9,8 +10,6 @@ import {
   LuX,
 } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
-
-import { useTheme } from 'next-themes'
 
 import { useCurrentUser } from '@/api'
 import Tooltip from '@/components/ui/Tooltip'
