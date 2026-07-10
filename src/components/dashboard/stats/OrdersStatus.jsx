@@ -1,12 +1,13 @@
 import { format } from 'date-fns'
 import Skeleton from 'react-loading-skeleton'
 
+import Badge from '@/components/ui/Badge'
 import { cn } from '@/utils'
 
 export default function OrdersStatus({ className, stats }) {
   const statusConfig = {
     pending: {
-      colors: 'border-amber-500/25 bg-amber-500/15 p-4 text-amber-600 dark:text-amber-400',
+      colors: 'border-amber-500/25 bg-amber-500/15 text-amber-600 dark:text-amber-400',
       skeleton: (
         <Skeleton
           width={32}
@@ -16,7 +17,7 @@ export default function OrdersStatus({ className, stats }) {
       ),
     },
     processing: {
-      colors: 'border-sky-500/25 bg-sky-500/15 p-4 text-sky-600 dark:text-sky-400',
+      colors: 'border-sky-500/25 bg-sky-500/15 text-sky-600 dark:text-sky-400',
       skeleton: (
         <Skeleton
           width={32}
@@ -26,7 +27,7 @@ export default function OrdersStatus({ className, stats }) {
       ),
     },
     confirmed: {
-      colors: 'border-teal-500/25 bg-teal-500/15 p-4 text-teal-600 dark:text-teal-400',
+      colors: 'border-teal-500/25 bg-teal-500/15 text-teal-600 dark:text-teal-400',
       skeleton: (
         <Skeleton
           width={32}
@@ -36,7 +37,7 @@ export default function OrdersStatus({ className, stats }) {
       ),
     },
     shipped: {
-      colors: 'border-purple-500/25 bg-purple-500/15 p-4 text-purple-600 dark:text-purple-400',
+      colors: 'border-purple-500/25 bg-purple-500/15 text-purple-600 dark:text-purple-400',
       skeleton: (
         <Skeleton
           width={32}
@@ -46,7 +47,7 @@ export default function OrdersStatus({ className, stats }) {
       ),
     },
     delivered: {
-      colors: 'border-lime-500/25 bg-lime-500/15 p-4 text-lime-600 dark:text-lime-400',
+      colors: 'border-lime-500/25 bg-lime-500/15 text-lime-600 dark:text-lime-400',
       skeleton: (
         <Skeleton
           width={32}
@@ -56,7 +57,7 @@ export default function OrdersStatus({ className, stats }) {
       ),
     },
     cancelled: {
-      colors: 'border-rose-500/25 bg-rose-500/15 p-4 text-rose-600 dark:text-rose-400',
+      colors: 'border-rose-500/25 bg-rose-500/15 text-rose-600 dark:text-rose-400',
       skeleton: (
         <Skeleton
           width={32}
@@ -76,9 +77,7 @@ export default function OrdersStatus({ className, stats }) {
           </p>
           <h2 className="text-xl">Live fulfillment breakdown</h2>
         </div>
-        <span className="bg-accent-500/15 border-accent-500/25 text-accent-600 rounded-full border px-2 py-0.5 text-xs tracking-wider">
-          Updated {format(new Date(), 'h:mm a')}
-        </span>
+        <Badge>Updated {format(new Date(), 'h:mm a')}</Badge>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -86,7 +85,10 @@ export default function OrdersStatus({ className, stats }) {
           return (
             <div
               key={status}
-              className={cn('flex flex-col gap-1 rounded-xl border', statusConfig[status].colors)}
+              className={cn(
+                'flex flex-col gap-1 rounded-xl border p-4',
+                statusConfig[status].colors,
+              )}
             >
               <h3 className="font-mono text-sm tracking-wider uppercase">{status}</h3>
               <p className="text-2xl font-bold">

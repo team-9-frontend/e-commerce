@@ -12,7 +12,7 @@ import RecentOrders from '@/components/dashboard/stats/RecentOrders'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
-  const { data, isPending } = useGetOrdersStats()
+  const { data } = useGetOrdersStats()
   const stats = data?.dashboard
 
   return (

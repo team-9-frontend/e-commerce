@@ -3,140 +3,117 @@ import { LuCalendar, LuClock, LuCrown, LuDollarSign, LuShoppingCart, LuUsers } f
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-export function TotalOrders({ className, totalOrders }) {
+function StatsTemplate({ className, color, header, icon, value, description }) {
+  const colorClasses = {
+    teal: { gradient: 'from-teal-300 to-teal-500', border: 'border-t-teal-500' },
+    amber: { gradient: 'from-amber-300 to-amber-500', border: 'border-t-amber-500' },
+    rose: { gradient: 'from-rose-300 to-rose-500', border: 'border-t-rose-500' },
+    sky: { gradient: 'from-sky-300 to-sky-500', border: 'border-t-sky-500' },
+    purple: { gradient: 'from-purple-300 to-purple-500', border: 'border-t-purple-500' },
+    lime: { gradient: 'from-lime-300 to-lime-500', border: 'border-t-lime-500' },
+  }
+
   return (
     <div
       className={cn(
-        'card flex flex-col items-start gap-2 border-t-4 border-t-teal-500 p-4 transition-all hover:-translate-y-1',
+        'card flex flex-col items-start gap-2 border-t-4 p-4 transition-all hover:-translate-y-1',
+        colorClasses[color]?.border,
         className,
       )}
     >
       <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">total orders</h2>
-        <div className="rounded-2xl bg-linear-to-br from-teal-300 to-teal-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
-          <LuShoppingCart size={28} />
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">{header}</h2>
+        <div
+          className={cn(
+            'rounded-2xl bg-linear-to-br p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12',
+            colorClasses[color]?.gradient,
+          )}
+        >
+          {icon}
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="text-2xl font-bold">{totalOrders || <Skeleton />}</p>
-        <p className="text-muted text-sm font-light">All orders received</p>
+        <p className="line-clamp-1 text-2xl font-bold">{value || <Skeleton />}</p>
+        <p className="text-muted text-sm font-light">{description}</p>
       </div>
     </div>
+  )
+}
+
+export function TotalOrders({ className, totalOrders }) {
+  return (
+    <StatsTemplate
+      color="teal"
+      header="total orders"
+      icon={<LuShoppingCart size={28} />}
+      value={totalOrders}
+      description="All orders received"
+      classNmae={className}
+    />
   )
 }
 
 export function PendingOrders({ className, pendingOrders }) {
   return (
-    <div
-      className={cn(
-        'card flex flex-col items-start gap-2 border-t-4 border-t-amber-500 p-4 transition-all hover:-translate-y-1',
-        className,
-      )}
-    >
-      <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">pending orders</h2>
-        <div className="rounded-2xl bg-linear-to-br from-amber-300 to-amber-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
-          <LuClock size={28} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="text-2xl font-bold">{pendingOrders || <Skeleton />}</p>
-        <p className="text-muted text-sm font-light">Awaiting action</p>
-      </div>
-    </div>
+    <StatsTemplate
+      color="amber"
+      header="pending orders"
+      icon={<LuClock size={28} />}
+      value={pendingOrders}
+      description="Awaiting action"
+      classNmae={className}
+    />
   )
 }
 
 export function Revenue({ className, revenue }) {
   return (
-    <div
-      className={cn(
-        'card flex flex-col items-start gap-2 border-t-4 border-t-rose-500 p-4 transition-all hover:-translate-y-1',
-        className,
-      )}
-    >
-      <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">revenue</h2>
-        <div className="rounded-2xl bg-linear-to-br from-rose-300 to-rose-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
-          <LuDollarSign size={28} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="text-2xl font-bold">
-          {revenue && '$'}
-          {revenue || <Skeleton />}
-        </p>
-        <p className="text-muted text-sm font-light">Total gross revenue</p>
-      </div>
-    </div>
+    <StatsTemplate
+      color="rose"
+      header="revenue"
+      icon={<LuDollarSign size={28} />}
+      value={revenue}
+      description="Total gross revenue"
+      className={className}
+    />
   )
 }
 
 export function ThisMonth({ className, salesThisMonth }) {
   return (
-    <div
-      className={cn(
-        'card flex flex-col items-start gap-2 border-t-4 border-t-sky-500 p-4 transition-all hover:-translate-y-1',
-        className,
-      )}
-    >
-      <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">this month</h2>
-        <div className="rounded-2xl bg-linear-to-br from-sky-300 to-sky-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
-          <LuCalendar size={28} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="text-2xl font-bold">
-          {salesThisMonth && '$'}
-          {salesThisMonth || <Skeleton />}
-        </p>
-        <p className="text-muted text-sm font-light">Monthly sales target</p>
-      </div>
-    </div>
+    <StatsTemplate
+      color="sky"
+      header="this month"
+      icon={<LuCalendar size={28} />}
+      value={salesThisMonth && `$${salesThisMonth}`}
+      description="All sales this month"
+      className={className}
+    />
   )
 }
 
 export function TopProduct({ className, topProduct, sales }) {
   return (
-    <div
-      className={cn(
-        'card flex flex-col items-start gap-2 border-t-4 border-t-purple-500 p-4 transition-all hover:-translate-y-1',
-        className,
-      )}
-    >
-      <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">top product</h2>
-        <div className="rounded-2xl bg-linear-to-br from-purple-300 to-purple-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
-          <LuCrown size={28} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="line-clamp-1 text-2xl font-bold">{topProduct || <Skeleton />}</p>
-        <p className="text-muted text-sm font-light">{sales || 0} sold</p>
-      </div>
-    </div>
+    <StatsTemplate
+      color="purple"
+      header="top product"
+      icon={<LuCrown size={28} />}
+      value={topProduct}
+      description={`${sales || 0} sold`}
+      className={className}
+    />
   )
 }
 
 export function TotalUsers({ className, totalUsers }) {
   return (
-    <div
-      className={cn(
-        'card flex flex-col items-start gap-2 border-t-4 border-t-lime-500 p-4 transition-all hover:-translate-y-1',
-        className,
-      )}
-    >
-      <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">total users</h2>
-        <div className="rounded-2xl bg-linear-to-br from-lime-300 to-lime-500 p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12">
-          <LuUsers size={28} />
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="text-2xl font-bold">{totalUsers || <Skeleton />}</p>
-        <p className="text-muted text-sm font-light">Registered customers</p>
-      </div>
-    </div>
+    <StatsTemplate
+      color="lime"
+      header="total users"
+      icon={<LuUsers size={28} />}
+      value={totalUsers}
+      description="Registered customers"
+      className={className}
+    />
   )
 }
