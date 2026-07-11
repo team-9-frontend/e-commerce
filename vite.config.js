@@ -5,10 +5,24 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
+  plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
     },
   },
-  plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
+  esbuild: {
+    jsx: 'automatic',
+  },
+  test: {
+    environment: 'jsdom',
+    setupFiles: './tests/setup.js',
+    globals: true,
+    css: false,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html'],
+      exclude: ['src/main.jsx', 'src/test/**', '**/*.config.js'],
+    },
+  },
 })
