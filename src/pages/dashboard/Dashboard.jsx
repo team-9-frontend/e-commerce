@@ -12,7 +12,7 @@ import RecentOrders from '@/components/dashboard/stats/RecentOrders'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
-  const { data, isPending, isError, error } = useGetOrdersStats()
+  const { data, isLoading, isError, error } = useGetOrdersStats()
   const stats = data?.dashboard
 
   return (
@@ -29,23 +29,23 @@ export default function AdminDashboard() {
         <div className="card text-muted col-span-full p-4">{error}</div>
       ) : (
         <>
-          <TotalOrders totalOrders={stats?.orders?.total} isPending={isPending} />
-          <PendingOrders pendingOrders={stats?.orders?.pending} isPending={isPending} />
-          <Revenue revenue={stats?.revenue?.total} isPending={isPending} />
-          <ThisMonth salesThisMonth={stats?.revenue?.thisMonth} isPending={isPending} />
+          <TotalOrders totalOrders={stats?.orders?.total} isLoading={isLoading} />
+          <PendingOrders pendingOrders={stats?.orders?.pending} isLoading={isLoading} />
+          <Revenue revenue={stats?.revenue?.total} isLoading={isLoading} />
+          <ThisMonth salesThisMonth={stats?.revenue?.thisMonth} isLoading={isLoading} />
           <TopProduct
             topProduct={stats?.topProducts?.[0].name}
             sales={stats?.topProducts?.[0].totalSold}
-            isPending={isPending}
+            isLoading={isLoading}
           />
-          <TotalUsers totalUsers={stats?.totalCustomers} isPending={isPending} />
+          <TotalUsers totalUsers={stats?.totalCustomers} isLoading={isLoading} />
 
-          <OrdersStatus stats={stats?.orders} className="col-span-full" isPending={isPending} />
+          <OrdersStatus stats={stats?.orders} className="col-span-full" isLoading={isLoading} />
 
           <div className="col-span-full grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <TopProducts topProducts={stats?.topProducts} isPending={isPending} />
+            <TopProducts topProducts={stats?.topProducts} isLoading={isLoading} />
 
-            <RecentOrders recentOrders={stats?.recentOrders} isPending={isPending} />
+            <RecentOrders recentOrders={stats?.recentOrders} isLoading={isLoading} />
           </div>
         </>
       )}

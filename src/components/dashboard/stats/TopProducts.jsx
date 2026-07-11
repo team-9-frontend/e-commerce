@@ -2,7 +2,7 @@ import Badge from '@/components/ui/Badge'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-export default function TopProducts({ className, isPending, topProducts }) {
+export default function TopProducts({ className, isLoading, topProducts }) {
   return (
     <div className={cn('card flex flex-col gap-4 p-4', className)}>
       <div className="flex items-center justify-between">
@@ -21,7 +21,7 @@ export default function TopProducts({ className, isPending, topProducts }) {
 
           return (
             <div key={i} className="card flex gap-4 p-4 shadow-sm dark:bg-neutral-200">
-              {!isPending ? (
+              {!isLoading ? (
                 <img
                   src={product?.image}
                   alt={product?.name}
@@ -34,10 +34,10 @@ export default function TopProducts({ className, isPending, topProducts }) {
               )}
               <div className="flex-1">
                 <h3 className="line-clamp-1 font-bold sm:text-lg">
-                  {!isPending ? product?.name : <Skeleton width="35%" />}
+                  {!isLoading ? product?.name : <Skeleton width="35%" />}
                 </h3>
                 <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
-                  {!isPending ? (
+                  {!isLoading ? (
                     `${product?.totalSold} units sold • revenue: $${product?.revenue}`
                   ) : (
                     <Skeleton width="50%" />

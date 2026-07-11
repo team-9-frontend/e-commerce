@@ -4,7 +4,7 @@ import Badge from '@/components/ui/Badge'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-export default function RecentOrders({ className, isPending, recentOrders }) {
+export default function RecentOrders({ className, isLoading, recentOrders }) {
   return (
     <div className={cn('card flex flex-col gap-4 p-4', className)}>
       <div className="flex items-center justify-between">
@@ -25,10 +25,10 @@ export default function RecentOrders({ className, isPending, recentOrders }) {
             <div key={i} className="card flex gap-4 p-4 shadow-sm dark:bg-neutral-200">
               <div className="flex-1">
                 <h3 className="line-clamp-1 font-bold sm:text-lg">
-                  {!isPending ? `${order?.user?.username || 'Customer'}` : <Skeleton width="50%" />}
+                  {!isLoading ? `${order?.user?.username || 'Customer'}` : <Skeleton width="50%" />}
                 </h3>
                 <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
-                  {!isPending ? (
+                  {!isLoading ? (
                     `${order?.items?.[0]?.name} • ${format(order?.createdAt, 'MMM d, yyyy')}`
                   ) : (
                     <Skeleton width="100%" />
@@ -37,7 +37,7 @@ export default function RecentOrders({ className, isPending, recentOrders }) {
               </div>
 
               <div className="flex-1 space-x-2 self-center text-end">
-                {!isPending ? (
+                {!isLoading ? (
                   <>
                     <Badge
                       color={

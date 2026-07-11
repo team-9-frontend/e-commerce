@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
 
 export default function Login() {
-  const { mutate: login, isPending } = useLogin()
+  const { mutate: login, isLoading } = useLogin()
 
   const {
     register,
@@ -73,8 +73,8 @@ export default function Login() {
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          <Button type="submit" disabled={isPending} className="flex-center py-2">
-            {isPending ? 'Loading...' : 'Login'}
+          <Button type="submit" disabled={isLoading} className="flex-center py-2">
+            {isLoading ? 'Loading...' : 'Login'}
           </Button>
         </form>
 

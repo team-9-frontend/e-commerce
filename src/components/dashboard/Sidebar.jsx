@@ -16,7 +16,7 @@ import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils'
 
 export default function Sidebar({ className, open, minimized }) {
-  const { mutate: logout, isPending } = useLogout()
+  const { mutate: logout, isLoading } = useLogout()
 
   const sidebarData = [
     {
@@ -89,7 +89,7 @@ export default function Sidebar({ className, open, minimized }) {
       <div className="flex-1"></div>
       <Button
         onClick={() => logout()}
-        disabled={isPending}
+        disabled={isLoading}
         variant="dangerGhost"
         className={cn('transition-all', minimized ? 'p-2' : '')}
       >
