@@ -36,11 +36,12 @@ export default function RecentOrders({ className, recentOrders }) {
                 <div className="flex-center gap-2">
                   <Badge
                     color={
+                      (order.status === 'returned' && 'amber') ||
                       (order.status === 'pending' && 'amber') ||
+                      (order.status === 'processing' && 'sky') ||
                       (order.status === 'confirmed' && 'teal') ||
                       (order.status === 'shipped' && 'purple') ||
                       (order.status === 'delivered' && 'lime') ||
-                      (order.status === 'returned' && 'amber') ||
                       (order.status === 'cancelled' && 'rose') ||
                       null
                     }
