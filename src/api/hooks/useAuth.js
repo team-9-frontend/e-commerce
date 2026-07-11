@@ -9,10 +9,13 @@ import { authService } from '../services/authService'
 // ----------------------------------
 
 export const useCurrentUser = () => {
+  const token = localStorage.getItem('token')
+
   return useQuery({
     queryKey: authKeys.currentUser,
     queryFn: authService.getCurrentUser,
     staleTime: Infinity,
+    enabled: !!token,
     retry: false,
   })
 }
@@ -35,8 +38,8 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
       localStorage.setItem('token', data.token)
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
       if (data.user.role === 'admin') {
         navigate('/dashboard')
       } else {
@@ -53,8 +56,8 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: authService.logout,
     onSuccess: () => {
-      queryClient.clear()
       localStorage.removeItem('token')
+      queryClient.clear()
       navigate('/login')
     },
   })

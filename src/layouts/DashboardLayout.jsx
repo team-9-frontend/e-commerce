@@ -13,16 +13,16 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
 
-  const { data: user, isPending } = useCurrentUser()
+  const { data: user, isLoading } = useCurrentUser()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isPending) return
+    if (isLoading) return
     if (!user) return navigate('/login')
     if (user.role !== 'admin') return navigate('/')
-  }, [user, isPending])
+  }, [user, isLoading])
 
-  return isPending ? (
+  return isLoading ? (
     <div className="flex-center min-h-screen">
       <LoadingSpinner className="size-24" />
     </div>
@@ -33,7 +33,6 @@ export default function DashboardLayout() {
         setOpen={setOpen}
         minimized={minimized}
         setMinimized={setMinimized}
-        user={user}
         className="relative z-50 col-start-1 col-end-3 row-start-1 row-end-2"
       />
 

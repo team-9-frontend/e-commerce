@@ -8,11 +8,25 @@ import '@/index.css'
 import AppRoutes from '@/routes'
 
 const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: (failureCount, error) => {
+        if (error.response?.status === 401) return false
+        return failureCount < 3
+      },
+    },
+  },
   queryCache: new QueryCache({
-    onError: (error) => console.error(`Global Query Error: ${error.message}`),
+    onError: (error) => {
+      if (error.response?.status === 401) return
+      console.error(`Global Query Error: ${error.message}`)
+    },
   }),
   mutationCache: new MutationCache({
-    onError: (error) => console.error(`Global Mutation Error: ${error.message}`),
+    onError: (error) => {
+      if (error.response?.status === 401) return
+      console.error(`Global Mutation Error: ${error.message}`)
+    },
   }),
 })
 
