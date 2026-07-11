@@ -12,7 +12,7 @@ export default function RecentOrders({ className, isLoading, recentOrders }) {
           <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
             recent orders
           </p>
-          <h2 className="text-xl">Latest customer activity</h2>
+          <h2 className="text-lg">Latest customer activity</h2>
         </div>
         <Badge>{recentOrders?.length || 0} orders</Badge>
       </div>

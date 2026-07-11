@@ -1,4 +1,15 @@
-import { LuCalendar, LuClock, LuCrown, LuDollarSign, LuShoppingCart, LuUsers } from 'react-icons/lu'
+import {
+  LuCalendar,
+  LuClock,
+  LuCrown,
+  LuDollarSign,
+  LuPackage,
+  LuShoppingCart,
+  LuStar,
+  LuTrendingDown,
+  LuTrendingUp,
+  LuUsers,
+} from 'react-icons/lu'
 
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
@@ -22,7 +33,7 @@ function StatsTemplate({ className, isLoading, color, header, icon, value, descr
       )}
     >
       <div className="flex w-full items-start justify-between">
-        <h2 className="text-muted mb-2 text-sm font-medium capitalize">{header}</h2>
+        <h2 className="mb-2 text-sm font-medium text-neutral-600 capitalize">{header}</h2>
         <div
           className={cn(
             'rounded-2xl bg-linear-to-br p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12',
@@ -32,9 +43,11 @@ function StatsTemplate({ className, isLoading, color, header, icon, value, descr
           {icon}
         </div>
       </div>
-      <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="line-clamp-1 text-2xl font-bold">{!isLoading ? value : <Skeleton />}</p>
-        <p className="text-muted text-sm font-light">{description}</p>
+      <div className="flex w-full flex-1 flex-col justify-end gap-1">
+        <p className="line-clamp-1 text-2xl font-bold">
+          {!isLoading ? value : <Skeleton width="50%" />}
+        </p>
+        {description && <p className="text-sm font-light text-neutral-500">{description}</p>}
       </div>
     </div>
   )
@@ -118,6 +131,58 @@ export function TotalUsers({ className, isLoading, totalUsers }) {
       icon={<LuUsers size={28} />}
       value={totalUsers}
       description="Registered customers"
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function TotalProducts({ className, isLoading, totalProducts }) {
+  return (
+    <StatsTemplate
+      color="sky"
+      header="total products"
+      icon={<LuPackage size={28} />}
+      value={totalProducts}
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function FeuturedProducts({ className, isLoading, feuturedProducts }) {
+  return (
+    <StatsTemplate
+      color="amber"
+      header="feutured products"
+      icon={<LuStar size={28} />}
+      value={feuturedProducts}
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function InStockTotal({ className, isLoading, inStockTotal }) {
+  return (
+    <StatsTemplate
+      color="lime"
+      header="in stock"
+      icon={<LuTrendingUp size={28} />}
+      value={inStockTotal}
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function OutOfStockTotal({ className, isLoading, outOfStockTotal }) {
+  return (
+    <StatsTemplate
+      color="rose"
+      header="out of stock"
+      icon={<LuTrendingDown size={28} />}
+      value={outOfStockTotal}
       className={className}
       isLoading={isLoading}
     />

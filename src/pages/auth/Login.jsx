@@ -34,7 +34,7 @@ export default function Login() {
     <div className="flex-center flex-1">
       <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
-        <p className="text-muted mb-6 text-center">Please log in to continue.</p>
+        <p className="mb-6 text-center text-neutral-500">Please log in to continue.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
@@ -73,7 +73,7 @@ export default function Login() {
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          <Button type="submit" disabled={isPending} className="flex-center py-2">
+          <Button type="submit" disabled={isPending} className="flex-center">
             {isPending ? 'Loading...' : 'Login'}
           </Button>
         </form>

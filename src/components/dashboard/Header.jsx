@@ -2,10 +2,10 @@ import { useTheme } from 'next-themes'
 import {
   LuBell,
   LuCircleUserRound,
+  LuIndentDecrease,
+  LuIndentIncrease,
   LuMenu,
   LuMoon,
-  LuSquareChevronLeft,
-  LuSquareChevronRight,
   LuSun,
   LuX,
 } from 'react-icons/lu'
@@ -38,7 +38,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           variant="ghost"
           className="hidden lg:block"
         >
-          {minimized ? <LuSquareChevronRight size={20} /> : <LuSquareChevronLeft size={20} />}
+          {minimized ? <LuIndentIncrease size={20} /> : <LuIndentDecrease size={20} />}
         </Button>
 
         <Link to="/" className="text-neutral-950">
@@ -59,7 +59,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           <Tooltip position="bottom">Notifications</Tooltip>
         </Button>
 
-        <div className="flex-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
+        <div className="flex-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
           {!isLoading && user?.avatar ? (
             <img
               src={user.avatar}
@@ -74,7 +74,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
 
           <div>
             <h3 className="font-semibold">{!isLoading ? user?.username : 'username'}</h3>
-            <p className="text-muted text-xs">{!isLoading ? user?.role : 'role'}</p>
+            <p className="text-xs text-neutral-500">{!isLoading ? user?.role : 'role'}</p>
           </div>
         </div>
       </div>

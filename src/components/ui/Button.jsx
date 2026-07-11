@@ -11,7 +11,7 @@ export default function Button({ children, className, variant = 'primary', icon,
   return (
     <button
       className={cn(
-        'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-3 font-medium text-neutral-950 capitalize disabled:pointer-events-none disabled:opacity-50',
+        'group relative flex cursor-pointer items-center gap-2 rounded-lg px-4 py-2 font-medium text-neutral-950 capitalize disabled:pointer-events-none disabled:opacity-50',
         variants[variant],
         icon && 'p-2',
         className,
