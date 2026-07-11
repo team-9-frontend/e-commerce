@@ -4,7 +4,7 @@ import Badge from '@/components/ui/Badge'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-export default function OrdersStatus({ className, stats }) {
+export default function OrdersStatus({ className, isPending, stats }) {
   return (
     <div className={cn('card flex flex-col gap-4 p-4', className)}>
       <div className="flex items-center justify-between">
@@ -39,7 +39,7 @@ export default function OrdersStatus({ className, stats }) {
               >
                 <h3 className="font-mono text-sm tracking-wider uppercase">{status}</h3>
                 <p className="text-2xl font-bold">
-                  {stats?.[status] ?? <Skeleton width={32} color={colors[status]} />}
+                  {!isPending ? stats?.[status] : <Skeleton width={32} color={colors[status]} />}
                 </p>
               </div>
             )

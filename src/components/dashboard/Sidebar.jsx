@@ -71,7 +71,7 @@ export default function Sidebar({ className, open, minimized }) {
           end
           className={({ isActive }) =>
             cn(
-              'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-3 font-medium transition-all',
+              'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-3 font-medium capitalize transition-all',
               isActive
                 ? 'dark:bg-accent-500 bg-neutral-800 font-medium text-neutral-50 dark:text-neutral-950'
                 : 'text-neutral-950 hover:bg-neutral-200',
