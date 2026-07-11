@@ -1,25 +1,48 @@
-export default function TopProducts({ topProducts }) {
+import Badge from '@/components/ui/Badge'
+import Skeleton from '@/components/ui/Skeleton'
+import { cn } from '@/utils'
+
+export default function TopProducts({ className, isLoading, topProducts }) {
   return (
-    <div className="card border-accent-100 dark:border-accent-50 flex flex-col gap-3 rounded-3xl border bg-white p-6 shadow-lg dark:bg-neutral-100">
-      <p className="text-accent-800 text-xs tracking-wider uppercase sm:text-sm">Top products</p>
-      <h2 className="mb-4 text-xl sm:text-2xl">Best sellers</h2>
-      <div className="space-y-3">
-        {topProducts?.map((product) => {
+    <div className={cn('card flex flex-col gap-4 p-4', className)}>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
+            top products
+          </p>
+          <h2 className="text-xl">Best sellers</h2>
+        </div>
+        <Badge>{topProducts?.length || 0} products</Badge>
+      </div>
+
+      <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
+        {Array.from({ length: topProducts?.length ?? 5 }).map((_, i) => {
+          const product = topProducts?.[i]
+
           return (
-            <div
-              key={product._id}
-              className="border-accent-200 group bg-accent-100/20 flex items-center justify-between gap-3 rounded-2xl border p-4 transition-all duration-300 hover:-translate-y-0.5"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="size-10 rounded-xl object-cover"
-              />
-              <div className="flex-1 space-y-1">
-                <h3 className="group-hover:text-accent-900 text-lg font-bold">{product.name}</h3>
-                <span className="text-sm text-neutral-700">
-                  {product.totalSold} units sold - ${product.revenue} revenue
-                </span>
+            <div key={i} className="card flex gap-4 p-4 shadow-sm dark:bg-neutral-200">
+              {!isLoading ? (
+                <img
+                  src={product?.image}
+                  alt={product?.name}
+                  width={48}
+                  height={48}
+                  className="size-12 rounded-lg bg-neutral-300 object-cover"
+                />
+              ) : (
+                <Skeleton width={44} height={44} />
+              )}
+              <div className="flex-1">
+                <h3 className="line-clamp-1 font-bold sm:text-lg">
+                  {!isLoading ? product?.name : <Skeleton width="35%" />}
+                </h3>
+                <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
+                  {!isLoading ? (
+                    `${product?.totalSold} units sold • revenue: $${product?.revenue}`
+                  ) : (
+                    <Skeleton width="50%" />
+                  )}
+                </p>
               </div>
             </div>
           )

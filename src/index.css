@@ -2,6 +2,13 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Safelist of dynamicly used colors */
+@source inline('{bg,text}-{neutral,rose,teal,amber,purple,lime,sky}-{400,500,600}{\/15,\/25,}');
+
+/* Safelist for dynamic gradient shimmer effect */
+@source inline('{bg,after:from,after:to}-{neutral,rose,teal,amber,purple,lime,sky}-500/15!');
+@source inline('after:via-{neutral,rose,teal,amber,purple,lime,sky}-500/25!');
+
 @theme {
   --color-accent-50: var(--color-indigo-50);
   --color-accent-100: var(--color-indigo-100);
@@ -15,18 +22,6 @@
   --color-accent-900: var(--color-indigo-900);
   --color-accent-950: var(--color-indigo-950);
 
-  --color-tertiary-50: var(--color-teal-50);
-  --color-tertiary-100: var(--color-teal-100);
-  --color-tertiary-200: var(--color-teal-200);
-  --color-tertiary-300: var(--color-teal-300);
-  --color-tertiary-400: var(--color-teal-400);
-  --color-tertiary-500: var(--color-teal-500);
-  --color-tertiary-600: var(--color-teal-600);
-  --color-tertiary-700: var(--color-teal-700);
-  --color-tertiary-800: var(--color-teal-800);
-  --color-tertiary-900: var(--color-teal-900);
-  --color-tertiary-950: var(--color-teal-950);
-
   --color-neutral-50: var(--color-gray-50);
   --color-neutral-100: var(--color-gray-100);
   --color-neutral-200: var(--color-gray-200);
@@ -39,36 +34,13 @@
   --color-neutral-900: var(--color-gray-900);
   --color-neutral-950: var(--color-gray-950);
 
-  --color-muted: color-mix(in oklab, var(--color-neutral-950) 40%, transparent);
+  --color-muted: color-mix(in oklab, var(--color-neutral-950) 45%, transparent);
 
-  --font-bodoni: 'Libre Bodoni', serif;
+  --font-fancy: 'Libre Bodoni', serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 .dark {
-  --color-accent-50: var(--color-indigo-950);
-  --color-accent-100: var(--color-indigo-900);
-  --color-accent-200: var(--color-indigo-800);
-  --color-accent-300: var(--color-indigo-700);
-  --color-accent-400: var(--color-indigo-600);
-  --color-accent-500: var(--color-indigo-500);
-  --color-accent-600: var(--color-indigo-400);
-  --color-accent-700: var(--color-indigo-300);
-  --color-accent-800: var(--color-indigo-200);
-  --color-accent-900: var(--color-indigo-100);
-  --color-accent-950: var(--color-indigo-50);
-
-  --color-tertiary-50: var(--color-teal-950);
-  --color-tertiary-100: var(--color-teal-900);
-  --color-tertiary-200: var(--color-teal-800);
-  --color-tertiary-300: var(--color-teal-700);
-  --color-tertiary-400: var(--color-teal-600);
-  --color-tertiary-500: var(--color-teal-500);
-  --color-tertiary-600: var(--color-teal-400);
-  --color-tertiary-700: var(--color-teal-300);
-  --color-tertiary-800: var(--color-teal-200);
-  --color-tertiary-900: var(--color-teal-100);
-  --color-tertiary-950: var(--color-teal-50);
-
   --color-neutral-50: var(--color-gray-950);
   --color-neutral-100: var(--color-gray-900);
   --color-neutral-200: var(--color-gray-800);
@@ -88,11 +60,17 @@
   }
 
   body {
-    @apply selection:bg-accent-500/50 bg-neutral-50 text-neutral-950;
+    @apply selection:bg-accent-500/20 bg-neutral-50 text-neutral-950;
   }
 
   a {
-    @apply text-accent-600 hover:text-tertiary-600;
+    @apply text-accent-600 dark:text-accent-400 hover:text-teal-600 dark:hover:text-teal-400;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-neutral-200 bg-white shadow-md dark:bg-neutral-100 dark:shadow-none;
   }
 }
 
@@ -101,12 +79,5 @@
 }
 
 @utility container {
-  margin-inline: auto;
-  padding-inline: 2rem;
-  @media (width >= --theme(--breakpoint-sm)) {
-    max-width: none;
-  }
-  @media (width >= 1400px) {
-    max-width: 1400px;
-  }
+  @apply mx-auto px-6;
 }

@@ -1,37 +1,66 @@
-export default function RecentOrders({ recentOrders }) {
+import { format } from 'date-fns'
+
+import Badge from '@/components/ui/Badge'
+import Skeleton from '@/components/ui/Skeleton'
+import { cn } from '@/utils'
+
+export default function RecentOrders({ className, isLoading, recentOrders }) {
   return (
-    <div className="card border-accent-100 dark:border-accent-50 flex flex-col gap-3 rounded-3xl border bg-white p-6 shadow-lg dark:bg-neutral-100">
+    <div className={cn('card flex flex-col gap-4 p-4', className)}>
       <div className="flex items-center justify-between">
-        <div className="space-y-3">
-          <p className="text-accent-800 text-xs tracking-wider uppercase sm:text-sm">
-            Recent orders
+        <div>
+          <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
+            recent orders
           </p>
-          <h2 className="mb-4 text-xl sm:text-2xl">Latest customer activity</h2>
+          <h2 className="text-xl">Latest customer activity</h2>
         </div>
-        <span className="shrink-0 rounded-xl bg-neutral-300 px-2.5 py-1 text-xs text-neutral-700">
-          {recentOrders?.length ?? 0} orders
-        </span>
+        <Badge>{recentOrders?.length || 0} orders</Badge>
       </div>
-      <div className="space-y-2">
-        {recentOrders?.map((order) => {
-          const userLabel = order.user?.username || order.user?.email || 'Guest'
-          const productLabel = order.items?.[0]?.name || 'Order item'
+
+      <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
+        {Array.from({ length: recentOrders?.length ?? 5 }).map((_, i) => {
+          const order = recentOrders?.[i]
+
           return (
-            <div
-              key={order._id}
-              className="border-accent-200 group bg-accent-100/20 flex flex-col justify-between gap-3 rounded-2xl border p-3 transition-all duration-300 hover:-translate-y-0.5 sm:flex-row sm:items-center"
-            >
-              <div className="flex-1 space-y-0.5">
-                <h3 className="group-hover:text-accent-900 text-lg font-bold">{userLabel}</h3>
-                <span className="text-sm text-neutral-700">{productLabel}</span>
+            <div key={i} className="card flex gap-4 p-4 shadow-sm dark:bg-neutral-200">
+              <div className="flex-1">
+                <h3 className="line-clamp-1 font-bold sm:text-lg">
+                  {!isLoading ? `${order?.user?.username || 'Customer'}` : <Skeleton width="50%" />}
+                </h3>
+                <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
+                  {!isLoading ? (
+                    `${order?.items?.[0]?.name} • ${format(order?.createdAt, 'MMM d, yyyy')}`
+                  ) : (
+                    <Skeleton width="100%" />
+                  )}
+                </p>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="bg-accent-200 text-accent-700 w-fit rounded-xl px-2.5 py-1 text-xs">
-                  {order.status}
-                </span>
-                <span className="group-hover:text-accent-900 shrink-0 font-semibold">
-                  ${order.totalPrice?.toFixed?.(2) ?? order.totalPrice}
-                </span>
+
+              <div className="flex-1 space-x-2 self-center text-end">
+                {!isLoading ? (
+                  <>
+                    <Badge
+                      color={
+                        (order?.status === 'returned' && 'amber') ||
+                        (order?.status === 'pending' && 'amber') ||
+                        (order?.status === 'processing' && 'sky') ||
+                        (order?.status === 'confirmed' && 'teal') ||
+                        (order?.status === 'shipped' && 'purple') ||
+                        (order?.status === 'delivered' && 'lime') ||
+                        (order?.status === 'cancelled' && 'rose') ||
+                        null
+                      }
+                    >
+                      {order?.status}
+                    </Badge>
+                    <span className="hidden sm:inline">•</span>
+                    <span className="hidden font-bold sm:inline sm:text-lg">
+                      ${order?.totalPrice}
+                    </span>
+                  </>
+                ) : (
+                  <Skeleton width="50%" className="max-w-32 sm:text-lg" />
+                )}
               </div>
             </div>
           )

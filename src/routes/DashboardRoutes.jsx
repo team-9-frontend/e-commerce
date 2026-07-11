@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 
 import DashboardLayout from '@/layouts/DashboardLayout'
+import NotFound from '@/pages/NotFound'
 import AdminCarts from '@/pages/dashboard/Carts'
 import AdminDashboard from '@/pages/dashboard/Dashboard'
 import AdminOrders from '@/pages/dashboard/Orders'
@@ -24,6 +25,8 @@ export default function DashboardRoutes() {
         <Route path="users" element={<AdminUsers />} />
         <Route path="carts" element={<AdminCarts />} />
         <Route path="settings" element={<AdminSettings />} />
+
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )

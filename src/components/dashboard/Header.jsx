@@ -12,63 +12,60 @@ import {
 import { Link } from 'react-router-dom'
 
 import { useCurrentUser } from '@/api'
+import Button from '@/components/ui/Button'
 import Tooltip from '@/components/ui/Tooltip'
-import { cn } from '@/utils/cn'
+import { cn } from '@/utils'
 
 export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
   const { theme, setTheme } = useTheme()
-  const { data: user } = useCurrentUser()
+  const { data: user, isLoading } = useCurrentUser()
 
   return (
     <header
       className={cn(
+        'flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 shadow dark:bg-neutral-100 dark:shadow-none',
         className,
-        'flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 text-neutral-950 dark:bg-neutral-100',
       )}
     >
-      <div className="flex-center gap-4">
-        <button
-          onClick={() => setOpen(!open)}
-          className="hover:text-accent-600 cursor-pointer lg:hidden"
-        >
+      <div className="flex-center gap-2">
+        <Button onClick={() => setOpen(!open)} icon variant="ghost" className="lg:hidden">
           {open ? <LuX size={20} /> : <LuMenu size={20} />}
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={() => setMinimized(!minimized)}
-          className="hover:text-accent-600 hidden cursor-pointer lg:block"
+          icon
+          variant="ghost"
+          className="hidden lg:block"
         >
           {minimized ? <LuSquareChevronRight size={20} /> : <LuSquareChevronLeft size={20} />}
-        </button>
+        </Button>
 
         <Link to="/" className="text-neutral-950">
-          <h1 className="font-bodoni hidden pt-1 text-xl font-bold sm:block">
+          <h1 className="font-fancy hidden pt-1 text-xl font-bold sm:block">
             LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
           </h1>
         </Link>
       </div>
 
-      <div className="flex-center gap-4">
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="group hover:text-accent-600 relative cursor-pointer"
-        >
+      <div className="flex-center gap-2">
+        <Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} icon variant="ghost">
           {theme === 'dark' ? <LuSun size={20} /> : <LuMoon size={20} />}
           <Tooltip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</Tooltip>
-        </button>
+        </Button>
 
-        <button className="group hover:text-accent-600 relative cursor-pointer">
+        <Button icon variant="ghost">
           <LuBell size={20} />
           <Tooltip position="bottom">Notifications</Tooltip>
-        </button>
+        </Button>
 
-        <div className="flex-center gap-2 rounded-xl border border-neutral-300 bg-neutral-100 px-2 py-1 dark:bg-neutral-200">
-          {user.avatar ? (
+        <div className="flex-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
+          {!isLoading && user?.avatar ? (
             <img
               src={user.avatar}
+              alt="avatar"
               width={28}
               height={28}
-              alt="avatar"
               className="rounded-full border border-neutral-300"
             />
           ) : (
@@ -76,8 +73,8 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           )}
 
           <div>
-            <h3 className="font-semibold text-neutral-950">{user.username || 'username'}</h3>
-            <p className="text-muted text-xs">{user.role || 'guest'}</p>
+            <h3 className="font-semibold">{!isLoading ? user?.username : 'username'}</h3>
+            <p className="text-muted text-xs">{!isLoading ? user?.role : 'role'}</p>
           </div>
         </div>
       </div>

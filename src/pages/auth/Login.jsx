@@ -2,10 +2,11 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { useLogin } from '@/api'
-import { cn } from '@/utils/cn'
+import Button from '@/components/ui/Button'
+import FormField from '@/components/ui/FormField'
 
 export default function Login() {
-  const { mutate: login, isPending } = useLogin()
+  const { mutate: login, isLoading } = useLogin()
 
   const {
     register,
@@ -22,7 +23,7 @@ export default function Login() {
       {
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Invalid credentials',
+            message: error.response?.data?.message || 'Login failed!',
           })
         },
       },
@@ -31,57 +32,39 @@ export default function Login() {
 
   return (
     <div className="flex-center flex-1">
-      <div className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-6 text-neutral-950 dark:bg-neutral-100">
+      <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
-        <p className="text-muted mb-2 text-center">Please log in to continue.</p>
+        <p className="text-muted mb-6 text-center">Please log in to continue.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="w-fit cursor-pointer font-medium">
-              Email
-            </label>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <FormField
+            label="email"
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            register={register}
+            rules={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Invalid email address',
+              },
+            }}
+            error={errors.email}
+          />
 
-            <input
-              type="email"
-              id="email"
-              {...register('email', {
-                required: 'Email is required',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address',
-                },
-              })}
-              placeholder="Enter your email"
-              className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 outline-none dark:bg-neutral-200"
-            />
-            {errors.email && (
-              <span className="col-start-2 text-sm font-medium text-red-600 dark:text-red-400">
-                {errors.email.message}
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="w-fit cursor-pointer font-medium">
-              Password
-            </label>
-
-            <input
-              type="password"
-              id="password"
-              {...register('password', {
-                required: 'Password is required',
-                minLength: { value: 8, message: 'Must be at least 8 characters' },
-              })}
-              placeholder="Enter your password"
-              className="focus:border-accent-500 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 outline-none dark:bg-neutral-200"
-            />
-            {errors.password && (
-              <span className="col-start-2 text-sm font-medium text-red-600 dark:text-red-400">
-                {errors.password.message}
-              </span>
-            )}
-          </div>
+          <FormField
+            label="password"
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            register={register}
+            rules={{
+              required: 'Password is required',
+              minLength: { value: 8, message: 'Must be at least 8 characters' },
+            }}
+            error={errors.password}
+          />
 
           <div className="flex flex-col gap-1 text-sm">
             <span>
@@ -90,22 +73,16 @@ export default function Login() {
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          <button
-            type="submit"
-            disabled={isPending}
-            className={cn(
-              'bg-accent-500 hover:bg-accent-600 cursor-pointer rounded-lg px-4 py-2 text-neutral-50 disabled:pointer-events-none disabled:opacity-50 dark:text-neutral-950',
-            )}
-          >
-            {isPending ? 'Loading...' : 'Login'}
-          </button>
-
-          {errors.root?.message && (
-            <span className="mt-4 text-center text-sm font-medium text-red-600 dark:text-red-400">
-              {errors.root.message}
-            </span>
-          )}
+          <Button type="submit" disabled={isLoading} className="flex-center py-2">
+            {isLoading ? 'Loading...' : 'Login'}
+          </Button>
         </form>
+
+        {errors.root && (
+          <span className="mt-6 text-center text-sm font-medium text-red-600 dark:text-red-400">
+            {errors.root.message}
+          </span>
+        )}
       </div>
     </div>
   )

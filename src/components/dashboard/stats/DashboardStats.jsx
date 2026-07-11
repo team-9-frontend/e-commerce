@@ -1,87 +1,125 @@
-import {
-  FaCalendarAlt,
-  FaClock,
-  FaCrown,
-  FaDollarSign,
-  FaShoppingCart,
-  FaUsers,
-} from 'react-icons/fa'
+import { LuCalendar, LuClock, LuCrown, LuDollarSign, LuShoppingCart, LuUsers } from 'react-icons/lu'
 
-export default function DashboardStats({
-  totalOrders,
-  pendingOrders,
-  revenue,
-  salesForMonth,
-  topProduct,
-  users,
-}) {
-  const stats = [
-    {
-      label: 'Total Orders',
-      value: totalOrders,
-      description: 'All orders received',
-      icon: FaShoppingCart,
-      color: 'bg-green-500',
-    },
-    {
-      label: 'Pending Orders',
-      value: pendingOrders,
-      description: 'Awaiting action',
-      icon: FaClock,
-      color: 'bg-orange-500',
-    },
-    {
-      label: 'Revenue',
-      value: `$${revenue}`,
-      description: 'Total gross revenue',
-      icon: FaDollarSign,
-      color: 'bg-indigo-500',
-    },
-    {
-      label: 'This Month',
-      value: `$${salesForMonth}`,
-      description: 'Monthly sales target',
-      icon: FaCalendarAlt,
-      color: 'bg-cyan-500',
-    },
-    {
-      label: 'Top Product',
-      value: topProduct?.name,
-      description: `${topProduct?.totalSold} sold`,
-      icon: FaCrown,
-      color: 'bg-purple-500',
-    },
-    {
-      label: 'Users',
-      value: users,
-      description: 'Registered customers',
-      icon: FaUsers,
-      color: 'bg-gray-500',
-    },
-  ]
+import Skeleton from '@/components/ui/Skeleton'
+import { cn } from '@/utils'
+
+function StatsTemplate({ className, isLoading, color, header, icon, value, description }) {
+  const colorClasses = {
+    teal: { gradient: 'from-teal-400 to-teal-600', border: 'border-t-teal-600' },
+    amber: { gradient: 'from-amber-400 to-amber-600', border: 'border-t-amber-600' },
+    rose: { gradient: 'from-rose-400 to-rose-600', border: 'border-t-rose-600' },
+    sky: { gradient: 'from-sky-400 to-sky-600', border: 'border-t-sky-600' },
+    purple: { gradient: 'from-purple-400 to-purple-600', border: 'border-t-purple-600' },
+    lime: { gradient: 'from-lime-400 to-lime-600', border: 'border-t-lime-500' },
+  }
+
   return (
-    <section className="grid gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3">
-      {stats.map((stat) => (
-        <article
-          key={stat.label}
-          className={`card relative flex justify-between gap-3 overflow-hidden rounded-2xl bg-white p-6 pb-10 shadow-xl dark:bg-neutral-100`}
+    <div
+      className={cn(
+        'card flex flex-col items-start gap-2 border-t-4 p-4 transition-all hover:-translate-y-1',
+        colorClasses[color]?.border,
+        className,
+      )}
+    >
+      <div className="flex w-full items-start justify-between">
+        <h2 className="text-muted mb-2 text-sm font-medium capitalize">{header}</h2>
+        <div
+          className={cn(
+            'rounded-2xl bg-linear-to-br p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12',
+            colorClasses[color]?.gradient,
+          )}
         >
-          <div className={`absolute top-0 left-0 ${stat.color} h-1 w-full`} />
-          <div className="relative">
-            <h2 className="text-accent-900 mb-3 text-sm font-semibold sm:text-base">
-              {' '}
-              {stat.label}
-            </h2>
-            <span className="mb-2 block text-xl font-bold sm:text-2xl">{stat.value}</span>
-            <span className="text-xs text-gray-500 sm:text-sm">{stat.description}</span>
-          </div>
-          <div
-            className={`${stat.color} flex-center size-10 shrink-0 rounded-lg sm:size-14 sm:rounded-2xl`}
-          >
-            <stat.icon className="text-lg text-white sm:text-2xl" />
-          </div>
-        </article>
-      ))}
-    </section>
+          {icon}
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-end gap-1">
+        <p className="line-clamp-1 text-2xl font-bold">{!isLoading ? value : <Skeleton />}</p>
+        <p className="text-muted text-sm font-light">{description}</p>
+      </div>
+    </div>
+  )
+}
+
+export function TotalOrders({ className, isLoading, totalOrders }) {
+  return (
+    <StatsTemplate
+      color="teal"
+      header="total orders"
+      icon={<LuShoppingCart size={28} />}
+      value={totalOrders}
+      description="All orders received"
+      classNmae={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function PendingOrders({ className, isLoading, pendingOrders }) {
+  return (
+    <StatsTemplate
+      color="amber"
+      header="pending orders"
+      icon={<LuClock size={28} />}
+      value={pendingOrders}
+      description="Awaiting action"
+      classNmae={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function Revenue({ className, isLoading, revenue }) {
+  return (
+    <StatsTemplate
+      color="rose"
+      header="revenue"
+      icon={<LuDollarSign size={28} />}
+      value={revenue}
+      description="Total gross revenue"
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function ThisMonth({ className, isLoading, salesThisMonth }) {
+  return (
+    <StatsTemplate
+      color="sky"
+      header="this month"
+      icon={<LuCalendar size={28} />}
+      value={salesThisMonth && `$${salesThisMonth}`}
+      description="All sales this month"
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function TopProduct({ className, isLoading, topProduct, sales }) {
+  return (
+    <StatsTemplate
+      color="purple"
+      header="top product"
+      icon={<LuCrown size={28} />}
+      value={topProduct}
+      description={`${sales || 0} sold`}
+      className={className}
+      isLoading={isLoading}
+    />
+  )
+}
+
+export function TotalUsers({ className, isLoading, totalUsers }) {
+  return (
+    <StatsTemplate
+      color="lime"
+      header="total users"
+      icon={<LuUsers size={28} />}
+      value={totalUsers}
+      description="Registered customers"
+      className={className}
+      isLoading={isLoading}
+    />
   )
 }
