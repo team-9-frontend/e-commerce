@@ -7,7 +7,7 @@ export default function TopProducts({ className, topProducts }) {
     <div className={cn('card flex flex-col gap-4 p-4', className)}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-accent-600 mb-1 font-mono text-sm tracking-wider uppercase">
+          <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
             top products
           </p>
           <h2 className="text-xl">Best sellers</h2>
@@ -16,12 +16,12 @@ export default function TopProducts({ className, topProducts }) {
       </div>
 
       <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
-        {topProducts
-          ? topProducts.map((product) => (
-              <div
-                key={product._id}
-                className="card flex items-center gap-4 p-4 shadow-sm dark:bg-neutral-200"
-              >
+        {Array.from({ length: topProducts?.length ?? 5 }).map((_, i) => {
+          const product = topProducts?.[i]
+
+          return (
+            <div key={i} className="card flex gap-4 p-4 shadow-sm dark:bg-neutral-200">
+              {product?.image ? (
                 <img
                   src={product.image}
                   alt={product.name}
@@ -29,27 +29,24 @@ export default function TopProducts({ className, topProducts }) {
                   height={48}
                   className="size-12 rounded-lg bg-neutral-300 object-cover"
                 />
-                <div>
-                  <h3 className="line-clamp-1 font-bold sm:text-lg">{product.name}</h3>
-                  <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
-                    {product.totalSold} units sold • revenue: ${product.revenue}
-                  </p>
-                </div>
-              </div>
-            ))
-          : Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="card flex items-center gap-4 p-4 shadow-sm dark:bg-neutral-200"
-              >
+              ) : (
                 <Skeleton width={44} height={44} />
-
-                <div className="flex-1">
-                  <Skeleton width="35%" className="sm:text-lg" />
-                  <Skeleton width="50%" className="text-sm" />
-                </div>
+              )}
+              <div className="flex-1">
+                <h3 className="line-clamp-1 font-bold sm:text-lg">
+                  {product?.name || <Skeleton width="35%" />}
+                </h3>
+                <p className="line-clamp-1 text-sm text-neutral-700 capitalize">
+                  {product ? (
+                    `${product.totalSold} units sold • revenue: $${product.revenue}`
+                  ) : (
+                    <Skeleton width="50%" />
+                  )}
+                </p>
               </div>
-            ))}
+            </div>
+          )
+        })}
       </div>
     </div>
   )

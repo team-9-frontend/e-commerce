@@ -5,12 +5,12 @@ import { cn } from '@/utils'
 
 function StatsTemplate({ className, color, header, icon, value, description }) {
   const colorClasses = {
-    teal: { gradient: 'from-teal-300 to-teal-500', border: 'border-t-teal-500' },
-    amber: { gradient: 'from-amber-300 to-amber-500', border: 'border-t-amber-500' },
-    rose: { gradient: 'from-rose-300 to-rose-500', border: 'border-t-rose-500' },
-    sky: { gradient: 'from-sky-300 to-sky-500', border: 'border-t-sky-500' },
-    purple: { gradient: 'from-purple-300 to-purple-500', border: 'border-t-purple-500' },
-    lime: { gradient: 'from-lime-300 to-lime-500', border: 'border-t-lime-500' },
+    teal: { gradient: 'from-teal-400 to-teal-600', border: 'border-t-teal-600' },
+    amber: { gradient: 'from-amber-400 to-amber-600', border: 'border-t-amber-600' },
+    rose: { gradient: 'from-rose-400 to-rose-600', border: 'border-t-rose-600' },
+    sky: { gradient: 'from-sky-400 to-sky-600', border: 'border-t-sky-600' },
+    purple: { gradient: 'from-purple-400 to-purple-600', border: 'border-t-purple-600' },
+    lime: { gradient: 'from-lime-400 to-lime-600', border: 'border-t-lime-500' },
   }
 
   return (
@@ -33,7 +33,7 @@ function StatsTemplate({ className, color, header, icon, value, description }) {
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="line-clamp-1 text-2xl font-bold">{value || <Skeleton />}</p>
+        <p className="line-clamp-1 text-2xl font-bold">{value ?? <Skeleton />}</p>
         <p className="text-muted text-sm font-light">{description}</p>
       </div>
     </div>

@@ -18,7 +18,7 @@ export default function AdminDashboard() {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div className="card col-span-full p-4">
-        <p className="text-accent-600 mb-1 font-mono text-sm tracking-wider uppercase">
+        <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
           admin overview
         </p>
         <h2 className="text-2xl">Real-time commerce health</h2>

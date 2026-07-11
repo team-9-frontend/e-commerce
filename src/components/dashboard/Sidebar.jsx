@@ -11,6 +11,7 @@ import {
 import { NavLink } from 'react-router-dom'
 
 import { useLogout } from '@/api'
+import Button from '@/components/ui/Button'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils'
 
@@ -70,7 +71,7 @@ export default function Sidebar({ className, open, minimized }) {
           end
           className={({ isActive }) =>
             cn(
-              'group relative flex items-center gap-2 rounded-xl px-4 py-3 transition-all',
+              'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-3 font-medium transition-all',
               isActive
                 ? 'dark:bg-accent-500 bg-neutral-800 font-medium text-neutral-50 dark:text-neutral-950'
                 : 'text-neutral-950 hover:bg-neutral-200',
@@ -86,20 +87,18 @@ export default function Sidebar({ className, open, minimized }) {
         </NavLink>
       ))}
       <div className="flex-1"></div>
-      <button
+      <Button
         onClick={() => logout()}
         disabled={isPending}
-        className={cn(
-          'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-2 hover:bg-red-500/25 hover:text-red-600 disabled:pointer-events-none disabled:opacity-50 dark:hover:text-red-400',
-          minimized ? 'p-2' : '',
-        )}
+        variant="dangerGhost"
+        className={cn('transition-all', minimized ? 'p-2' : '')}
       >
         <LuLogOut size={20} />
         <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>
         <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
           Logout
         </Tooltip>
-      </button>
+      </Button>
     </aside>
   )
 }

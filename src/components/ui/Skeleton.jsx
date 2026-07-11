@@ -1,12 +1,16 @@
 import ReactSkeleton from 'react-loading-skeleton'
 
+import { cn } from '@/utils'
+
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export default function Skeleton({ ...props }) {
+export default function Skeleton({ className, color = 'neutral', ...props }) {
   return (
     <ReactSkeleton
-      baseColor="hsl(from var(--color-neutral-500) h s l / 0.2)"
-      highlightColor="hsl(from var(--color-neutral-500) h s l / 0.3)"
+      className={cn(
+        `bg-${color}-500/15! after:bg-linear-to-r! after:from-${color}-500/15! after:via-${color}-500/25! after:to-${color}-500/15! after:from-0%! after:via-50%! after:to-100%! after:blur-md!`,
+        className,
+      )}
       {...props}
     />
   )

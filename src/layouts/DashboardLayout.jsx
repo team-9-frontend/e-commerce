@@ -46,13 +46,13 @@ export default function DashboardLayout() {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          'fixed inset-0 z-10 cursor-default bg-black/50 lg:hidden',
-          open ? 'block' : 'hidden',
+          'fixed inset-0 z-10 cursor-default bg-black/50 transition-all lg:hidden',
+          open ? 'opacity-100' : 'invisible opacity-0',
         )}
       ></button>
 
       <main className="col-start-1 col-end-3 row-start-2 row-end-3 overflow-y-scroll lg:col-start-2">
-        <div className="container flex flex-col py-6">
+        <div className="container flex min-h-full flex-col py-6">
           <Outlet />
         </div>
       </main>
