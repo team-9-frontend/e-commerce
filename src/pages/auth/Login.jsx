@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
 
 export default function Login() {
-  const { mutate: login, isLoading } = useLogin()
+  const { mutate: login, isPending } = useLogin()
 
   const {
     register,
@@ -68,20 +68,20 @@ export default function Login() {
 
           <div className="flex flex-col gap-1 text-sm">
             <span>
-              Dont have an account? <Link to="/register">Register</Link>
+              Don&apos;t have an account? <Link to="/register">Register</Link>
             </span>
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          <Button type="submit" disabled={isLoading} className="flex-center py-2">
-            {isLoading ? 'Loading...' : 'Login'}
+          <Button type="submit" disabled={isPending} className="flex-center py-2">
+            {isPending ? 'Loading...' : 'Login'}
           </Button>
         </form>
 
         {errors.root && (
-          <span className="mt-6 text-center text-sm font-medium text-red-600 dark:text-red-400">
+          <p className="mt-6 text-center text-sm font-medium text-red-600 capitalize dark:text-red-400">
             {errors.root.message}
-          </span>
+          </p>
         )}
       </div>
     </div>
