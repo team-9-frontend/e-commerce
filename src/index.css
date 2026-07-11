@@ -3,7 +3,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Safelist of dynamicly used colors */
-@source inline('{bg,text}-{neutral,rose,teal,amber,purple,lime,sky}-{400,500,600}{\/15,\/25,}');
+@source inline('dark:{bg,text,border}-{accent,neutral,rose,teal,amber,purple,lime,sky}-{400}');
+@source inline('{bg,text,border}-{accent,neutral,rose,teal,amber,purple,lime,sky}-{600}');
+@source inline(
+  '{bg,text,border}-{accent,neutral,rose,teal,amber,purple,lime,sky}-{500}{/{15,25},}'
+);
 
 /* Safelist for dynamic gradient shimmer effect */
 @source inline('{bg,after:from,after:to}-{neutral,rose,teal,amber,purple,lime,sky}-500/15!');

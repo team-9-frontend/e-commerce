@@ -9,13 +9,10 @@ import { authService } from '../services/authService'
 // ----------------------------------
 
 export const useCurrentUser = () => {
-  const token = localStorage.getItem('token')
-
   return useQuery({
     queryKey: authKeys.currentUser,
     queryFn: authService.getCurrentUser,
     staleTime: Infinity,
-    enabled: !!token,
     retry: false,
   })
 }
