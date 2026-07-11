@@ -18,7 +18,7 @@ import { cn } from '@/utils'
 
 export default function Navbar({ className, open, setOpen, minimized, setMinimized }) {
   const { theme, setTheme } = useTheme()
-  const { data: user, isPending } = useCurrentUser()
+  const { data: user, isLoading } = useCurrentUser()
 
   return (
     <header
@@ -60,7 +60,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
         </Button>
 
         <div className="flex-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
-          {!isPending && user?.avatar ? (
+          {!isLoading && user?.avatar ? (
             <img
               src={user.avatar}
               alt="avatar"
@@ -73,8 +73,8 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           )}
 
           <div>
-            <h3 className="font-semibold">{!isPending ? user?.username : 'username'}</h3>
-            <p className="text-muted text-xs">{!isPending ? user?.role : 'role'}</p>
+            <h3 className="font-semibold">{!isLoading ? user?.username : 'username'}</h3>
+            <p className="text-muted text-xs">{!isLoading ? user?.role : 'role'}</p>
           </div>
         </div>
       </div>
