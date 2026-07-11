@@ -11,6 +11,7 @@ import {
 } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
+import Button from '@/components/ui/Button'
 import Tooltip from '@/components/ui/Tooltip'
 import { cn } from '@/utils'
 
@@ -24,20 +25,19 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
         className,
       )}
     >
-      <div className="flex-center gap-4">
-        <button
-          onClick={() => setOpen(!open)}
-          className="hover:text-accent-600 cursor-pointer lg:hidden"
-        >
+      <div className="flex-center gap-2">
+        <Button onClick={() => setOpen(!open)} icon variant="ghost" className="lg:hidden">
           {open ? <LuX size={20} /> : <LuMenu size={20} />}
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={() => setMinimized(!minimized)}
-          className="hover:text-accent-600 hidden cursor-pointer lg:block"
+          icon
+          variant="ghost"
+          className="hidden lg:block"
         >
           {minimized ? <LuSquareChevronRight size={20} /> : <LuSquareChevronLeft size={20} />}
-        </button>
+        </Button>
 
         <Link to="/" className="text-neutral-950">
           <h1 className="font-fancy hidden pt-1 text-xl font-bold sm:block">
@@ -46,19 +46,16 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
         </Link>
       </div>
 
-      <div className="flex-center gap-4">
-        <button
-          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          className="group hover:text-accent-600 relative cursor-pointer"
-        >
+      <div className="flex-center gap-2">
+        <Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} icon variant="ghost">
           {theme === 'dark' ? <LuSun size={20} /> : <LuMoon size={20} />}
           <Tooltip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</Tooltip>
-        </button>
+        </Button>
 
-        <button className="group hover:text-accent-600 relative cursor-pointer">
+        <Button icon variant="ghost">
           <LuBell size={20} />
           <Tooltip position="bottom">Notifications</Tooltip>
-        </button>
+        </Button>
 
         <div className="flex-center gap-2 rounded-xl border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
           {user.avatar ? (
