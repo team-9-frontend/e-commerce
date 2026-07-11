@@ -3,7 +3,7 @@ import { LuCalendar, LuClock, LuCrown, LuDollarSign, LuShoppingCart, LuUsers } f
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-function StatsTemplate({ className, color, header, icon, value, description }) {
+function StatsTemplate({ className, isPending, color, header, icon, value, description }) {
   const colorClasses = {
     teal: { gradient: 'from-teal-400 to-teal-600', border: 'border-t-teal-600' },
     amber: { gradient: 'from-amber-400 to-amber-600', border: 'border-t-amber-600' },
@@ -33,14 +33,14 @@ function StatsTemplate({ className, color, header, icon, value, description }) {
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-end gap-1">
-        <p className="line-clamp-1 text-2xl font-bold">{value ?? <Skeleton />}</p>
+        <p className="line-clamp-1 text-2xl font-bold">{!isPending ? value : <Skeleton />}</p>
         <p className="text-muted text-sm font-light">{description}</p>
       </div>
     </div>
   )
 }
 
-export function TotalOrders({ className, totalOrders }) {
+export function TotalOrders({ className, isPending, totalOrders }) {
   return (
     <StatsTemplate
       color="teal"
@@ -49,11 +49,12 @@ export function TotalOrders({ className, totalOrders }) {
       value={totalOrders}
       description="All orders received"
       classNmae={className}
+      isPending={isPending}
     />
   )
 }
 
-export function PendingOrders({ className, pendingOrders }) {
+export function PendingOrders({ className, isPending, pendingOrders }) {
   return (
     <StatsTemplate
       color="amber"
@@ -62,11 +63,12 @@ export function PendingOrders({ className, pendingOrders }) {
       value={pendingOrders}
       description="Awaiting action"
       classNmae={className}
+      isPending={isPending}
     />
   )
 }
 
-export function Revenue({ className, revenue }) {
+export function Revenue({ className, isPending, revenue }) {
   return (
     <StatsTemplate
       color="rose"
@@ -75,11 +77,12 @@ export function Revenue({ className, revenue }) {
       value={revenue}
       description="Total gross revenue"
       className={className}
+      isPending={isPending}
     />
   )
 }
 
-export function ThisMonth({ className, salesThisMonth }) {
+export function ThisMonth({ className, isPending, salesThisMonth }) {
   return (
     <StatsTemplate
       color="sky"
@@ -88,11 +91,12 @@ export function ThisMonth({ className, salesThisMonth }) {
       value={salesThisMonth && `$${salesThisMonth}`}
       description="All sales this month"
       className={className}
+      isPending={isPending}
     />
   )
 }
 
-export function TopProduct({ className, topProduct, sales }) {
+export function TopProduct({ className, isPending, topProduct, sales }) {
   return (
     <StatsTemplate
       color="purple"
@@ -101,11 +105,12 @@ export function TopProduct({ className, topProduct, sales }) {
       value={topProduct}
       description={`${sales || 0} sold`}
       className={className}
+      isPending={isPending}
     />
   )
 }
 
-export function TotalUsers({ className, totalUsers }) {
+export function TotalUsers({ className, isPending, totalUsers }) {
   return (
     <StatsTemplate
       color="lime"
@@ -114,6 +119,7 @@ export function TotalUsers({ className, totalUsers }) {
       value={totalUsers}
       description="Registered customers"
       className={className}
+      isPending={isPending}
     />
   )
 }
