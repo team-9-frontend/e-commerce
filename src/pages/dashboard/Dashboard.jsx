@@ -28,7 +28,7 @@ export default function AdminDashboard() {
       </div>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error}</div>
+        <div className="card p-4 text-neutral-500">{error?.message}</div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">

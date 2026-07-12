@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 
+import { useGetProducts } from '@/api'
 import {
   FeuturedProducts,
   InStockTotal,
@@ -12,14 +13,41 @@ import {
 } from '@/components/dashboard/stats/DashboardStats'
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
+import Pagination from '@/components/ui/Pagination'
 import { cn } from '@/utils'
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
+
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const { register, handleSubmit, watch } = useForm()
-  const inputValue = watch(['search', 'category', 'subcategory'])
+  const page = searchParams.get('page') || ''
+  const search = searchParams.get('search') || ''
+  const category = searchParams.get('category') || ''
+  const subcategory = searchParams.get('subcategory') || ''
+
+  const { data, isLoading, isError, error } = useGetProducts({
+    page,
+    limit: 1,
+    search,
+    category,
+    subcategory,
+  })
+
+  console.log(data)
+
+  const { register, handleSubmit, watch } = useForm({
+    defaultValues: {
+      search,
+      category,
+      subcategory,
+    },
+  })
+  const [searchValue, categoryValue, subcategoryValue] = watch([
+    'search',
+    'category',
+    'subcategory',
+  ])
 
   function onSubmit({ search, category, subcategory }) {
     setSearchParams((prev) => {
@@ -33,12 +61,11 @@ export default function AdminProducts() {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      if (inputValue) {
-        handleSubmit(onSubmit)()
-      }
+      handleSubmit(onSubmit)()
     }, 500)
+
     return () => clearTimeout(delayDebounceFn)
-  }, [inputValue, handleSubmit])
+  }, [searchValue, categoryValue, subcategoryValue, handleSubmit])
 
   return (
     <div className="flex flex-col gap-4">
@@ -70,11 +97,12 @@ export default function AdminProducts() {
         <div className="flex items-center gap-4">
           <FormField
             id="search"
+            icon={<LuSearch />}
             placeholder="Search products..."
             register={register}
-            icon={<LuSearch />}
             className="w-full"
           />
+
           <Button
             type="button"
             variant="outline"
@@ -86,10 +114,12 @@ export default function AdminProducts() {
           >
             <LuFilter /> Filters
           </Button>
+
           <Button type="submit" onClick={handleSubmit(onSubmit)}>
             <LuSearch /> Search
           </Button>
         </div>
+
         <div
           className={cn(
             'mt-4 flex gap-4 overflow-hidden border-t border-neutral-200 pt-4 transition-all',
@@ -101,16 +131,18 @@ export default function AdminProducts() {
             id="category"
             label="category"
             labelIcon={<LuBoxes />}
+            register={register}
             options={[
               { value: '', label: 'All Categories' },
               { value: 'electronics', label: 'Electronics' },
               { value: 'fashion', label: 'Fashion' },
+              { value: 'beauty', label: 'beauty' },
               { value: 'home', label: 'Home & Garden' },
               { value: 'sports', label: 'Sports & Outdoors' },
             ]}
-            register={register}
             className="w-full"
           />
+
           <FormField
             id="subcategory"
             label="subcategory"
@@ -122,7 +154,13 @@ export default function AdminProducts() {
         </div>
       </form>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+      {isError ? (
+        <div className="card p-4 text-neutral-500">{error?.message}</div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+      )}
+
+      <Pagination totalPages={data?.totalPages} />
     </div>
   )
 }

@@ -36,15 +36,11 @@ export default function FormField({
               className,
               icon && 'pl-10',
             )}
+            value=""
             {...rest}
           >
             {options?.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-                selected={option.value === ''}
-                hidden={option.value === ''}
-              >
+              <option key={option.value} value={option.value} hidden={option.value === ''}>
                 {option.label}
               </option>
             ))}
