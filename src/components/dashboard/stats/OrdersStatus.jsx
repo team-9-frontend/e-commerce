@@ -49,7 +49,11 @@ export default function OrdersStatus({ className, isLoading, stats }) {
             >
               <h3 className="font-mono text-sm tracking-wider uppercase">{status}</h3>
               <p className="text-2xl font-bold">
-                {!isLoading ? stats?.[status] : <Skeleton width={32} color={statusColors[status]} />}
+                {!isLoading ? (
+                  stats?.[status]
+                ) : (
+                  <Skeleton width={32} color={statusColors[status]} />
+                )}
               </p>
             </div>
           ),

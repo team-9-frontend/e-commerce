@@ -28,14 +28,19 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
       )}
     >
       <div className="flex-center gap-2">
-        <Button onClick={() => setOpen(!open)} icon variant="ghost" className="lg:hidden">
+        <Button
+          onClick={() => setOpen(!open)}
+          variant="ghost"
+          size="md-square"
+          className="lg:hidden"
+        >
           {open ? <LuX size={20} /> : <LuMenu size={20} />}
         </Button>
 
         <Button
           onClick={() => setMinimized(!minimized)}
-          icon
           variant="ghost"
+          size="md-square"
           className="hidden lg:block"
         >
           {minimized ? <LuIndentIncrease size={20} /> : <LuIndentDecrease size={20} />}
@@ -49,12 +54,16 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
       </div>
 
       <div className="flex-center gap-2">
-        <Button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} icon variant="ghost">
+        <Button
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          variant="ghost"
+          size="md-square"
+        >
           {theme === 'dark' ? <LuSun size={20} /> : <LuMoon size={20} />}
           <Tooltip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</Tooltip>
         </Button>
 
-        <Button icon variant="ghost">
+        <Button variant="ghost" size="md-square">
           <LuBell size={20} />
           <Tooltip position="bottom">Notifications</Tooltip>
         </Button>

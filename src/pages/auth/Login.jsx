@@ -36,12 +36,12 @@ export default function Login() {
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
         <p className="mb-6 text-center text-neutral-500">Please log in to continue.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <FormField
             id="email"
             label="email"
             type="email"
-            placeholder="Enter your email"
+            placeholder="email"
             register={register}
             rules={{
               required: 'Email is required',
@@ -57,7 +57,7 @@ export default function Login() {
             id="password"
             label="password"
             type="password"
-            placeholder="Enter your password"
+            placeholder="password"
             register={register}
             rules={{
               required: 'Password is required',
@@ -66,7 +66,7 @@ export default function Login() {
             error={errors.password}
           />
 
-          <div className="flex flex-col gap-1 text-sm">
+          <div className="flex flex-col items-start gap-1 text-sm">
             <span>
               Don&apos;t have an account? <Link to="/register">Register</Link>
             </span>

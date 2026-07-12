@@ -2,10 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { wishlistService } from '@/api/services/wishlistService'
-
 import { wishlistKeys } from '@/api//keys/wishlistKeys'
-
 import {
   useAddToWishlist,
   useClearWishlist,
@@ -14,6 +11,7 @@ import {
   useGetWishlistStats,
   useRemoveFromWishlist,
 } from '@/api/hooks/useWishlist'
+import { wishlistService } from '@/api/services/wishlistService'
 
 vi.mock('@/api/services/wishlistService', () => ({
   wishlistService: {

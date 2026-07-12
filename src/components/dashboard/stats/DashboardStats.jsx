@@ -1,4 +1,5 @@
 import {
+  LuBoxes,
   LuCalendar,
   LuClock,
   LuCrown,
@@ -6,7 +7,6 @@ import {
   LuPackage,
   LuShoppingCart,
   LuStar,
-  LuBoxes,
   LuTrendingUp,
   LuUsers,
 } from 'react-icons/lu'

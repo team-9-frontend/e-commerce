@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import {
   FeuturedProducts,
@@ -16,12 +16,19 @@ import { cn } from '@/utils'
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const { register, handleSubmit, watch } = useForm()
   const inputValue = watch(['search', 'category', 'subcategory'])
 
-  function onSubmit(data) {
-    console.log(data)
+  function onSubmit({ search, category, subcategory }) {
+    setSearchParams((prev) => {
+      search ? prev.set('search', search) : prev.delete('search')
+      category ? prev.set('category', category) : prev.delete('category')
+      subcategory ? prev.set('subcategory', subcategory) : prev.delete('subcategory')
+
+      return prev
+    })
   }
 
   useEffect(() => {

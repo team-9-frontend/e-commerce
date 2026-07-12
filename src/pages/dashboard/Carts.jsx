@@ -6,12 +6,12 @@ export default function AdminCarts() {
           carts
         </p>
         <h2 className="text-3xl">Cart overview</h2>
-        <p className="text-neutral-500 text-sm">
+        <p className="text-sm text-neutral-500">
           All active carts returned from the API are rendered here with their latest item details.
         </p>
       </div>
 
-      <div className="card text-neutral-500 col-span-full p-4">No carts returned from the API.</div>
+      <div className="card col-span-full p-4 text-neutral-500">No carts returned from the API.</div>
     </div>
   )
 }
