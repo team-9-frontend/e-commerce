@@ -38,8 +38,8 @@ export default function Login() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
-            label="email"
             id="email"
+            label="email"
             type="email"
             placeholder="Enter your email"
             register={register}
@@ -54,8 +54,8 @@ export default function Login() {
           />
 
           <FormField
-            label="password"
             id="password"
+            label="password"
             type="password"
             placeholder="Enter your password"
             register={register}

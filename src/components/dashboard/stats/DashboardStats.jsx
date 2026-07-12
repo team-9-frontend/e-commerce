@@ -6,7 +6,7 @@ import {
   LuPackage,
   LuShoppingCart,
   LuStar,
-  LuTrendingDown,
+  LuBoxes,
   LuTrendingUp,
   LuUsers,
 } from 'react-icons/lu'
@@ -36,7 +36,7 @@ function StatsTemplate({ className, isLoading, color, header, icon, value, descr
         <h2 className="mb-2 text-sm font-medium text-neutral-600 capitalize">{header}</h2>
         <div
           className={cn(
-            'rounded-2xl bg-linear-to-br p-3 text-neutral-50 transition-all hover:scale-105 hover:rotate-12',
+            'rounded-2xl bg-linear-to-br p-3 text-3xl text-neutral-50 transition-all hover:scale-105 hover:rotate-12',
             colorClasses[color]?.gradient,
           )}
         >
@@ -58,7 +58,7 @@ export function TotalOrders({ className, isLoading, totalOrders }) {
     <StatsTemplate
       color="teal"
       header="total orders"
-      icon={<LuShoppingCart size={28} />}
+      icon={<LuShoppingCart />}
       value={totalOrders}
       description="All orders received"
       classNmae={className}
@@ -72,7 +72,7 @@ export function PendingOrders({ className, isLoading, pendingOrders }) {
     <StatsTemplate
       color="amber"
       header="pending orders"
-      icon={<LuClock size={28} />}
+      icon={<LuClock />}
       value={pendingOrders}
       description="Awaiting action"
       classNmae={className}
@@ -86,7 +86,7 @@ export function Revenue({ className, isLoading, revenue }) {
     <StatsTemplate
       color="rose"
       header="revenue"
-      icon={<LuDollarSign size={28} />}
+      icon={<LuDollarSign />}
       value={revenue}
       description="Total gross revenue"
       className={className}
@@ -100,7 +100,7 @@ export function ThisMonth({ className, isLoading, salesThisMonth }) {
     <StatsTemplate
       color="sky"
       header="this month"
-      icon={<LuCalendar size={28} />}
+      icon={<LuCalendar />}
       value={salesThisMonth && `$${salesThisMonth}`}
       description="All sales this month"
       className={className}
@@ -114,7 +114,7 @@ export function TopProduct({ className, isLoading, topProduct, sales }) {
     <StatsTemplate
       color="purple"
       header="top product"
-      icon={<LuCrown size={28} />}
+      icon={<LuCrown />}
       value={topProduct}
       description={`${sales || 0} sold`}
       className={className}
@@ -128,7 +128,7 @@ export function TotalUsers({ className, isLoading, totalUsers }) {
     <StatsTemplate
       color="lime"
       header="total users"
-      icon={<LuUsers size={28} />}
+      icon={<LuUsers />}
       value={totalUsers}
       description="Registered customers"
       className={className}
@@ -142,7 +142,7 @@ export function TotalProducts({ className, isLoading, totalProducts }) {
     <StatsTemplate
       color="sky"
       header="total products"
-      icon={<LuPackage size={28} />}
+      icon={<LuPackage />}
       value={totalProducts}
       className={className}
       isLoading={isLoading}
@@ -155,7 +155,7 @@ export function FeuturedProducts({ className, isLoading, feuturedProducts }) {
     <StatsTemplate
       color="amber"
       header="feutured products"
-      icon={<LuStar size={28} />}
+      icon={<LuStar />}
       value={feuturedProducts}
       className={className}
       isLoading={isLoading}
@@ -168,7 +168,7 @@ export function InStockTotal({ className, isLoading, inStockTotal }) {
     <StatsTemplate
       color="lime"
       header="in stock"
-      icon={<LuTrendingUp size={28} />}
+      icon={<LuTrendingUp />}
       value={inStockTotal}
       className={className}
       isLoading={isLoading}
@@ -181,7 +181,7 @@ export function OutOfStockTotal({ className, isLoading, outOfStockTotal }) {
     <StatsTemplate
       color="rose"
       header="out of stock"
-      icon={<LuTrendingDown size={28} />}
+      icon={<LuBoxes />}
       value={outOfStockTotal}
       className={className}
       isLoading={isLoading}

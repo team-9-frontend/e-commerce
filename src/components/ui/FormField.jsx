@@ -3,9 +3,11 @@ import { cn } from '@/utils'
 export default function FormField({
   className,
   icon,
+  labelIcon,
   type = 'text',
-  label,
+  options,
   id,
+  label,
   placeholder,
   register,
   rules,
@@ -15,25 +17,53 @@ export default function FormField({
   return (
     <div className={cn('flex flex-col gap-1', className)}>
       {label && (
-        <label htmlFor={id} className="w-fit cursor-pointer text-sm font-medium capitalize">
-          {label}
+        <label
+          htmlFor={id}
+          className="flex-center w-fit cursor-pointer gap-1 text-sm font-medium capitalize"
+        >
+          {labelIcon} {label}
         </label>
       )}
 
       <div className="relative">
-        <input
-          type={type}
-          id={id}
-          {...(register && register(id, rules))}
-          placeholder={placeholder}
-          className={cn(
-            'focus:border-accent-500 w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
-            error && 'border-red-500 dark:border-red-400',
-            className,
-            icon && 'pl-10',
-          )}
-          {...rest}
-        />
+        {type === 'select' ? (
+          <select
+            id={id}
+            {...(register && register(id, rules))}
+            className={cn(
+              'w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
+              error && 'border-red-600 dark:border-red-400',
+              className,
+              icon && 'pl-10',
+            )}
+            {...rest}
+          >
+            {options?.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+                selected={option.value === ''}
+                hidden={option.value === ''}
+              >
+                {option.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            type={type}
+            id={id}
+            {...(register && register(id, rules))}
+            placeholder={placeholder}
+            className={cn(
+              'focus:border-accent-500 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
+              error && 'border-red-600 dark:border-red-400',
+              className,
+              icon && 'pl-10',
+            )}
+            {...rest}
+          />
+        )}
         <div className="absolute top-1/2 left-3 -translate-y-1/2 text-neutral-500">{icon}</div>
       </div>
 

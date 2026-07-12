@@ -5,6 +5,8 @@ const variants = {
     'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 text-neutral-50 dark:text-neutral-950',
   dangerGhost: 'hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400',
   ghost: 'hover:bg-neutral-200',
+  outline:
+    'border border-neutral-300  bg-neutral-50 dark:bg-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-300',
 }
 
 export default function Button({ children, className, variant = 'primary', icon, ...rest }) {
