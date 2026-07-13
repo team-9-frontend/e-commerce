@@ -10,13 +10,13 @@ export default function TopProducts({ className, isLoading, topProducts }) {
           <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
             top products
           </p>
-          <h2 className="text-xl">Best sellers</h2>
+          <h2 className="text-lg">Best sellers</h2>
         </div>
         <Badge>{topProducts?.length || 0} products</Badge>
       </div>
 
       <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
-        {Array.from({ length: topProducts?.length ?? 5 }).map((_, i) => {
+        {Array.from({ length: isLoading ? 5 : topProducts?.length }).map((_, i) => {
           const product = topProducts?.[i]
 
           return (

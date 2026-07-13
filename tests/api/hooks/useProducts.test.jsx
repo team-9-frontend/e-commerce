@@ -3,8 +3,6 @@ import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { productKeys } from '@/api//keys/productKeys'
-import { productsService } from '@/api/services/productsService'
-
 import {
   useCreateProduct,
   useDeleteProduct,
@@ -13,6 +11,7 @@ import {
   useSearchProducts,
   useUpdateProduct,
 } from '@/api/hooks/useProducts'
+import { productsService } from '@/api/services/productsService'
 
 vi.mock('@/api/services/productsService', () => ({
   productsService: {

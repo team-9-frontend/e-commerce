@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { authService } from '@/api/services/authService'
-
 import Login from '@/pages/auth/Login'
 
 const mockNavigate = vi.fn()
