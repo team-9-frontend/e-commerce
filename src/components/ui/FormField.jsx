@@ -31,7 +31,7 @@ export default function FormField({
             id={id}
             {...(register && register(id, rules))}
             className={cn(
-              'w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
+              'w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
               error && 'border-red-600 dark:border-red-400',
               className,
               icon && 'pl-10',
@@ -39,9 +39,9 @@ export default function FormField({
             value=""
             {...rest}
           >
-            {options?.map((option) => (
-              <option key={option.value} value={option.value} hidden={option.value === ''}>
-                {option.label}
+            {options?.map((option, i) => (
+              <option key={i} value={option} hidden={option === ''}>
+                {option}
               </option>
             ))}
           </select>
@@ -60,7 +60,9 @@ export default function FormField({
             {...rest}
           />
         )}
-        <div className="absolute top-1/2 left-3 -translate-y-1/2 text-neutral-500">{icon}</div>
+        {icon && (
+          <div className="absolute top-1/2 left-3 -translate-y-1/2 text-neutral-500">{icon}</div>
+        )}
       </div>
 
       {error && (

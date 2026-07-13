@@ -14,6 +14,7 @@ import {
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
 import Pagination from '@/components/ui/Pagination'
+import ProductCard from '@/components/ui/ProductCard'
 import { cn } from '@/utils'
 
 export default function AdminProducts() {
@@ -28,20 +29,23 @@ export default function AdminProducts() {
 
   const { data, isLoading, isError, error } = useGetProducts({
     page,
-    limit: 1,
+    limit: 6,
     search,
     category,
     subcategory,
   })
 
-  console.log(data)
+  const products = data?.products || []
+
+  const totalProducts = products.length
+  const featuredProducts = products.filter((product) => product.featured).length
+  const inStockTotal = products.filter((product) => product.stock > 0).length
+  const outOfStockTotal = products.filter((product) => product.stock === 0).length
+
+  const categories = Array.from(new Set(products.map((product) => product.category)))
 
   const { register, handleSubmit, watch } = useForm({
-    defaultValues: {
-      search,
-      category,
-      subcategory,
-    },
+    defaultValues: { search, category, subcategory },
   })
   const [searchValue, categoryValue, subcategoryValue] = watch([
     'search',
@@ -50,12 +54,12 @@ export default function AdminProducts() {
   ])
 
   function onSubmit({ search, category, subcategory }) {
-    setSearchParams((prev) => {
-      search ? prev.set('search', search) : prev.delete('search')
-      category ? prev.set('category', category) : prev.delete('category')
-      subcategory ? prev.set('subcategory', subcategory) : prev.delete('subcategory')
+    setSearchParams((s) => {
+      search ? s.set('search', search) : s.delete('search')
+      category ? s.set('category', category) : s.delete('category')
+      subcategory ? s.set('subcategory', subcategory) : s.delete('subcategory')
 
-      return prev
+      return s
     })
   }
 
@@ -68,7 +72,7 @@ export default function AdminProducts() {
   }, [searchValue, categoryValue, subcategoryValue, handleSubmit])
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-1 flex-col gap-4">
       <div className="card flex items-center justify-between p-4">
         <div className="space-y-2">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
@@ -87,10 +91,10 @@ export default function AdminProducts() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <TotalProducts totalProducts={1} isLoading={false} />
-        <FeuturedProducts feuturedProducts={1} isLoading={false} />
-        <InStockTotal inStockTotal={1} isLoading={false} />
-        <OutOfStockTotal outOfStockTotal={1} isLoading={false} />
+        <TotalProducts totalProducts={totalProducts} isLoading={isLoading} />
+        <FeuturedProducts feuturedProducts={featuredProducts} isLoading={isLoading} />
+        <InStockTotal inStockTotal={inStockTotal} isLoading={isLoading} />
+        <OutOfStockTotal outOfStockTotal={outOfStockTotal} isLoading={isLoading} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="card overflow-hidden p-4">
@@ -120,47 +124,42 @@ export default function AdminProducts() {
           </Button>
         </div>
 
-        <div
-          className={cn(
-            'mt-4 flex gap-4 overflow-hidden border-t border-neutral-200 pt-4 transition-all',
-            !filters && 'm-0 h-0 border-none p-0',
-          )}
-        >
-          <FormField
-            type="select"
-            id="category"
-            label="category"
-            labelIcon={<LuBoxes />}
-            register={register}
-            options={[
-              { value: '', label: 'All Categories' },
-              { value: 'electronics', label: 'Electronics' },
-              { value: 'fashion', label: 'Fashion' },
-              { value: 'beauty', label: 'beauty' },
-              { value: 'home', label: 'Home & Garden' },
-              { value: 'sports', label: 'Sports & Outdoors' },
-            ]}
-            className="w-full"
-          />
+        <div className={cn('grid transition-all', filters ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
+          <div className={cn('mt-4 flex gap-4 overflow-hidden border-t border-neutral-200 pt-4')}>
+            <FormField
+              type="select"
+              id="category"
+              label="category"
+              labelIcon={<LuBoxes />}
+              register={register}
+              options={categories}
+              className="w-full"
+            />
 
-          <FormField
-            id="subcategory"
-            label="subcategory"
-            labelIcon={<LuTag />}
-            placeholder="e.g. smartphones"
-            register={register}
-            className="w-full"
-          />
+            <FormField
+              id="subcategory"
+              label="subcategory"
+              labelIcon={<LuTag />}
+              placeholder="e.g. smartphones"
+              register={register}
+              className="w-full"
+            />
+          </div>
         </div>
       </form>
 
       {isError ? (
         <div className="card p-4 text-neutral-500">{error?.message}</div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: isLoading ? 6 : products?.length }).map((_, i) => {
+            const product = products?.[i]
+            return <ProductCard key={i} product={product} isLoading={isLoading} />
+          })}
+        </div>
       )}
 
-      <Pagination totalPages={data?.totalPages} />
+      <Pagination totalPages={data?.totalPages} className="mt-auto" />
     </div>
   )
 }

@@ -18,7 +18,7 @@ export default function RecentOrders({ className, isLoading, recentOrders }) {
       </div>
 
       <div className="flex max-h-128 flex-col gap-4 overflow-y-auto">
-        {Array.from({ length: recentOrders?.length ?? 5 }).map((_, i) => {
+        {Array.from({ length: isLoading ? 5 : recentOrders?.length }).map((_, i) => {
           const order = recentOrders?.[i]
 
           return (

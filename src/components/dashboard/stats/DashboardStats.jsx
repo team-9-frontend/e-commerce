@@ -36,7 +36,7 @@ function StatsTemplate({ className, isLoading, color, header, icon, value, descr
         <h2 className="mb-2 text-sm font-medium text-neutral-600 capitalize">{header}</h2>
         <div
           className={cn(
-            'rounded-2xl bg-linear-to-br p-3 text-3xl text-neutral-50 transition-all hover:scale-105 hover:rotate-12',
+            'rounded-2xl bg-linear-to-br p-3 text-3xl text-neutral-50 transition-all hover:scale-105 hover:rotate-12 dark:text-neutral-950',
             colorClasses[color]?.gradient,
           )}
         >

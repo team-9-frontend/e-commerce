@@ -9,7 +9,7 @@ export default function Modal({ isOpen, onClose, title, children, className }) {
       onClick={onClose}
     >
       <div
-        className={cn('w-full max-w-md rounded-xl bg-white p-6 shadow-lg', className)}
+        className={cn('w-full max-w-md rounded-lg bg-white p-6 shadow-lg', className)}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

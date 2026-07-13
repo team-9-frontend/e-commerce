@@ -16,11 +16,11 @@ export default function DashboardLayout() {
   const { data: user, isLoading } = useCurrentUser()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (isLoading) return
-    if (!user) return navigate('/login')
-    if (user.role !== 'admin') return navigate('/')
-  }, [user, isLoading])
+  // useEffect(() => {
+  //   if (isLoading) return
+  //   if (!user) return navigate('/login')
+  //   if (user.role !== 'admin') return navigate('/')
+  // }, [user, isLoading])
 
   return isLoading ? (
     <div className="flex-center min-h-screen">
