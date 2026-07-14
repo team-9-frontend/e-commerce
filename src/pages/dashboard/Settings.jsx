@@ -1,7 +1,7 @@
 export default function AdminSettings() {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div className="card col-span-full space-y-2 p-4">
+    <div className="flex flex-col gap-4">
+      <div className="card space-y-2 p-4">
         <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
           settings
         </p>

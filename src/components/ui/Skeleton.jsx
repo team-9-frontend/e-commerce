@@ -18,11 +18,12 @@ export default function Skeleton({
   height,
   color = 'neutral',
   className,
+  parentClassName,
   style,
   ...rest
 }) {
   return (
-    <span className="leading-inherit">
+    <span className={cn('leading-inherit', parentClassName)}>
       <span
         className={cn(
           'shimmer inline-block bg-transparent! bg-linear-to-r! from-0%! via-50%! to-100%! bg-size-[200%_100%]! align-middle',

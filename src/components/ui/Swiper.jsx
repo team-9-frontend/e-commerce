@@ -6,9 +6,10 @@ import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react'
 
+import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-export default function Swiper({ children, className, images, id, showImages, isCard }) {
+export default function Swiper({ children, className, isLoading, images, id, showImages, isCard }) {
   const [swiperInstance, setSwiperInstance] = useState(null)
   const [activeIndex, setactiveIndex] = useState(0)
   const shouldLoop = images?.length > 1
@@ -43,18 +44,22 @@ export default function Swiper({ children, className, images, id, showImages, is
             '--swiper-pagination-color': 'var(--color-accent-500)',
           }}
         >
-          {images.map((image, i) => (
-            <SwiperSlide key={i}>
-              <img
-                src={image.url}
-                alt={`${image.public_id} ${i + 1}`}
-                className={cn(
-                  'aspect-video w-full bg-neutral-50 object-cover sm:aspect-square dark:bg-neutral-200',
-                  className,
-                )}
-              />
-            </SwiperSlide>
-          ))}
+          {!isLoading ? (
+            images.map((image, i) => (
+              <SwiperSlide key={i}>
+                <img
+                  src={image.url}
+                  alt={`${image.public_id} ${i + 1}`}
+                  className={cn(
+                    'aspect-video w-full bg-neutral-50 object-cover sm:aspect-square dark:bg-neutral-200',
+                    className,
+                  )}
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <Skeleton className="aspect-video w-full sm:aspect-square" />
+          )}
         </SwiperReact>
 
         {shouldLoop && (
@@ -82,21 +87,24 @@ export default function Swiper({ children, className, images, id, showImages, is
         {children}
       </div>
       {showImages && (
-        <div className="flex gap-4">
-          {images.map((image, i) => {
+        <div className="flex w-full gap-4">
+          {Array.from({ length: isLoading ? 4 : images.length }).map((_, i) => {
+            const image = images?.[i]
             const isSelected = activeIndex === i
 
-            return (
+            return !isLoading ? (
               <button
-                key={image.public_id}
+                key={i}
                 onClick={() => setactiveIndex(i)}
                 className={cn(
-                  'card aspect-square w-1/4 cursor-pointer border-2 transition-all',
+                  'card aspect-square max-w-1/4 flex-1 cursor-pointer border-2 transition-all',
                   isSelected ? 'border-accent-500 card border-2' : '',
                 )}
               >
                 <img src={image.url} alt={image.public_id} className="size-full object-cover" />
               </button>
+            ) : (
+              <Skeleton className="aspect-square" parentClassName="card max-w-1/4 flex-1" />
             )
           })}
         </div>
