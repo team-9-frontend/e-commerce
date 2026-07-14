@@ -7,11 +7,11 @@ export default function Modal({ children, className, isOpen, setIsOpen, onClose,
 
   const handleClose = () => {
     setIsOpen(false)
-    if (onClose) onClose()
+    onClose?.()
   }
 
   return (
-    <div className="fixed inset-0 z-100 flex cursor-default items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/50">
       <div
         className={cn('card w-full max-w-md p-6', className)}
         onClick={(e) => e.stopPropagation()}
