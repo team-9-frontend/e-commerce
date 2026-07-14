@@ -1,16 +1,25 @@
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
+import { useState } from 'react'
+
+import { LuChevronLeft, LuChevronRight, LuStar } from 'react-icons/lu'
+import { Link } from 'react-router-dom'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import { useDeleteProduct } from '@/api'
 import { cn } from '@/utils'
 
+import Badge from './Badge'
+import Button from './Button'
+import ConfirmDialog from './ConfirmDialog'
 import Skeleton from './Skeleton'
 
-export default function ProductCard({ isLoading, product }) {
-  const shouldLoop = product?.images?.length > 1
+export default function ProductCard({ edits, isLoading, product }) {
+  const { mutate: deleteProduct, isPending } = useDeleteProduct()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
+  const shouldLoop = product?.images?.length > 1
   const prevClass = `prev-${product?._id}`
   const nextClass = `next-${product?._id}`
 
@@ -60,14 +69,118 @@ export default function ProductCard({ isLoading, product }) {
               </button>
             </>
           )}
+
+          {product?.featured && (
+            <Badge color="amber" className="flex-center absolute top-0 z-10 mt-6 ml-6 gap-2">
+              <LuStar />
+              Featured
+            </Badge>
+          )}
+          <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-6 mb-6">
+            {product?.stock ? `${product.stock} In Stock` : 'Out of Stock'}
+          </Badge>
         </div>
       ) : (
         <Skeleton className="aspect-video w-full sm:aspect-square" />
       )}
 
-      <div className="flex flex-col gap-2 p-4">
-        <h2 className="font-bold sm:text-lg">{product?.name}</h2>
-        <p></p>
+      <div className="flex flex-col gap-4 p-4">
+        <div>
+          <h2 className="text-lg font-medium sm:text-xl">
+            {!isLoading ? product.name : <Skeleton width="75%" />}
+          </h2>
+          <p className="mb-2 line-clamp-1 text-sm font-medium text-neutral-500">
+            {!isLoading ? (
+              [product.category, product.subcategory, product.brand].join(' • ') || 'no tags'
+            ) : (
+              <Skeleton width="50%" />
+            )}
+          </p>
+          <p className="line-clamp-1 text-sm text-neutral-500">
+            {!isLoading ? product.shortDescription || 'no description' : <Skeleton width="60%" />}
+          </p>
+        </div>
+        <p className="text-4xl font-bold">
+          {!isLoading ? (
+            <>
+              ${product.price}
+              <span className="ml-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                {`-$${product.discountPrice} off`}
+              </span>
+            </>
+          ) : (
+            <Skeleton width="30%" />
+          )}
+        </p>
+        {!isLoading ? (
+          <div className="flex gap-2">
+            {product.tags.map((tag) => (
+              <div className="card rounded-md border-neutral-300 bg-neutral-200 px-2 py-1">
+                {tag}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Skeleton width="75%" height={26} />
+        )}
+
+        {!isLoading & edits ? (
+          <div className="flex items-center gap-2 border-t border-neutral-200 pt-4">
+            <Link to={`/products/view/${product._id}`}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hover:border-teal-500/50 hover:bg-teal-500/15 hover:text-teal-600 dark:hover:bg-teal-500/15 dark:hover:text-teal-400"
+              >
+                view
+              </Button>
+            </Link>
+
+            <Link to={`/products/edit/${product._id}`}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hover:border-purple-500/50 hover:bg-purple-500/15 hover:text-purple-600 dark:hover:bg-purple-500/15 dark:hover:text-purple-400"
+              >
+                edit
+              </Button>
+            </Link>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="hover:border-amber-500/50 hover:bg-amber-500/15 hover:text-amber-600 dark:hover:bg-amber-500/15 dark:hover:text-amber-400"
+            >
+              quick edit
+            </Button>
+
+            <Button
+              onClick={() => {
+                setIsDialogOpen(true)
+              }}
+              variant="outlineDanger"
+              size="sm"
+              className="ml-auto"
+            >
+              delete
+              <ConfirmDialog
+                isOpen={isDialogOpen}
+                setIsOpen={setIsDialogOpen}
+                onConfirm={() => {
+                  deleteProduct(product._id)
+                }}
+                title="Confirm Deletion"
+                message="Are you sure?"
+              ></ConfirmDialog>
+            </Button>
+          </div>
+        ) : (
+          edits && (
+            <div className="border-t border-neutral-200 pt-4">
+              <Skeleton width="100%" height={26} />
+            </div>
+          )
+        )}
       </div>
     </div>
   )

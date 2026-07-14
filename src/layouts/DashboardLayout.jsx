@@ -5,9 +5,8 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useCurrentUser } from '@/api'
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { cn } from '@/utils'
-
-import LoadingSpinner from '../components/ui/LoadingSpinner'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)

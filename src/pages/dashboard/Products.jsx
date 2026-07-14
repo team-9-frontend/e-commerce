@@ -154,7 +154,7 @@ export default function AdminProducts() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: isLoading ? 6 : products?.length }).map((_, i) => {
             const product = products?.[i]
-            return <ProductCard key={i} product={product} isLoading={isLoading} />
+            return <ProductCard key={i} product={product} isLoading={isLoading} edits />
           })}
         </div>
       )}
