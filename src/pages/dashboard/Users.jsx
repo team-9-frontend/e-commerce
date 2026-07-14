@@ -17,7 +17,7 @@ export default function AdminUsers() {
   const updateUser = useUpdateUser()
   const deleteUser = useDeleteUser()
   const [openAdd, setOpenAdd] = useState(false)
-  const [openEdit, setOpenEdit] = useState(false)
+  const [openedit, setOpenedit] = useState(false)
   const [selectedUser, setSelectedUser] = useState(null)
   const [search, setSearch] = useState('')
 
@@ -44,7 +44,7 @@ export default function AdminUsers() {
 
     setOpenEdit(true)
   }
-  const handleEditChange = (e) => {
+  const handleEditchange = (e) => {
     setEditData({
       ...editData,
       [e.target.name]: e.target.value,
@@ -383,7 +383,7 @@ export default function AdminUsers() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="relative w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl dark:bg-gray-900">
             <button
-              onClick={() => setOpenEdit(false)}
+              onClick={() => setOpenedit(false)}
               className="absolute top-5 right-5 text-2xl text-gray-500 transition hover:text-red-500"
             >
               <FiX />
@@ -401,7 +401,7 @@ export default function AdminUsers() {
                   type="text"
                   name="username"
                   value={editData.username}
-                  onChange={handleEditChange}
+                  onChange={handleEditchange}
                   className="w-full rounded-xl border border-gray-300 bg-white p-4 outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                 />
               </div>
@@ -415,7 +415,7 @@ export default function AdminUsers() {
                   type="text"
                   name="phone"
                   value={editData.phone}
-                  onChange={handleEditChange}
+                  onChange={handleEditchange}
                   className="w-full rounded-xl border border-gray-300 bg-white p-4 outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                 />
               </div>
@@ -429,7 +429,7 @@ export default function AdminUsers() {
                   type="text"
                   name="avatar"
                   value={editData.avatar}
-                  onChange={handleEditChange}
+                  onChange={handleEditchange}
                   className="w-full rounded-xl border border-gray-300 bg-white p-4 outline-none focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                 />
               </div>
