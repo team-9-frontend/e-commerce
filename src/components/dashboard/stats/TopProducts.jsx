@@ -30,7 +30,7 @@ export default function TopProducts({ className, isLoading, topProducts }) {
                   className="size-12 rounded-lg bg-neutral-300 object-cover"
                 />
               ) : (
-                <Skeleton width={44} height={44} />
+                <Skeleton width={48} height={48} />
               )}
               <div className="flex-1">
                 <h3 className="line-clamp-1 font-bold sm:text-lg">

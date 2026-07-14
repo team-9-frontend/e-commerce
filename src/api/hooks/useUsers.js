@@ -30,6 +30,7 @@ export const useGetUserById = (id) => {
 
 const useUserMutation = (mutationFn) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn,
     onSuccess: () => {

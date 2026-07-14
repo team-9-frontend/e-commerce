@@ -5,6 +5,7 @@ import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { useGetProducts } from '@/api'
+import ProductCard from '@/components/dashboard/products/ProductCard'
 import {
   FeuturedProducts,
   InStockTotal,
@@ -14,7 +15,6 @@ import {
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
 import Pagination from '@/components/ui/Pagination'
-import ProductCard from '@/components/ui/ProductCard'
 import { cn } from '@/utils'
 
 export default function AdminProducts() {
@@ -45,6 +45,7 @@ export default function AdminProducts() {
   const categories = Array.from(new Set(products.map((product) => product.category)))
 
   const { register, handleSubmit, watch } = useForm({
+    mode: 'onTouched',
     defaultValues: { search, category, subcategory },
   })
   const [searchValue, categoryValue, subcategoryValue] = watch([
@@ -97,7 +98,7 @@ export default function AdminProducts() {
         <OutOfStockTotal outOfStockTotal={outOfStockTotal} isLoading={isLoading} />
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="card overflow-hidden p-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="card p-4">
         <div className="flex items-center gap-4">
           <FormField
             id="search"

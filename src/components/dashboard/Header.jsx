@@ -82,7 +82,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           )}
 
           <div>
-            <h3 className="font-semibold">{!isLoading ? user?.username : 'username'}</h3>
+            <h3 className="font-medium">{!isLoading ? user?.username : 'username'}</h3>
             <p className="text-xs text-neutral-500">{!isLoading ? user?.role : 'role'}</p>
           </div>
         </div>
