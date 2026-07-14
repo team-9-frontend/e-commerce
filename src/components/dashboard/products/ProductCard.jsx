@@ -8,14 +8,13 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { useDeleteProduct } from '@/api'
+import Badge from '@/components/ui/Badge'
+import Button from '@/components/ui/Button'
+import ConfirmDialog from '@/components/ui/ConfirmDialog'
+import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-import Badge from './Badge'
-import Button from './Button'
-import ConfirmDialog from './ConfirmDialog'
-import Skeleton from './Skeleton'
-
-export default function ProductCard({ edits, isLoading, product }) {
+export default function ProductCard({ isLoading, product }) {
   const { mutate: deleteProduct, isPending } = useDeleteProduct()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -124,7 +123,7 @@ export default function ProductCard({ edits, isLoading, product }) {
           <Skeleton width="75%" height={32} />
         )}
 
-        {!isLoading & edits ? (
+        {!isLoading ? (
           <div className="flex items-center gap-2 border-t border-neutral-200 pt-4">
             <Link to={`/products/view/${product._id}`}>
               <Button
@@ -181,11 +180,9 @@ export default function ProductCard({ edits, isLoading, product }) {
             ></ConfirmDialog>
           </div>
         ) : (
-          edits && (
-            <div className="border-t border-neutral-200 pt-4">
-              <Skeleton width="100%" height={32} />
-            </div>
-          )
+          <div className="border-t border-neutral-200 pt-4">
+            <Skeleton width="100%" height={32} />
+          </div>
         )}
       </div>
     </div>
