@@ -114,8 +114,8 @@ export default function ProductCard({ edits, isLoading, product }) {
         </p>
         {!isLoading ? (
           <div className="flex gap-2">
-            {product.tags.map((tag) => (
-              <div className="card rounded-md border-neutral-300 bg-neutral-200 px-2 py-1">
+            {product.tags.map((tag, i) => (
+              <div key={i} className="card rounded-md border-neutral-300 bg-neutral-200 px-2 py-1">
                 {tag}
               </div>
             ))}

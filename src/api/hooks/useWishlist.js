@@ -36,7 +36,7 @@ export const useGetWishlistStats = () => {
 
 const useWishlistMutation = (mutationFn) => {
   const queryClient = useQueryClient()
-  
+
   return useMutation({
     mutationFn,
     onSuccess: () => {

@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { cn } from '@/utils'
 
 const colorClasses = {
@@ -11,7 +13,6 @@ const colorClasses = {
 }
 
 export default function Skeleton({
-  count = 1,
   circle = false,
   width,
   height,
@@ -22,29 +23,23 @@ export default function Skeleton({
 }) {
   return (
     <span className="leading-inherit">
-      {Array.from({ length: count }).map((_, i) => (
-        <>
-          <span
-            key={i}
-            className={cn(
-              'shimmer inline-block bg-transparent! bg-linear-to-r! from-0%! via-50%! to-100%! bg-size-[200%_100%]! align-middle',
-              colorClasses[color],
-              circle ? 'rounded-full' : 'rounded',
-              !width && 'w-full',
-              !height && 'min-h-[1em]',
-              className,
-            )}
-            style={{
-              ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
-              ...(height && { height: typeof height === 'number' ? `${height}px` : height }),
-              ...style,
-            }}
-            aria-hidden="true"
-            {...rest}
-          />
-          {i < count - 1 && <br />}
-        </>
-      ))}
+      <span
+        className={cn(
+          'shimmer inline-block bg-transparent! bg-linear-to-r! from-0%! via-50%! to-100%! bg-size-[200%_100%]! align-middle',
+          colorClasses[color],
+          circle ? 'rounded-full' : 'rounded',
+          !width && 'w-full',
+          !height && 'min-h-[1em]',
+          className,
+        )}
+        style={{
+          ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
+          ...(height && { height: typeof height === 'number' ? `${height}px` : height }),
+          ...style,
+        }}
+        aria-hidden="true"
+        {...rest}
+      />
       &zwnj;
     </span>
   )

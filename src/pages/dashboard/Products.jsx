@@ -45,6 +45,7 @@ export default function AdminProducts() {
   const categories = Array.from(new Set(products.map((product) => product.category)))
 
   const { register, handleSubmit, watch } = useForm({
+    mode: 'onTouched',
     defaultValues: { search, category, subcategory },
   })
   const [searchValue, categoryValue, subcategoryValue] = watch([
