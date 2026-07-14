@@ -1,15 +1,12 @@
-function Table({ columns = [], data = [] }) {
+export default function Table({ columns = [], data = [] }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200">
+    <div className="card overflow-x-auto">
       <table className="min-w-full border-collapse">
-        <thead className="bg-gray-100">
+        <thead className="bg-neutral-50 dark:bg-neutral-200">
           <tr>
             {columns.map((column) => (
-              <th
-                key={column.key}
-                className="px-4 py-3 text-left font-semibold"
-              >
-                {column.header}
+              <th key={column.key} className="px-4 py-3 text-left font-medium">
+                {column}
               </th>
             ))}
           </tr>
@@ -17,27 +14,21 @@ function Table({ columns = [], data = [] }) {
 
         <tbody>
           {data.length > 0 ? (
-            data.map((row) => (
+            data.map((row, i) => (
               <tr
-                key={row.id}
-                className="border-t hover:bg-gray-50"
+                key={i}
+                className="border-t border-neutral-200 hover:bg-neutral-50/50 dark:hover:bg-neutral-200/50"
               >
-                {columns.map((column) => (
-                  <td
-                    key={column.key}
-                    className="px-4 py-3"
-                  >
-                    {row[column.key]}
+                {columns.map((column, i) => (
+                  <td key={i} className="px-4 py-3">
+                    {row[column.toLowerCase()] || '-'}
                   </td>
                 ))}
               </tr>
             ))
           ) : (
             <tr>
-              <td
-                colSpan={columns.length}
-                className="py-6 text-center text-gray-500"
-              >
+              <td colSpan={columns.length} className="py-6 text-center text-neutral-500">
                 No data found
               </td>
             </tr>
@@ -45,7 +36,5 @@ function Table({ columns = [], data = [] }) {
         </tbody>
       </table>
     </div>
-  );
+  )
 }
-
-export default Table;

@@ -19,6 +19,7 @@ export const useGetProducts = (params) => {
   return useQuery({
     queryKey: productKeys.list(params),
     queryFn: () => productsService.getAll(params),
+    placeholderData: (previousData) => previousData,
   })
 }
 

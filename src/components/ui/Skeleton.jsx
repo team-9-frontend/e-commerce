@@ -1,41 +1,46 @@
-// import ReactSkeleton from 'react-loading-skeleton'
+import { Fragment } from 'react'
 
-// import { cn } from '@/utils'
+import { cn } from '@/utils'
 
-// import 'react-loading-skeleton/dist/skeleton.css'
-
-// export default function Skeleton({ className, color = 'neutral', ...props }) {
-//   return (
-//     <ReactSkeleton
-//       className={cn(
-//         `bg-${color}-500/15! after:bg-linear-to-r! after:from-${color}-500/15! after:via-${color}-500/25! after:to-${color}-500/15! after:from-0%! after:via-50%! after:to-100%! after:blur-md!`,
-//         className,
-//       )}
-//       {...props}
-//     />
-//   )
-// }
-
-
-
-
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-
-function CustomSkeleton({
-  width,
-  height,
-  count = 1,
-  circle = false,
-}) {
-  return (
-    <Skeleton
-      width={width}
-      height={height}
-      count={count}
-      circle={circle}
-    />
-  );
+const colorClasses = {
+  neutral: 'from-neutral-500/15! via-neutral-500/25! to-neutral-500/15!',
+  teal: 'from-teal-500/15! via-teal-500/25! to-teal-500/15!',
+  amber: 'from-amber-500/15! via-amber-500/25! to-amber-500/15!',
+  rose: 'from-rose-500/15! via-rose-500/25! to-rose-500/15!',
+  sky: 'from-sky-500/15! via-sky-500/25! to-sky-500/15!',
+  purple: 'from-purple-500/15! via-purple-500/25! to-purple-500/15!',
+  emerald: 'from-emerald-500/15! via-emerald-500/25! to-emerald-500/15!',
 }
 
-export default CustomSkeleton;
+export default function Skeleton({
+  circle = false,
+  width,
+  height,
+  color = 'neutral',
+  className,
+  style,
+  ...rest
+}) {
+  return (
+    <span className="leading-inherit">
+      <span
+        className={cn(
+          'shimmer inline-block bg-transparent! bg-linear-to-r! from-0%! via-50%! to-100%! bg-size-[200%_100%]! align-middle',
+          colorClasses[color],
+          circle ? 'rounded-full' : 'rounded',
+          !width && 'w-full',
+          !height && 'min-h-[1em]',
+          className,
+        )}
+        style={{
+          ...(width && { width: typeof width === 'number' ? `${width}px` : width }),
+          ...(height && { height: typeof height === 'number' ? `${height}px` : height }),
+          ...style,
+        }}
+        aria-hidden="true"
+        {...rest}
+      />
+      &zwnj;
+    </span>
+  )
+}

@@ -11,9 +11,6 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  esbuild: {
-    jsx: 'automatic',
-  },
   test: {
     environment: 'jsdom',
     setupFiles: './tests/setup.js',
