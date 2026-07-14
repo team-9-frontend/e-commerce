@@ -2,17 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Safelist of dynamicly used colors */
-@source inline('dark:{bg,text,border}-{accent,neutral,rose,teal,amber,purple,lime,sky}-{400}');
-@source inline('{bg,text,border}-{accent,neutral,rose,teal,amber,purple,lime,sky}-{600}');
-@source inline(
-  '{bg,text,border}-{accent,neutral,rose,teal,amber,purple,lime,sky}-{500}{/{15,25},}'
-);
-
-/* Safelist for dynamic gradient shimmer effect */
-@source inline('{bg,after:from,after:to}-{neutral,rose,teal,amber,purple,lime,sky}-500/15!');
-@source inline('after:via-{neutral,rose,teal,amber,purple,lime,sky}-500/25!');
-
 @theme {
   --color-accent-50: var(--color-indigo-50);
   --color-accent-100: var(--color-indigo-100);
@@ -38,8 +27,6 @@
   --color-neutral-900: var(--color-gray-900);
   --color-neutral-950: var(--color-gray-950);
 
-  --color-muted: color-mix(in oklab, var(--color-neutral-950) 45%, transparent);
-
   --font-fancy: 'Libre Bodoni', serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -56,6 +43,14 @@
   --color-neutral-800: var(--color-gray-200);
   --color-neutral-900: var(--color-gray-100);
   --color-neutral-950: var(--color-gray-50);
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility container {
+  @apply mx-auto px-6;
 }
 
 @layer base {
@@ -76,12 +71,17 @@
   .card {
     @apply rounded-2xl border border-neutral-200 bg-white shadow-md dark:bg-neutral-100 dark:shadow-none;
   }
-}
 
-@utility flex-center {
-  @apply flex items-center justify-center;
-}
+  .shimmer {
+    animation: shimmer 1.5s infinite linear;
+  }
 
-@utility container {
-  @apply mx-auto px-6;
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
 }

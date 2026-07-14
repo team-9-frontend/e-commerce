@@ -8,7 +8,7 @@ import {
   LuShoppingCart,
   LuUsers,
 } from 'react-icons/lu'
-import { NavLink } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import { useLogout } from '@/api'
 import Button from '@/components/ui/Button'
@@ -17,6 +17,7 @@ import { cn } from '@/utils'
 
 export default function Sidebar({ className, open, minimized }) {
   const { mutate: logout, isPending } = useLogout()
+  const { pathname } = useLocation()
 
   const sidebarData = [
     {
@@ -65,33 +66,28 @@ export default function Sidebar({ className, open, minimized }) {
       )}
     >
       {sidebarData.map((item) => (
-        <NavLink
-          key={item.path}
-          to={item.path}
-          end
-          className={({ isActive }) =>
-            cn(
-              'group relative flex cursor-pointer items-center gap-2 rounded-xl px-4 py-3 font-medium capitalize transition-all',
-              isActive
-                ? 'dark:bg-accent-500 bg-neutral-800 font-medium text-neutral-50 dark:text-neutral-950'
-                : 'text-neutral-950 hover:bg-neutral-200',
-              minimized ? 'p-2' : 'min-w-48',
-            )
-          }
-        >
-          {item.icon}
-          <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>{item.title}</span>
-          <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
-            {item.title}
-          </Tooltip>
-        </NavLink>
+        <Link key={item.path} to={item.path}>
+          <Button
+            variant={pathname === item.path ? 'neutralPrimary' : 'ghost'}
+            size={minimized ? 'lg-square' : 'lg'}
+            className="w-full"
+          >
+            {item.icon}
+            <span className={cn('min-w-36 leading-none', minimized ? 'lg:hidden' : '')}>
+              {item.title}
+            </span>
+            <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
+              {item.title}
+            </Tooltip>
+          </Button>
+        </Link>
       ))}
       <div className="flex-1"></div>
       <Button
         onClick={() => logout()}
         disabled={isPending}
-        variant="dangerGhost"
-        className={cn('transition-all', minimized ? 'p-2' : '')}
+        variant="ghostDanger"
+        size={minimized ? 'lg-square' : 'lg'}
       >
         <LuLogOut size={20} />
         <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>

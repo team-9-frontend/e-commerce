@@ -19,8 +19,7 @@ import Profile from '@/pages/user/Profile'
 import Wishlist from '@/pages/user/Wishlist'
 
 import DashboardRoutes from './DashboardRoutes'
-import StoreProtectedRoute from '../store-auth/components/StoreProtectedRoute'
-import StoreLogin from '../store-auth/pages/StoreLogin'
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -31,50 +30,20 @@ export default function AppRoutes() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<DynamicProduct />} />
 
-          <Route path="/profile" element={<StoreProtectedRoute>
-                                          <Profile />
-                                        </StoreProtectedRoute>} />
-          <Route path="/profile/orders"  element={
-                                                <StoreProtectedRoute>
-                                                  <Orders />
-                                                </StoreProtectedRoute>
-                                              } />
-          <Route path="/profile/orders/:id" element={
-                                                <StoreProtectedRoute>
-                                                  <DynamicOrder />
-                                                </StoreProtectedRoute>
-                                              } />
-          <Route path="/wishlist" element={
-                                                <StoreProtectedRoute>
-                                                  <Wishlist />
-                                                </StoreProtectedRoute>
-                                              } />
-          <Route path="/cart"  element={
-                                          <StoreProtectedRoute>
-                                            <Cart />
-                                          </StoreProtectedRoute>
-                                        }/>
-          <Route path='/storelogin' element={<StoreLogin />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/orders" element={<Orders />} />
+          <Route path="/profile/orders/:id" element={<DynamicOrder />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/cart" element={<Cart />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify-otp" element={<VerifyOTP />} />
 
-          <Route path="/payment" element={
-                                           <StoreProtectedRoute>
-                                             <Payment />
-                                           </StoreProtectedRoute>
-                                         }/>
-          <Route path="/checkout" element={
-                                            <StoreProtectedRoute>
-                                              <Checkout />
-                                            </StoreProtectedRoute>
-                                          }/>
-          <Route path="/order-success" element={
-                                                 <StoreProtectedRoute>
-                                                   <OrderSuccess />
-                                                 </StoreProtectedRoute>
-                                               } />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

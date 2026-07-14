@@ -1,33 +1,67 @@
-import Button from "./Button";
+import { LuChevronFirst, LuChevronLast, LuChevronLeft, LuChevronRight } from 'react-icons/lu'
+import { useSearchParams } from 'react-router-dom'
 
-function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}) {
+import { cn } from '@/utils'
+
+import Button from './Button'
+
+export default function Pagination({ className, totalPages = 1 }) {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currentPage = parseInt(searchParams.get('page') || '1')
+
+  const safeTotalPages = Math.max(totalPages, 1)
+
+  const updatePage = (newPage) => {
+    setSearchParams((prev) => {
+      newPage <= 1 ? prev.delete('page') : prev.set('page', newPage.toString())
+      newPage >= safeTotalPages && prev.set('page', safeTotalPages.toString())
+      return prev
+    })
+  }
+
   return (
-    <div className="flex items-center justify-center gap-2 mt-6">
+    <div className={cn('flex-center gap-2', className)}>
       <Button
-        variant="outline"
-        disabled={currentPage === 1}
-        onClick={() => onPageChange(currentPage - 1)}
+        variant="ghost"
+        size="md-square"
+        disabled={currentPage <= 1}
+        onClick={() => updatePage(1)}
       >
-        Previous
+        <LuChevronFirst />
       </Button>
 
-      <span className="px-4">
-        {currentPage} / {totalPages}
+      <Button
+        variant="ghost"
+        size="md-square"
+        disabled={currentPage <= 1}
+        onClick={() => updatePage(currentPage - 1)}
+      >
+        <LuChevronLeft />
+      </Button>
+
+      <span className="flex-center gap-4 font-medium tracking-widest">
+        <span>{currentPage}</span>
+        <span>/</span>
+        <span>{safeTotalPages}</span>
       </span>
 
       <Button
-        variant="outline"
-        disabled={currentPage === totalPages}
-        onClick={() => onPageChange(currentPage + 1)}
+        variant="ghost"
+        size="md-square"
+        disabled={currentPage >= safeTotalPages}
+        onClick={() => updatePage(currentPage + 1)}
       >
-        Next
+        <LuChevronRight />
+      </Button>
+
+      <Button
+        variant="ghost"
+        size="md-square"
+        disabled={currentPage >= safeTotalPages}
+        onClick={() => updatePage(safeTotalPages)}
+      >
+        <LuChevronLast />
       </Button>
     </div>
-  );
+  )
 }
-
-export default Pagination;

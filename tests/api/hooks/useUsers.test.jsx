@@ -3,8 +3,6 @@ import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { userKeys } from '@/api//keys/userKeys'
-import { usersService } from '@/api/services/usersService'
-
 import {
   useAddUser,
   useDeleteUser,
@@ -12,6 +10,7 @@ import {
   useGetUserById,
   useUpdateUser,
 } from '@/api/hooks/useUsers'
+import { usersService } from '@/api/services/usersService'
 
 vi.mock('@/api/services/usersService', () => ({
   usersService: {

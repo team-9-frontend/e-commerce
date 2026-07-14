@@ -4,8 +4,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { cartKeys } from '@/api//keys/cartKeys'
 import { orderKeys } from '@/api//keys/orderKeys'
-import { ordersService } from '@/api/services/ordersService'
-
 import {
   useCancelOrder,
   useCreateOrder,
@@ -17,6 +15,7 @@ import {
   useGetOrdersStats,
   useUpdateOrderStatus,
 } from '@/api/hooks/useOrders'
+import { ordersService } from '@/api/services/ordersService'
 
 vi.mock('@/api/services/ordersService', () => ({
   ordersService: {

@@ -3,9 +3,8 @@ import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { reviewKeys } from '@/api//keys/reviewKeys'
-import { reviewsService } from '@/api/services/reviewsService'
-
 import { useDeleteReview, useGetReviews, usePostReview } from '@/api/hooks/useReviews'
+import { reviewsService } from '@/api/services/reviewsService'
 
 vi.mock('@/api/services/reviewsService', () => ({
   reviewsService: {
