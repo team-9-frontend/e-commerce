@@ -1,67 +1,46 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { LuArrowLeft } from 'react-icons/lu'
+import { Link, useParams } from 'react-router-dom'
+
 import { useGetProductById } from '@/api/hooks/useProducts'
-import ProductGallery from "@/pages/store/product-details/ProductGallery";
-import ProductInfo from "@/pages/store/product-details/ProductInfo";
-import ProductReviews from "@/pages/store/product-details/ProductReviews";
-import LoadingSpinner from '../../components/ui/LoadingSpinner';
-import {
-  LuEye,
-  LuArrowLeft,
-} from "react-icons/lu";
+import ProductInfo from '@/components/dashboard/products/ProductInfo'
+import Button from '@/components/ui/Button'
+import Swiper from '@/components/ui/Swiper'
+
 export default function AdminProductView() {
   const { id } = useParams()
-const {
-  data,
-  isLoading,
-  isError,
-} = useGetProductById(id)
-const navigate = useNavigate()
-if (isLoading) return <LoadingSpinner />
+  const { data, isLoading, isError, error } = useGetProductById(id)
+  const product = data?.product
 
-if (isError) return <h1>Product not found</h1>
+  if (isLoading) return
 
-const product = data.product
-
-return (
-  
-  <>
-
-  <div className="rounded-3xl bg-gradient-to-r from-slate-950 to-slate-800 p-8 text-white">
-    <button onClick={()=>{navigate('/dashboard/products')}} className="mb-5 flex items-center gap-2 text-sm font-medium text-white/80 transition hover:text-white">
-      <LuArrowLeft size={18} />
-      <span>Back</span>
-    </button>
-
-    <div className="flex items-center gap-4">
-      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10">
-        <LuEye size={24} />
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="card flex items-center justify-between p-4">
+        <div className="space-y-2">
+          <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
+            overview
+          </p>
+          <h2 className="text-3xl">Product details</h2>
+          <p className="text-sm text-neutral-500">Product details overview.</p>
+        </div>
+        <Link to="/dashboard/products">
+          <Button variant="ghost">
+            <LuArrowLeft size={20} /> Go Back
+          </Button>
+        </Link>
       </div>
 
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          {product.name}
-        </h1>
+      {isError ? (
+        <div className="card p-4 text-neutral-500">{error?.message}</div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <Swiper images={product.images} id={product._id} showImages isCard />
 
-        <p className="mt-1 text-sm text-white/60">
-          Product details overview
-        </p>
-      </div>
+            <ProductInfo product={product} />
+          </div>
+        </>
+      )}
     </div>
-  </div>
-
-  
-  <div className="mt-6 grid gap-6 lg:grid-cols-2">
-  
-    <div className="space-y-6">
-      <ProductGallery product={product} />
-    </div>
-
-    <div className="space-y-6">
-      <ProductInfo product={product} />
-    </div>
-  </div>
-
-  
-</>
-)
+  )
 }

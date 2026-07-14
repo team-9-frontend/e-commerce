@@ -1,74 +1,23 @@
 import { useState } from 'react'
 
-import { LuChevronLeft, LuChevronRight, LuStar } from 'react-icons/lu'
+import { LuStar } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { useDeleteProduct } from '@/api'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import ConfirmDialog from '@/components/ui/ConfirmDialog'
 import Skeleton from '@/components/ui/Skeleton'
-import { cn } from '@/utils'
+import Swiper from '@/components/ui/Swiper'
 
 export default function ProductCard({ isLoading, product }) {
   const { mutate: deleteProduct, isPending } = useDeleteProduct()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  const shouldLoop = product?.images?.length > 1
-  const prevClass = `prev-${product?._id}`
-  const nextClass = `next-${product?._id}`
-
   return (
-    <div className="card overflow-hidden">
+    <div className="card">
       {!isLoading ? (
-        <div className="group relative">
-          <Swiper
-            modules={[Navigation, Pagination, Autoplay]}
-            autoplay={shouldLoop ? { delay: 3000, disableOnInteraction: false } : false}
-            loop={shouldLoop}
-            pagination={{ clickable: true }}
-            navigation={{ prevEl: `.${prevClass}`, nextEl: `.${nextClass}` }}
-            style={{
-              '--swiper-pagination-color': 'var(--color-accent-500)',
-            }}
-          >
-            {product?.images.map((image, i) => (
-              <SwiperSlide key={i}>
-                <img
-                  src={image.url}
-                  alt={`${product.name} ${i + 1}`}
-                  className="aspect-video w-full bg-neutral-50 object-cover sm:aspect-square dark:bg-neutral-200"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-          {shouldLoop && (
-            <>
-              <button
-                className={cn(
-                  'text-accent-600 dark:text-accent-400 absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 text-xl opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:-translate-x-1/3',
-                  prevClass,
-                )}
-              >
-                <LuChevronLeft />
-              </button>
-
-              <button
-                className={cn(
-                  'text-accent-600 dark:text-accent-400 absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 text-xl opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:translate-x-1/3',
-                  nextClass,
-                )}
-              >
-                <LuChevronRight />
-              </button>
-            </>
-          )}
-
+        <Swiper images={product?.images} id={product?._id}>
           {product?.featured && (
             <Badge color="amber" className="flex-center absolute top-0 z-10 mt-6 ml-6 gap-2">
               <LuStar />
@@ -78,7 +27,7 @@ export default function ProductCard({ isLoading, product }) {
           <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-6 mb-6">
             {product?.stock ? `${product.stock} In Stock` : 'Out of Stock'}
           </Badge>
-        </div>
+        </Swiper>
       ) : (
         <Skeleton className="aspect-video w-full sm:aspect-square" />
       )}
@@ -114,9 +63,12 @@ export default function ProductCard({ isLoading, product }) {
         {!isLoading ? (
           <div className="flex gap-2">
             {product.tags.map((tag, i) => (
-              <div key={i} className="card rounded-md border-neutral-300 bg-neutral-200 px-2 py-1">
-                {tag}
-              </div>
+              <span
+                key={tag}
+                className="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-700 dark:bg-neutral-200"
+              >
+                #{tag}
+              </span>
             ))}
           </div>
         ) : (
@@ -148,7 +100,7 @@ export default function ProductCard({ isLoading, product }) {
             <Button
               variant="outline"
               size="sm"
-              className="hover:border-amber-500/50 hover:bg-amber-500/15 hover:text-amber-600 dark:hover:bg-amber-500/15 dark:hover:text-amber-400"
+              className="line-clamp-1 hover:border-amber-500/50 hover:bg-amber-500/15 hover:text-amber-600 dark:hover:bg-amber-500/15 dark:hover:text-amber-400"
             >
               quick edit
             </Button>
