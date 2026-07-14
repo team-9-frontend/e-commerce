@@ -91,7 +91,7 @@ export default function ProductCard({ edits, isLoading, product }) {
           </h2>
           <p className="mb-2 line-clamp-1 text-sm font-medium text-neutral-500">
             {!isLoading ? (
-              [product.category, product.subcategory, product.brand].join(' • ') || 'no tags'
+              [product.category, product.subcategory, product.brand].join(' • ')
             ) : (
               <Skeleton width="50%" />
             )}
@@ -121,7 +121,7 @@ export default function ProductCard({ edits, isLoading, product }) {
             ))}
           </div>
         ) : (
-          <Skeleton width="75%" height={26} />
+          <Skeleton width="75%" height={32} />
         )}
 
         {!isLoading & edits ? (
@@ -163,21 +163,27 @@ export default function ProductCard({ edits, isLoading, product }) {
               className="ml-auto"
             >
               delete
-              <ConfirmDialog
-                isOpen={isDialogOpen}
-                setIsOpen={setIsDialogOpen}
-                onConfirm={() => {
-                  deleteProduct(product._id)
-                }}
-                title="Confirm Deletion"
-                message="Are you sure?"
-              ></ConfirmDialog>
             </Button>
+
+            <ConfirmDialog
+              isOpen={isDialogOpen}
+              setIsOpen={setIsDialogOpen}
+              isLoading={isPending}
+              onConfirm={() => {
+                deleteProduct(product._id, {
+                  onSuccess: () => {
+                    setIsDialogOpen(false)
+                  },
+                })
+              }}
+              title="Confirm Deletion"
+              message="Are you sure?"
+            ></ConfirmDialog>
           </div>
         ) : (
           edits && (
             <div className="border-t border-neutral-200 pt-4">
-              <Skeleton width="100%" height={26} />
+              <Skeleton width="100%" height={32} />
             </div>
           )
         )}
