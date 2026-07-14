@@ -16,21 +16,17 @@ export default function ProductCard({ isLoading, product }) {
 
   return (
     <div className="card">
-      {!isLoading ? (
-        <Swiper images={product?.images} id={product?._id}>
-          {product?.featured && (
-            <Badge color="amber" className="flex-center absolute top-0 z-10 mt-6 ml-6 gap-2">
-              <LuStar />
-              Featured
-            </Badge>
-          )}
-          <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-6 mb-6">
-            {product?.stock ? `${product.stock} In Stock` : 'Out of Stock'}
+      <Swiper images={product?.images} id={product?._id} isLoading={isLoading}>
+        {product?.featured && (
+          <Badge color="amber" className="flex-center absolute top-0 z-10 mt-6 ml-6 gap-2">
+            <LuStar />
+            Featured
           </Badge>
-        </Swiper>
-      ) : (
-        <Skeleton className="aspect-video w-full sm:aspect-square" />
-      )}
+        )}
+        <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-6 mb-6">
+          {product?.stock ? `${product.stock} In Stock` : 'Out of Stock'}
+        </Badge>
+      </Swiper>
 
       <div className="flex flex-col gap-4 p-4">
         <div>

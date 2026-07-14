@@ -1,13 +1,25 @@
 import { LuShoppingBag, LuStar, LuTag } from 'react-icons/lu'
 
+import Skeleton from '@/components/ui/Skeleton'
+
 import ProductStats from './ProductStats'
 
 export default function ProductInfo({ isLoading, product }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="card space-y-2 p-4">
-        <h2 className="text-3xl">{product.name}</h2>
-        <p className="text-sm wrap-anywhere text-neutral-500">{product.description}</p>
+        <h2 className="text-3xl">{!isLoading ? product.name : <Skeleton width="50%" />}</h2>
+        <p className="text-sm wrap-anywhere text-neutral-500">
+          {!isLoading ? (
+            product.description
+          ) : (
+            <>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+            </>
+          )}
+        </p>
       </div>
 
       <ProductStats product={product} isLoading={isLoading} />
@@ -18,14 +30,20 @@ export default function ProductInfo({ isLoading, product }) {
         </h2>
 
         <div className="flex flex-wrap gap-2">
-          {product.tags?.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-700 dark:bg-neutral-200"
-            >
-              #{tag}
-            </span>
-          ))}
+          {Array.from({ length: isLoading ? 3 : product.tags?.length }).map((_, i) => {
+            const tag = product?.tags?.[i]
+
+            return !isLoading ? (
+              <span
+                key={i}
+                className="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-700 dark:bg-neutral-200"
+              >
+                #${tag}
+              </span>
+            ) : (
+              <Skeleton width={48} />
+            )
+          })}
         </div>
       </div>
 
@@ -35,7 +53,11 @@ export default function ProductInfo({ isLoading, product }) {
         </h2>
 
         <p className="text-sm font-medium text-neutral-500">
-          {[product.category, product.subcategory, product.brand].join(' • ')}
+          {!isLoading ? (
+            [product.category, product.subcategory, product.brand].join(' • ')
+          ) : (
+            <Skeleton width="50%" />
+          )}
         </p>
       </div>
 
@@ -44,8 +66,17 @@ export default function ProductInfo({ isLoading, product }) {
           <LuStar /> Rating
         </h2>
 
-        <p className="text-sm font-medium text-neutral-500">
-          {product.averageRating} / 5 ({product.numReviews} reviews)
+        <p className="text-sm space-x-4 font-medium text-neutral-500">
+          {!isLoading ? (
+            <>
+              <span>{product.numReviews} reviews</span>
+              <span className="inline-flex items-center gap-2 text-amber-500">
+                <LuStar /> {product.averageRating}/5
+              </span>
+            </>
+          ) : (
+            <Skeleton width="35%" />
+          )}
         </p>
       </div>
     </div>

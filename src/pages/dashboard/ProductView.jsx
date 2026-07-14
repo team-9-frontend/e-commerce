@@ -5,7 +5,6 @@ import { useGetProductById } from '@/api/hooks/useProducts'
 import ProductInfo from '@/components/dashboard/products/ProductInfo'
 import ProductReviews from '@/components/dashboard/products/ProductReviews'
 import Button from '@/components/ui/Button'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import Swiper from '@/components/ui/Swiper'
 
 export default function AdminProductView() {
@@ -13,11 +12,7 @@ export default function AdminProductView() {
   const { data, isLoading, isError, error } = useGetProductById(id)
   const product = data?.product
 
-  return isLoading ? (
-    <div className="flex-center min-h-screen">
-      <LoadingSpinner className="size-24" />
-    </div>
-  ) : (
+  return (
     <div className="flex flex-col gap-4">
       <div className="card flex items-center justify-between p-4">
         <div className="space-y-2">
@@ -39,13 +34,19 @@ export default function AdminProductView() {
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <Swiper
+              images={product?.images}
+              id={product?._id}
+              isLoading={isLoading}
+              showImages
+              isCard
+            />
+
             <div className="flex flex-col gap-4">
-              <Swiper images={product.images} id={product._id} showImages isCard />
+              <ProductInfo product={product} isLoading={isLoading} />
 
-              <ProductReviews reviews={product?.reviews} />
+              <ProductReviews reviews={product?.reviews} isLoading={isLoading} />
             </div>
-
-            <ProductInfo product={product} />
           </div>
         </>
       )}
