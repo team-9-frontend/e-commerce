@@ -7,7 +7,7 @@ import {
   TotalOrders,
   TotalUsers,
 } from '@/components/dashboard/stats/DashboardStats'
-import OrdersStatus from '@/components/dashboard/stats/OrdersStatus'
+import OrdersStats from '@/components/dashboard/stats/OrdersStats'
 import RecentOrders from '@/components/dashboard/stats/RecentOrders'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
@@ -44,7 +44,7 @@ export default function AdminDashboard() {
             <TotalUsers totalUsers={stats?.totalCustomers} isLoading={isLoading} />
           </div>
 
-          <OrdersStatus stats={stats?.orders} isLoading={isLoading} />
+          <OrdersStats stats={stats?.orders} isLoading={isLoading} />
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <TopProducts topProducts={stats?.topProducts} isLoading={isLoading} />

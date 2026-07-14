@@ -5,7 +5,6 @@ export default function ConfirmDialog({
   className,
   isOpen,
   setIsOpen,
-  onClose,
   onConfirm,
   isLoading,
   title = 'Confirm Action',
@@ -13,7 +12,6 @@ export default function ConfirmDialog({
 }) {
   const handleClose = () => {
     setIsOpen(false)
-    onClose?.()
   }
 
   const handleConfirm = () => {
@@ -21,13 +19,7 @@ export default function ConfirmDialog({
   }
 
   return (
-    <Dialog
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
-      onClose={onClose}
-      title={title}
-      className={className}
-    >
+    <Dialog isOpen={isOpen} setIsOpen={setIsOpen} title={title} className={className}>
       <p className="mb-6 text-center text-neutral-500">{message}</p>
 
       <div className="flex gap-4">

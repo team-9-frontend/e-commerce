@@ -2,13 +2,8 @@ import { LuX } from 'react-icons/lu'
 
 import { cn } from '@/utils'
 
-export default function Modal({ children, className, isOpen, setIsOpen, onClose, title }) {
+export default function Modal({ children, className, isOpen, setIsOpen, title }) {
   if (!isOpen) return null
-
-  const handleClose = () => {
-    setIsOpen(false)
-    onClose?.()
-  }
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/50">
@@ -20,7 +15,7 @@ export default function Modal({ children, className, isOpen, setIsOpen, onClose,
           <h2 className="text-lg font-semibold text-neutral-950">{title}</h2>
 
           <button
-            onClick={handleClose}
+            onClick={() => setIsOpen(false)}
             className="cursor-pointer text-neutral-500 hover:text-red-600 dark:hover:text-red-400"
           >
             <LuX size={24} />

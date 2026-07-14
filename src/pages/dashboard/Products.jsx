@@ -98,7 +98,7 @@ export default function AdminProducts() {
         <OutOfStockTotal outOfStockTotal={outOfStockTotal} isLoading={isLoading} />
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="card overflow-hidden p-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="card p-4">
         <div className="flex items-center gap-4">
           <FormField
             id="search"
