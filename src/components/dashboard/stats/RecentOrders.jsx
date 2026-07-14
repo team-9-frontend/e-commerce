@@ -46,7 +46,7 @@ export default function RecentOrders({ className, isLoading, recentOrders }) {
                         (order?.status === 'processing' && 'sky') ||
                         (order?.status === 'confirmed' && 'teal') ||
                         (order?.status === 'shipped' && 'purple') ||
-                        (order?.status === 'delivered' && 'lime') ||
+                        (order?.status === 'delivered' && 'emerald') ||
                         (order?.status === 'cancelled' && 'rose') ||
                         null
                       }

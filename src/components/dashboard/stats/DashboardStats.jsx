@@ -21,7 +21,7 @@ function StatsTemplate({ className, isLoading, color, header, icon, value, descr
     rose: { gradient: 'from-rose-400 to-rose-600', border: 'border-t-rose-600' },
     sky: { gradient: 'from-sky-400 to-sky-600', border: 'border-t-sky-600' },
     purple: { gradient: 'from-purple-400 to-purple-600', border: 'border-t-purple-600' },
-    lime: { gradient: 'from-lime-400 to-lime-600', border: 'border-t-lime-500' },
+    emerald: { gradient: 'from-emerald-400 to-emerald-600', border: 'border-t-emerald-500' },
   }
 
   return (
@@ -47,7 +47,7 @@ function StatsTemplate({ className, isLoading, color, header, icon, value, descr
         <p className="line-clamp-1 text-2xl font-bold">
           {!isLoading ? value : <Skeleton width="50%" />}
         </p>
-        {description && <p className="text-sm font-light text-neutral-500">{description}</p>}
+        {description && <p className="text-sm text-neutral-500">{description}</p>}
       </div>
     </div>
   )
@@ -126,7 +126,7 @@ export function TopProduct({ className, isLoading, topProduct, sales }) {
 export function TotalUsers({ className, isLoading, totalUsers }) {
   return (
     <StatsTemplate
-      color="lime"
+      color="emerald"
       header="total users"
       icon={<LuUsers />}
       value={totalUsers}
@@ -166,7 +166,7 @@ export function FeuturedProducts({ className, isLoading, feuturedProducts }) {
 export function InStockTotal({ className, isLoading, inStockTotal }) {
   return (
     <StatsTemplate
-      color="lime"
+      color="emerald"
       header="in stock"
       icon={<LuTrendingUp />}
       value={inStockTotal}

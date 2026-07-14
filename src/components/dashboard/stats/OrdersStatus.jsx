@@ -6,14 +6,12 @@ import { cn } from '@/utils'
 
 export default function OrdersStatus({ className, isLoading, stats }) {
   const colorClasses = {
-    teal: 'border-teal-500/25 bg-teal-500/15 text-teal-600 dark:text-teal-400 border-teal-500/25 bg-teal-500/15 text-teal-600 dark:text-teal-400',
-    amber:
-      'border-amber-500/25 bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/25 bg-amber-500/15 text-amber-600 dark:text-amber-400',
-    rose: 'border-rose-500/25 bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/25 bg-rose-500/15 text-rose-600 dark:text-rose-400',
-    sky: 'border-sky-500/25 bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/25 bg-sky-500/15 text-sky-600 dark:text-sky-400',
-    purple:
-      'border-purple-500/25 bg-purple-500/15 text-purple-600 dark:text-purple-400 border-purple-500/25 bg-purple-500/15 text-purple-600 dark:text-purple-400',
-    lime: 'border-lime-500/25 bg-lime-500/15 text-lime-600 dark:text-lime-400 border-lime-500/25 bg-lime-500/15 text-lime-600 dark:text-lime-400',
+    teal: 'border-teal-500/25 before:bg-teal-500/15 text-teal-700 dark:text-teal-400',
+    amber: 'border-amber-500/25 before:bg-amber-500/15 text-amber-700 dark:text-amber-400',
+    rose: 'border-rose-500/25 before:bg-rose-500/15 text-rose-700 dark:text-rose-400',
+    sky: 'border-sky-500/25 before:bg-sky-500/15 text-sky-700 dark:text-sky-400 border-sky-500/25 before:bg-sky-500/15 text-sky-700 dark:text-sky-400',
+    purple: 'border-purple-500/25 before:bg-purple-500/15 text-purple-700 dark:text-purple-400',
+    emerald: 'border-emerald-500/25 before:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400',
   }
 
   const statusColors = {
@@ -21,7 +19,7 @@ export default function OrdersStatus({ className, isLoading, stats }) {
     processing: 'sky',
     confirmed: 'teal',
     shipped: 'purple',
-    delivered: 'lime',
+    delivered: 'emerald',
     cancelled: 'rose',
   }
 
@@ -43,7 +41,7 @@ export default function OrdersStatus({ className, isLoading, stats }) {
             <div
               key={status}
               className={cn(
-                'flex flex-col gap-1 rounded-lg border p-4',
+                'relative flex flex-col gap-1 overflow-hidden rounded-lg border bg-neutral-50 p-4 before:pointer-events-none before:absolute before:inset-0 before:content-[""]',
                 colorClasses[statusColors[status]],
               )}
             >
