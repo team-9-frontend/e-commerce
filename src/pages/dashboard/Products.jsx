@@ -5,6 +5,7 @@ import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import { useGetProducts } from '@/api'
+import ProductCard from '@/components/dashboard/products/ProductCard'
 import {
   FeuturedProducts,
   InStockTotal,
@@ -14,7 +15,6 @@ import {
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
 import Pagination from '@/components/ui/Pagination'
-import ProductCard from '@/components/ui/ProductCard'
 import { cn } from '@/utils'
 
 export default function AdminProducts() {
@@ -45,6 +45,7 @@ export default function AdminProducts() {
   const categories = Array.from(new Set(products.map((product) => product.category)))
 
   const { register, handleSubmit, watch } = useForm({
+    mode: 'onTouched',
     defaultValues: { search, category, subcategory },
   })
   const [searchValue, categoryValue, subcategoryValue] = watch([
@@ -154,7 +155,7 @@ export default function AdminProducts() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: isLoading ? 6 : products?.length }).map((_, i) => {
             const product = products?.[i]
-            return <ProductCard key={i} product={product} isLoading={isLoading} edits />
+            return <ProductCard key={i} product={product} isLoading={isLoading} />
           })}
         </div>
       )}

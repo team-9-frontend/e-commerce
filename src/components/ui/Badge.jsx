@@ -8,7 +8,8 @@ export default function Badge({ children, className, color = 'accent' }) {
     rose: 'before:bg-rose-500/15 border-rose-500/25 text-rose-700 dark:text-rose-400',
     sky: 'before:bg-sky-500/15 border-sky-500/25 text-sky-700 dark:text-sky-400',
     purple: 'before:bg-purple-500/15 border-purple-500/25 text-purple-700 dark:text-purple-400',
-    emerald: 'before:bg-emerald-500/15 border-emerald-500/25 text-emerald-700 dark:text-emerald-400',
+    emerald:
+      'before:bg-emerald-500/15 border-emerald-500/25 text-emerald-700 dark:text-emerald-400',
   }
 
   return (

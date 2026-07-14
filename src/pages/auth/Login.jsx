@@ -36,7 +36,7 @@ export default function Login() {
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
         <p className="mb-6 text-center text-neutral-500">Please log in to continue.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
             id="email"
             label="email"

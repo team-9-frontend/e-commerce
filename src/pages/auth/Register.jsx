@@ -24,7 +24,10 @@ export default function Register() {
       { username, email, password, phone },
       {
         onSuccess: () => {
-          navigate('/verify-otp')
+          navigate('/verify-otp', {
+            replace: true,
+            state: { email, mode: 'register' },
+          })
         },
         onError: (error) => {
           setError('root', {
@@ -41,7 +44,7 @@ export default function Register() {
         <h1 className="mb-2 text-center text-3xl font-bold">Create Account</h1>
         <p className="mb-6 text-center text-neutral-500">Join us and start shopping.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
             label="username"
             id="username"

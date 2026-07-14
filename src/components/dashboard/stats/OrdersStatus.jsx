@@ -11,7 +11,8 @@ export default function OrdersStatus({ className, isLoading, stats }) {
     rose: 'border-rose-500/25 before:bg-rose-500/15 text-rose-700 dark:text-rose-400',
     sky: 'border-sky-500/25 before:bg-sky-500/15 text-sky-700 dark:text-sky-400 border-sky-500/25 before:bg-sky-500/15 text-sky-700 dark:text-sky-400',
     purple: 'border-purple-500/25 before:bg-purple-500/15 text-purple-700 dark:text-purple-400',
-    emerald: 'border-emerald-500/25 before:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400',
+    emerald:
+      'border-emerald-500/25 before:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400',
   }
 
   const statusColors = {
