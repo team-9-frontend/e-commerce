@@ -1,7 +1,5 @@
-import { format } from 'date-fns'
-import { LuChartBar, LuChartLine } from 'react-icons/lu'
+import { LuChartLine } from 'react-icons/lu'
 
-import Badge from '@/components/ui/Badge'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
