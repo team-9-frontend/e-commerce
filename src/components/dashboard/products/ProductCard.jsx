@@ -125,7 +125,7 @@ export default function ProductCard({ isLoading, product }) {
 
         {!isLoading ? (
           <div className="flex items-center gap-2 border-t border-neutral-200 pt-4">
-            <Link to={`/products/view/${product._id}`}>
+            <Link to={`/dashboard/products/view/${product._id}`}>
               <Button
                 variant="outline"
                 size="sm"
