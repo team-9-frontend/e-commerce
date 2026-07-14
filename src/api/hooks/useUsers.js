@@ -41,3 +41,10 @@ const useUserMutation = (mutationFn) => {
 export const useAddUser = () => useUserMutation(usersService.add)
 export const useUpdateUser = () => useUserMutation(({ id, data }) => usersService.update(id, data))
 export const useDeleteUser = () => useUserMutation((id) => usersService.remove(id))
+
+
+
+
+
+
+
