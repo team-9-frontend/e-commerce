@@ -1,4 +1,4 @@
-﻿import { useTheme } from 'next-themes'
+import { useTheme } from 'next-themes'
 import {
   LuBell,
   LuCircleUserRound,
@@ -81,14 +81,11 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           )}
 
           <div>
-            <h3 className="font-medium">{user?.username || 'username'}</h3>
-            <p className="text-xs text-neutral-500">{user?.role || 'guest'}</p>
+            <h3 className="font-medium">{!isLoading ? user?.username : 'username'}</h3>
+            <p className="text-xs text-neutral-500">{!isLoading ? user?.role : 'role'}</p>
           </div>
         </div>
       </div>
     </header>
   )
 }
-
-
-

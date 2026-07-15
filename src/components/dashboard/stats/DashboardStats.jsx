@@ -56,7 +56,7 @@ export function TotalOrders({ className, isLoading, totalOrders }) {
   return (
     <StatsTemplate
       color="teal"
-      header="Total Orders"
+      header="total orders"
       icon={<LuShoppingCart />}
       value={totalOrders}
       description="All orders received"
@@ -70,7 +70,7 @@ export function PendingOrders({ className, isLoading, pendingOrders }) {
   return (
     <StatsTemplate
       color="amber"
-      header="Pending Orders"
+      header="pending orders"
       icon={<LuClock />}
       value={pendingOrders}
       description="Awaiting action"
@@ -84,9 +84,9 @@ export function Revenue({ className, isLoading, revenue }) {
   return (
     <StatsTemplate
       color="rose"
-      header="Revenue"
+      header="revenue"
       icon={<LuDollarSign />}
-            value={revenue !== undefined && `$${revenue}`}
+      value={revenue}
       description="Total gross revenue"
       className={className}
       isLoading={isLoading}
@@ -98,7 +98,7 @@ export function ThisMonth({ className, isLoading, salesThisMonth }) {
   return (
     <StatsTemplate
       color="sky"
-      header="This Month"
+      header="this month"
       icon={<LuCalendar />}
       value={salesThisMonth && `$${salesThisMonth}`}
       description="All sales this month"
@@ -112,7 +112,7 @@ export function TopProduct({ className, isLoading, topProduct, sales }) {
   return (
     <StatsTemplate
       color="purple"
-      header="Top Product"
+      header="top product"
       icon={<LuCrown />}
       value={topProduct}
       description={`${sales || 0} sold`}
@@ -126,7 +126,7 @@ export function TotalUsers({ className, isLoading, totalUsers }) {
   return (
     <StatsTemplate
       color="emerald"
-      header="Users"
+      header="total users"
       icon={<LuUsers />}
       value={totalUsers}
       description="Registered customers"
@@ -187,33 +187,3 @@ export function OutOfStockTotal({ className, isLoading, outOfStockTotal }) {
     />
   )
 }
-
-export default function DashboardStats({
-  className,
-  isLoading,
-  totalOrders,
-  pendingOrders,
-  revenue,
-  salesForMonth,
-  topProduct,
-  users,
-}) {
-  return (
-    <div className={cn('grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3', className)}>
-      <TotalOrders totalOrders={totalOrders} isLoading={isLoading} />
-      <PendingOrders pendingOrders={pendingOrders} isLoading={isLoading} />
-      <Revenue revenue={revenue} isLoading={isLoading} />
-      <ThisMonth salesThisMonth={salesForMonth} isLoading={isLoading} />
-      <TopProduct
-        topProduct={topProduct?.name}
-        sales={topProduct?.totalSold}
-        isLoading={isLoading}
-      />
-      <TotalUsers totalUsers={users} isLoading={isLoading} />
-    </div>
-  )
-}
-
-
-
-

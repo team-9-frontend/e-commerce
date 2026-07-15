@@ -10,16 +10,16 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
 
-  const { data: user, isPending } = useCurrentUser()
+  const { data: user, isLoading } = useCurrentUser()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isPending) return
+    if (isLoading) return
     if (!user) return navigate('/login')
     if (user.role !== 'admin') return navigate('/')
-  }, [user, isPending])
+  }, [user, isLoading])
 
-  return isPending ? (
+  return isLoading ? (
     <div className="flex-center min-h-screen">
       <LoadingSpinner className="size-24" />
     </div>
@@ -43,7 +43,7 @@ export default function DashboardLayout() {
         onClick={() => setOpen(!open)}
         className={cn(
           'fixed inset-0 z-10 cursor-default bg-black/50 transition-all lg:hidden',
-          open ? 'block' : 'hidden',
+          open ? 'opacity-100' : 'invisible opacity-0',
         )}
       ></button>
 
@@ -55,7 +55,3 @@ export default function DashboardLayout() {
     </div>
   )
 }
-
-
-
-
