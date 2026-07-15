@@ -7,6 +7,7 @@ export default function Modal({
   className,
   isOpen,
   setIsOpen,
+  onClose,
   title,
   position = 'center',
 }) {
@@ -21,7 +22,10 @@ export default function Modal({
         position === 'center' && 'items-center justify-center',
         isOpen ? 'opacity-100' : 'invisible opacity-0',
       )}
-      onClick={() => setIsOpen(false)}
+      onClick={() => {
+        setIsOpen(false)
+        onClose?.()
+      }}
     >
       <div
         className={cn(
@@ -39,7 +43,10 @@ export default function Modal({
           <h2 className="font-mono text-sm tracking-wider text-neutral-950 uppercase">{title}</h2>
 
           <Button
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false)
+              onClose?.()
+            }}
             variant="ghostDanger"
             size="md-square"
             className="text-neutral-500"

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { authKeys } from '../keys/authKeys'
+import { userKeys } from '../keys/userKeys'
 import { authService } from '../services/authService'
 
 // ----------------------------------
@@ -63,9 +64,9 @@ export const useUpdateUserRole = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: authService.updateUserRole,
+    mutationFn: (data) => authService.updateUserRole(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
+      queryClient.invalidateQueries({ queryKey: userKeys.all })
     },
   })
 }

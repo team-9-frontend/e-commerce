@@ -13,7 +13,7 @@ export default function Register() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm()
+  } = useForm({ mode: 'onTouched' })
 
   const onSubmit = ({ username, email, password, phone }) => {
     sendRegisterOtp(

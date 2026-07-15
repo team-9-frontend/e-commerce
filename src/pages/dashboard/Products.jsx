@@ -17,9 +17,11 @@ import { useSearchParamsForm } from '@/utils/forms'
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
-  const [searchParams] = useSearchParams()
 
-  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm()
+  const [searchParams] = useSearchParams()
+  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
+    mode: 'onTouched',
+  })
 
   const { search, category, subcategory } = urlValues
 
@@ -108,7 +110,7 @@ export default function AdminProducts() {
             <LuFilter /> Filters
           </Button>
 
-          <Button type="submit">
+          <Button type="submit" variant="neutralPrimary">
             <LuSearch /> Search
           </Button>
         </div>

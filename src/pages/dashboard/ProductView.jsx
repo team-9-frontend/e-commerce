@@ -33,18 +33,30 @@ export default function AdminProductView() {
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <Swiper
-              images={product?.images}
-              id={product?._id}
-              isLoading={isLoading}
-              showImages
-              isCard
-            />
+            <div className="flex flex-col gap-4">
+              <Swiper
+                images={product?.images}
+                id={product?._id}
+                isLoading={isLoading}
+                showImages
+                isCard
+              />
+
+              <ProductReviews
+                reviews={product?.reviews}
+                isLoading={isLoading}
+                className="max-lg:hidden xl:hidden"
+              />
+            </div>
 
             <div className="flex flex-col gap-4">
               <ProductInfo product={product} isLoading={isLoading} />
 
-              <ProductReviews reviews={product?.reviews} isLoading={isLoading} />
+              <ProductReviews
+                reviews={product?.reviews}
+                isLoading={isLoading}
+                className="lg:max-xl:hidden"
+              />
             </div>
           </div>
         </>
