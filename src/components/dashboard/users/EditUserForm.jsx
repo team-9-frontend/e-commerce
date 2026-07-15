@@ -67,7 +67,7 @@ export default function AddUserForm({ user, setUser }) {
         error={errors.avatar}
       />
 
-      <Button type="submit" disabled={isPending} variant="neutralPrimary" className="flex-center">
+      <Button type="submit" disabled={isPending} variant="primary" className="flex-center">
         <span className="text-nowrap">{isPending ? 'Saving...' : 'save changes'}</span>
       </Button>
     </form>

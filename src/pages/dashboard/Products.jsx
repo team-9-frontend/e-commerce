@@ -110,7 +110,7 @@ export default function AdminProducts() {
             <LuFilter /> Filters
           </Button>
 
-          <Button type="submit" variant="neutralPrimary">
+          <Button type="submit" variant="primary">
             <LuSearch /> Search
           </Button>
         </div>

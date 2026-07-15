@@ -37,22 +37,22 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
       title={
         <div className="flex flex-col">
           order detail
-          <h2 className="text-xs font-medium text-neutral-600">#{selectedOrder._id}</h2>
+          <h2 className="text-xs font-medium text-neutral-600">#{selectedOrder?._id}</h2>
         </div>
       }
     >
       <div className="flex w-full items-center justify-between border-t border-neutral-200 pt-4">
         <div className="flex-center gap-2">
-          <Badge color={statusColors[selectedOrder.status]} className="flex-center gap-2">
-            <span className="text-xl leading-0">•</span> {selectedOrder.status}
+          <Badge color={statusColors[selectedOrder?.status]} className="flex-center gap-2">
+            <span className="text-xl leading-0">•</span> {selectedOrder?.status}
           </Badge>
 
-          <Badge color={statusColors[selectedOrder.paymentStatus]} className="flex-center gap-2">
-            <span className="text-xl leading-0">•</span> {selectedOrder.paymentStatus}
+          <Badge color={statusColors[selectedOrder?.paymentStatus]} className="flex-center gap-2">
+            <span className="text-xl leading-0">•</span> {selectedOrder?.paymentStatus}
           </Badge>
         </div>
 
-        <span className="text-sm text-neutral-600">{selectedOrder.paymentMethod}</span>
+        <span className="text-sm text-neutral-600">{selectedOrder?.paymentMethod}</span>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -61,20 +61,20 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
         <div className="card divide-y divide-neutral-200">
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">Placed</h2>
-            <p className="font-medium">{format(selectedOrder.createdAt, 'MMM d, yyyy')}</p>
+            <p className="font-medium">{format(selectedOrder?.createdAt, 'MMM d, yyyy')}</p>
           </div>
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">Customer</h2>
-            <p className="font-medium">{selectedOrder.user.username || '-'}</p>
+            <p className="font-medium">{selectedOrder?.user?.username || '-'}</p>
           </div>
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">Email</h2>
-            <p className="font-medium">{selectedOrder.user.email || '-'}</p>
+            <p className="font-medium">{selectedOrder?.user?.email || '-'}</p>
           </div>
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">Ship to</h2>
             <p className="font-medium">
-              {selectedOrder.shippingAddress.city} {selectedOrder.shippingAddress.country}
+              {selectedOrder?.shippingAddress.city} {selectedOrder?.shippingAddress.country}
             </p>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
       <div className="flex flex-col gap-2">
         <h2 className="text-xs font-medium text-neutral-600 uppercase">items</h2>
 
-        {selectedOrder.items.map((item, i) => (
+        {selectedOrder?.items.map((item, i) => (
           <div key={i} className="card flex items-center justify-between p-4 shadow-sm">
             <div className="flex gap-2">
               <img
@@ -110,21 +110,21 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
         <div className="card divide-y divide-neutral-200">
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">Subtotal</h2>
-            <p className="font-medium">${selectedOrder.subtotal}</p>
+            <p className="font-medium">${selectedOrder?.subtotal}</p>
           </div>
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">Shipping</h2>
-            <p className="font-medium">${selectedOrder.shippingFee}</p>
+            <p className="font-medium">${selectedOrder?.shippingFee}</p>
           </div>
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium text-neutral-600">
-              Tax ({Math.floor((selectedOrder.tax / selectedOrder.totalPrice) * 100)}%)
+              Tax ({Math.floor((selectedOrder?.tax / selectedOrder?.totalPrice) * 100)}%)
             </h2>
-            <p className="font-medium">${selectedOrder.tax}</p>
+            <p className="font-medium">${selectedOrder?.tax}</p>
           </div>
           <div className="flex items-center justify-between p-3 px-4 text-sm">
             <h2 className="font-medium">Total</h2>
-            <p className="font-medium">${selectedOrder.totalPrice}</p>
+            <p className="font-medium">${selectedOrder?.totalPrice}</p>
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
         <form
           onSubmit={handleSubmit((data) => {
             updateStatus(
-              { id: selectedOrder._id, data },
+              { id: selectedOrder?._id, data },
               {
                 onSuccess: () => {
                   setSelectedOrder(false)
@@ -157,10 +157,10 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
               'delivered',
               'cancelled',
               'returned',
-            ].filter((status) => status !== selectedOrder.status)}
-            defaultOption={selectedOrder.status}
-            defaultValue={selectedOrder.status}
-            className="card overflow-visible shadow-sm"
+            ].filter((status) => status !== selectedOrder?.status)}
+            defaultOption={selectedOrder?.status}
+            defaultValue={selectedOrder?.status}
+            className="card overflow-visible shadow-xs"
           />
 
           <FormField
@@ -168,14 +168,14 @@ export default function OrdersDialog({ selectedOrder, setSelectedOrder }) {
             id="adminNote"
             register={register}
             placeholder="Admin Note (optional)..."
-            className="card overflow-visible shadow-sm outline-none"
+            className="card overflow-visible shadow-xs outline-none"
             rows={3}
           />
 
           <Button
             type="submit"
             disabled={isPending}
-            variant="neutralPrimary"
+            variant="primary"
             className="flex-center"
           >
             {!isPending ? 'Save Changes' : 'Saving...'}
