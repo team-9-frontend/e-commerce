@@ -20,21 +20,23 @@ export default function ConfirmDialog({
 
   return (
     <Dialog isOpen={isOpen} setIsOpen={setIsOpen} title={title} className={className}>
-      <p className="mb-6 text-center text-neutral-500">{message}</p>
+      <div className="flex flex-col gap-6">
+        <p className="text-center text-neutral-500">{message}</p>
 
-      <div className="flex gap-4">
-        <Button onClick={handleClose} variant="outline" className="flex-center flex-1">
-          Cancel
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={handleClose} variant="outline" className="flex-center flex-1">
+            Cancel
+          </Button>
 
-        <Button
-          onClick={handleConfirm}
-          disabled={isLoading}
-          variant="outlineDanger"
-          className="flex-center flex-1"
-        >
-          {!isLoading ? 'Confirm' : 'Loading...'}
-        </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={isLoading}
+            variant="outlineDanger"
+            className="flex-center flex-1"
+          >
+            {!isLoading ? 'Confirm' : 'Loading...'}
+          </Button>
+        </div>
       </div>
     </Dialog>
   )

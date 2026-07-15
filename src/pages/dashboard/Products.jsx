@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
-
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
-
 import { useGetProducts } from '@/api'
 import ProductCard from '@/components/dashboard/products/ProductCard'
 import {
@@ -16,23 +14,18 @@ import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
 import Pagination from '@/components/ui/Pagination'
 import { cn } from '@/utils'
+import { useSearchParamsForm } from '@/utils/forms'
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
+  const [searchParams] = useSearchParams()
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm()
 
-  const page = searchParams.get('page') || ''
-  const search = searchParams.get('search') || ''
-  const category = searchParams.get('category') || ''
-  const subcategory = searchParams.get('subcategory') || ''
+  const { search, category, subcategory } = urlValues
 
   const { data, isLoading, isError, error } = useGetProducts({
-    page,
-    limit: 6,
-    search,
-    category,
-    subcategory,
+    limit: 100,
   })
 
   const products = data?.products || []
@@ -44,33 +37,29 @@ export default function AdminProducts() {
 
   const categories = Array.from(new Set(products.map((product) => product.category)))
 
-  const { register, handleSubmit, watch } = useForm({
-    mode: 'onTouched',
-    defaultValues: { search, category, subcategory },
-  })
-  const [searchValue, categoryValue, subcategoryValue] = watch([
-    'search',
-    'category',
-    'subcategory',
-  ])
+  const filteredProducts = useMemo(() => {
+    if (!products?.length) return []
 
-  function onSubmit({ search, category, subcategory }) {
-    setSearchParams((s) => {
-      search ? s.set('search', search) : s.delete('search')
-      category ? s.set('category', category) : s.delete('category')
-      subcategory ? s.set('subcategory', subcategory) : s.delete('subcategory')
+    const query = search?.toLowerCase().trim()
 
-      return s
+    return products.filter((product) => {
+      if (category && product.category !== category) return false
+      if (subcategory && product.subcategory !== subcategory) return false
+
+      if (query) {
+        const name = product.shippingAddress?.fullName || product.user || ''
+
+        return product._id?.toLowerCase().includes(query) || name.toLowerCase().includes(query)
+      }
+
+      return true
     })
-  }
+  }, [products, search, category, subcategory])
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      handleSubmit(onSubmit)()
-    }, 500)
-
-    return () => clearTimeout(delayDebounceFn)
-  }, [searchValue, categoryValue, subcategoryValue, handleSubmit])
+  const currentPage = searchParams.get('page') || 1
+  const limit = 20
+  const page = filteredProducts.slice((currentPage - 1) * limit, currentPage * limit)
+  const totalPages = Math.ceil(filteredProducts.length / limit)
 
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -98,7 +87,7 @@ export default function AdminProducts() {
         <OutOfStockTotal outOfStockTotal={outOfStockTotal} isLoading={isLoading} />
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="card p-4">
+      <form onSubmit={handleSubmit(updateParams)} className="card p-4">
         <div className="flex items-center gap-4">
           <FormField
             id="search"
@@ -120,7 +109,7 @@ export default function AdminProducts() {
             <LuFilter /> Filters
           </Button>
 
-          <Button type="submit" onClick={handleSubmit(onSubmit)}>
+          <Button type="submit">
             <LuSearch /> Search
           </Button>
         </div>
@@ -134,6 +123,7 @@ export default function AdminProducts() {
               labelIcon={<LuBoxes />}
               register={register}
               options={categories}
+              defaultOption="all categories"
               className="w-full"
             />
 
@@ -153,14 +143,14 @@ export default function AdminProducts() {
         <div className="card p-4 text-neutral-500">{error?.message}</div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {Array.from({ length: isLoading ? 6 : products?.length }).map((_, i) => {
-            const product = products?.[i]
+          {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {
+            const product = page?.[i]
             return <ProductCard key={i} product={product} isLoading={isLoading} />
           })}
         </div>
       )}
 
-      <Pagination totalPages={data?.totalPages} className="mt-auto" />
+      <Pagination totalPages={totalPages} className="mt-auto" />
     </div>
   )
 }

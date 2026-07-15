@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-
 import Wishlist from '@/pages/user/Wishlist'
 
 describe('Wishlist', () => {

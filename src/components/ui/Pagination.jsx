@@ -1,8 +1,6 @@
 import { LuChevronFirst, LuChevronLast, LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
-
 import { cn } from '@/utils'
-
 import Button from './Button'
 
 export default function Pagination({ className, totalPages = 1 }) {
@@ -13,8 +11,8 @@ export default function Pagination({ className, totalPages = 1 }) {
 
   const updatePage = (newPage) => {
     setSearchParams((prev) => {
-      newPage <= 1 ? prev.delete('page') : prev.set('page', newPage.toString())
-      newPage >= safeTotalPages && prev.set('page', safeTotalPages.toString())
+      newPage <= 1 ? prev.delete('page') : prev.set('page', String(newPage))
+      newPage >= safeTotalPages && prev.set('page', String(safeTotalPages))
       return prev
     })
   }

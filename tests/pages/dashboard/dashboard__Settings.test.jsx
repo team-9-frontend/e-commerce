@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-
 import Settings from '@/pages/dashboard/Settings'
 
 describe('Settings', () => {

@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-
 import { useLogin } from '@/api'
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
@@ -13,9 +12,7 @@ export default function Login() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm()
 
   const onSubmit = ({ email, password }) => {
     login(

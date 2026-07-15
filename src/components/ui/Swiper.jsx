@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
-
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react'
-
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 

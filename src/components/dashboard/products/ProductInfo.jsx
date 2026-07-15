@@ -1,7 +1,5 @@
 import { LuShoppingBag, LuStar, LuTag } from 'react-icons/lu'
-
 import Skeleton from '@/components/ui/Skeleton'
-
 import ProductStats from './ProductStats'
 
 export default function ProductInfo({ isLoading, product }) {
@@ -66,7 +64,7 @@ export default function ProductInfo({ isLoading, product }) {
           <LuStar /> Rating
         </h2>
 
-        <p className="text-sm space-x-4 font-medium text-neutral-500">
+        <p className="space-x-4 text-sm font-medium text-neutral-500">
           {!isLoading ? (
             <>
               <span>{product.numReviews} reviews</span>

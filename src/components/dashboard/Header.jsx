@@ -10,7 +10,6 @@ import {
   LuX,
 } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
-
 import { useCurrentUser } from '@/api'
 import Button from '@/components/ui/Button'
 import Tooltip from '@/components/ui/Tooltip'

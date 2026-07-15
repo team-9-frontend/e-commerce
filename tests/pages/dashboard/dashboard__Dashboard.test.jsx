@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import AdminDashboard from '@/pages/dashboard/Dashboard'
 
 const mockRefetch = vi.fn()
