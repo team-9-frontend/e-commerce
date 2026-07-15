@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react'
-
 import { Outlet, useNavigate } from 'react-router-dom'
-
 import { useCurrentUser } from '@/api'
 import Header from '@/components/dashboard/Header'
 import Sidebar from '@/components/dashboard/Sidebar'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { cn } from '@/utils'
-
-import LoadingSpinner from '../components/ui/LoadingSpinner'
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
@@ -16,11 +13,11 @@ export default function DashboardLayout() {
   const { data: user, isLoading } = useCurrentUser()
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (isLoading) return
-  //   if (!user) return navigate('/login')
-  //   if (user.role !== 'admin') return navigate('/')
-  // }, [user, isLoading])
+  useEffect(() => {
+    if (isLoading) return
+    if (!user) return navigate('/login')
+    if (user.role !== 'admin') return navigate('/')
+  }, [user, isLoading])
 
   return isLoading ? (
     <div className="flex-center min-h-screen">

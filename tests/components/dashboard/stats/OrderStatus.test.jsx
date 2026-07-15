@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-
 import OrderStatus from '@/components/dashboard/stats/OrderStatus'
 
 const orders = {

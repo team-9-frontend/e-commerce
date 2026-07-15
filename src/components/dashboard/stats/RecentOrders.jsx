@@ -1,5 +1,4 @@
 import { format } from 'date-fns'
-
 import Badge from '@/components/ui/Badge'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
@@ -46,7 +45,7 @@ export default function RecentOrders({ className, isLoading, recentOrders }) {
                         (order?.status === 'processing' && 'sky') ||
                         (order?.status === 'confirmed' && 'teal') ||
                         (order?.status === 'shipped' && 'purple') ||
-                        (order?.status === 'delivered' && 'lime') ||
+                        (order?.status === 'delivered' && 'emerald') ||
                         (order?.status === 'cancelled' && 'rose') ||
                         null
                       }

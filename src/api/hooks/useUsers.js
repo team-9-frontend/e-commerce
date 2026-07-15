@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-
 import { userKeys } from '../keys/userKeys'
 import { usersService } from '../services/usersService'
 
@@ -30,6 +29,7 @@ export const useGetUserById = (id) => {
 
 const useUserMutation = (mutationFn) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn,
     onSuccess: () => {

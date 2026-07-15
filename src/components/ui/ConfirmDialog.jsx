@@ -1,26 +1,43 @@
 import Button from './Button'
-import Modal from './Modal'
+import Dialog from './Dialog'
 
 export default function ConfirmDialog({
+  className,
   isOpen,
-  onClose,
+  setIsOpen,
   onConfirm,
+  isLoading,
   title = 'Confirm Action',
   message = 'Are you sure?',
 }) {
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+  const handleConfirm = () => {
+    onConfirm?.()
+  }
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title}>
-      <p className="mb-6 text-gray-600">{message}</p>
+    <Dialog isOpen={isOpen} setIsOpen={setIsOpen} title={title} className={className}>
+      <div className="flex flex-col gap-6">
+        <p className="text-center text-neutral-500">{message}</p>
 
-      <div className="flex justify-end gap-3">
-        <Button variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={handleClose} variant="outline" className="flex-center flex-1">
+            Cancel
+          </Button>
 
-        <Button variant="danger" onClick={onConfirm}>
-          Confirm
-        </Button>
+          <Button
+            onClick={handleConfirm}
+            disabled={isLoading}
+            variant="outlineDanger"
+            className="flex-center flex-1"
+          >
+            {!isLoading ? 'Confirm' : 'Loading...'}
+          </Button>
+        </div>
       </div>
-    </Modal>
+    </Dialog>
   )
 }

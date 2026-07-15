@@ -9,7 +9,6 @@ import {
   LuUsers,
 } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
-
 import { useLogout } from '@/api'
 import Button from '@/components/ui/Button'
 import Tooltip from '@/components/ui/Tooltip'
@@ -68,12 +67,14 @@ export default function Sidebar({ className, open, minimized }) {
       {sidebarData.map((item) => (
         <Link key={item.path} to={item.path}>
           <Button
-            variant={pathname === item.path ? 'neutral-primary' : 'ghost'}
-            size={minimized ? 'md-square' : 'md'}
+            variant={pathname === item.path ? 'neutralPrimary' : 'ghost'}
+            size={minimized ? 'lg-square' : 'lg'}
             className="w-full"
           >
             {item.icon}
-            <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>{item.title}</span>
+            <span className={cn('min-w-36 leading-none', minimized ? 'lg:hidden' : '')}>
+              {item.title}
+            </span>
             <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
               {item.title}
             </Tooltip>
@@ -84,8 +85,8 @@ export default function Sidebar({ className, open, minimized }) {
       <Button
         onClick={() => logout()}
         disabled={isPending}
-        variant="dangerGhost"
-        size={minimized ? 'md-square' : 'md'}
+        variant="ghostDanger"
+        size={minimized ? 'lg-square' : 'lg'}
       >
         <LuLogOut size={20} />
         <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>

@@ -1,7 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-
 import MainLayout from '@/layouts/MainLayout'
-import NotFound from '@/pages/NotFound'
 import ForgotPassword from '@/pages/auth/ForgotPassword'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
@@ -9,6 +7,7 @@ import VerifyOTP from '@/pages/auth/VerifyOTP'
 import Checkout from '@/pages/checkout/Checkout'
 import OrderSuccess from '@/pages/checkout/OrderSuccess'
 import Payment from '@/pages/checkout/Payment'
+import NotFound from '@/pages/NotFound'
 import DynamicProduct from '@/pages/store/DynamicProduct'
 import Home from '@/pages/store/Home'
 import Products from '@/pages/store/Products'
@@ -17,7 +16,6 @@ import DynamicOrder from '@/pages/user/DynamicOrder'
 import Orders from '@/pages/user/Orders'
 import Profile from '@/pages/user/Profile'
 import Wishlist from '@/pages/user/Wishlist'
-
 import DashboardRoutes from './DashboardRoutes'
 
 export default function AppRoutes() {

@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-
 import { wishlistKeys } from '../keys/wishlistKeys'
 import { wishlistService } from '../services/wishlistService'
 
@@ -36,6 +35,7 @@ export const useGetWishlistStats = () => {
 
 const useWishlistMutation = (mutationFn) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn,
     onSuccess: () => {

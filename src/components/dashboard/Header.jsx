@@ -10,7 +10,6 @@ import {
   LuX,
 } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
-
 import { useCurrentUser } from '@/api'
 import Button from '@/components/ui/Button'
 import Tooltip from '@/components/ui/Tooltip'
@@ -82,7 +81,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           )}
 
           <div>
-            <h3 className="font-semibold">{!isLoading ? user?.username : 'username'}</h3>
+            <h3 className="font-medium">{!isLoading ? user?.username : 'username'}</h3>
             <p className="text-xs text-neutral-500">{!isLoading ? user?.role : 'role'}</p>
           </div>
         </div>

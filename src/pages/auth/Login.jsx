@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-
 import { useLogin } from '@/api'
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
@@ -13,9 +12,7 @@ export default function Login() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm()
 
   const onSubmit = ({ email, password }) => {
     login(
@@ -36,7 +33,7 @@ export default function Login() {
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
         <p className="mb-6 text-center text-neutral-500">Please log in to continue.</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
             id="email"
             label="email"

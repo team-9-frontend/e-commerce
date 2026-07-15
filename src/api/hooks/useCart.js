@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-
 import { cartKeys } from '../keys/cartKeys'
 import { cartService } from '../services/cartService'
 
@@ -20,6 +19,7 @@ export const useGetCart = () => {
 
 const useCartMutation = (mutationFn) => {
   const queryClient = useQueryClient()
+
   return useMutation({
     mutationFn,
     onSuccess: () => {
@@ -28,9 +28,9 @@ const useCartMutation = (mutationFn) => {
   })
 }
 
-export const useAddToCart = () => useCartMutation(cartService.addItem)
-export const useApplyCoupon = () => useCartMutation(cartService.applyCoupon)
-export const useUpdateCartItem = () => useCartMutation(cartService.updateItem)
-export const useRemoveCartItem = () => useCartMutation(cartService.removeItem)
+export const useAddToCart = () => useCartMutation(cartService.addItem(data))
+export const useApplyCoupon = () => useCartMutation(cartService.applyCoupon(data))
+export const useUpdateCartItem = () => useCartMutation(cartService.updateItem(data))
+export const useRemoveCartItem = () => useCartMutation(cartService.removeItem(id))
 export const useClearCart = () => useCartMutation(cartService.clear)
 export const useRemoveCoupon = () => useCartMutation(cartService.removeCoupon)
