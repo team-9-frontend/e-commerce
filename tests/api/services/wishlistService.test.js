@@ -1,5 +1,4 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import api from '@/api/client'
 import { wishlistService } from '@/api/services/wishlistService'
 

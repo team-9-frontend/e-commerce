@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import FormField from './FormField'
 
 export default function OtpInput({ name, count = 6, register, setValue, error }) {

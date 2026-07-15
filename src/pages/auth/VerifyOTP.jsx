@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
-
 import { useVerifyForgotPasswordOtp, useVerifyRegisterOtp } from '@/api'
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'

@@ -1,16 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
-
 import DashboardLayout from '@/layouts/DashboardLayout'
-import NotFound from '@/pages/NotFound'
 import AdminCarts from '@/pages/dashboard/Carts'
 import AdminDashboard from '@/pages/dashboard/Dashboard'
 import AdminOrders from '@/pages/dashboard/Orders'
 import AdminProductCreate from '@/pages/dashboard/ProductCreate'
 import AdminProductEdit from '@/pages/dashboard/ProductEdit'
-import AdminProductView from '@/pages/dashboard/ProductView'
 import AdminProducts from '@/pages/dashboard/Products'
+import AdminProductView from '@/pages/dashboard/ProductView'
 import AdminSettings from '@/pages/dashboard/Settings'
 import AdminUsers from '@/pages/dashboard/Users'
+import NotFound from '@/pages/NotFound'
 
 export default function DashboardRoutes() {
   return (

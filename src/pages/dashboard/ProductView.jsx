@@ -1,6 +1,5 @@
 import { LuArrowLeft } from 'react-icons/lu'
 import { Link, useParams } from 'react-router-dom'
-
 import { useGetProductById } from '@/api/hooks/useProducts'
 import ProductInfo from '@/components/dashboard/products/ProductInfo'
 import ProductReviews from '@/components/dashboard/products/ProductReviews'

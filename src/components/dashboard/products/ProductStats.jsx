@@ -1,5 +1,4 @@
 import { LuChartLine } from 'react-icons/lu'
-
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 

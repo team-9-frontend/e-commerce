@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
 import { useSendRegisterOtp } from '@/api'
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
@@ -15,9 +13,7 @@ export default function Register() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm()
 
   const onSubmit = ({ username, email, password, phone }) => {
     sendRegisterOtp(
