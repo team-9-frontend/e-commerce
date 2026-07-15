@@ -40,7 +40,7 @@ export default function AdminUsers() {
 
     return users.filter((user) => {
       if (query) {
-        const name = user.user?.username || ''
+        const name = user?.username || ''
 
         return user._id?.toLowerCase().includes(query) || name.toLowerCase().includes(query)
       }

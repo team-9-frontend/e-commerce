@@ -67,7 +67,7 @@ export default function Sidebar({ className, open, minimized }) {
       {sidebarData.map((item) => (
         <Link key={item.path} to={item.path}>
           <Button
-            variant={pathname === item.path ? 'neutralPrimary' : 'ghost'}
+            variant={pathname === item.path ? 'primary' : 'ghost'}
             size={minimized ? 'lg-square' : 'lg'}
             className="w-full"
           >

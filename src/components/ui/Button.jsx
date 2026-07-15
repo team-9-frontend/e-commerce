@@ -2,8 +2,6 @@ import { cn } from '@/utils'
 
 const variants = {
   primary:
-    'bg-accent-500 hover:bg-accent-600 dark:hover:bg-accent-400 text-neutral-50 dark:text-neutral-950',
-  neutralPrimary:
     'bg-neutral-800 dark:bg-accent-500 hover:bg-neutral-700 dark:hover:bg-accent-400 text-neutral-50 dark:text-neutral-950',
   ghost: 'hover:bg-neutral-200',
   ghostDanger: 'hover:bg-red-500/25 hover:text-red-600 dark:hover:text-red-400',

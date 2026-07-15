@@ -92,7 +92,7 @@ export default function AddUserForm() {
           <LuTrash /> clear
         </Button>
 
-        <Button type="submit" disabled={isPending} variant="neutralPrimary">
+        <Button type="submit" disabled={isPending} variant="primary">
           <LuUserPlus />
           <span className="text-nowrap">{isPending ? 'Loading...' : 'create user'}</span>
         </Button>

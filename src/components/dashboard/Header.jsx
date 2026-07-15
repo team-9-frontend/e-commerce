@@ -67,17 +67,19 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           <Tooltip position="bottom">Notifications</Tooltip>
         </Button>
 
-        <div className="flex-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
-          {!isLoading && user?.avatar ? (
-            <img
-              src={user.avatar}
-              alt="avatar"
-              width={28}
-              height={28}
-              className="rounded-full border border-neutral-300"
-            />
+        <div className="flex items-center gap-2 rounded-lg border border-neutral-200 min-w-32 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
+          {user?.avatar ? (
+            <div className="flex-center size-8 overflow-hidden rounded-full bg-neutral-50 text-xs">
+              <img
+                src={user?.avatar}
+                alt={String(user?.username).slice(0, 1)}
+                className="size-full object-cover"
+              />
+            </div>
           ) : (
-            <LuCircleUserRound size={28} />
+            <div className="flex-center size-8 rounded-full bg-neutral-50 text-xs">
+              {String(user?.username).slice(0, 1)}
+            </div>
           )}
 
           <div>
