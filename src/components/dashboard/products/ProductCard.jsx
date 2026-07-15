@@ -1,8 +1,6 @@
 import { useState } from 'react'
-
 import { LuStar } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
-
 import { useDeleteProduct } from '@/api'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'

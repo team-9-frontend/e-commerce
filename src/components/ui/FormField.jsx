@@ -6,6 +6,7 @@ export default function FormField({
   labelIcon,
   type = 'text',
   options,
+  defaultOption,
   id,
   label,
   placeholder,
@@ -31,20 +32,33 @@ export default function FormField({
             id={id}
             {...(register && register(id, rules))}
             className={cn(
-              'w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
+              'w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 capitalize outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
               error && 'border-red-600 dark:border-red-400',
               className,
               icon && 'pl-10',
             )}
-            value=""
             {...rest}
           >
+            <option value="">{defaultOption}</option>
             {options?.map((option, i) => (
-              <option key={i} value={option} hidden={option === ''}>
+              <option key={i} value={option}>
                 {option}
               </option>
             ))}
           </select>
+        ) : type === 'textarea' ? (
+          <textarea
+            id={id}
+            {...(register && register(id, rules))}
+            placeholder={placeholder}
+            className={cn(
+              'focus:border-accent-500 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
+              error && 'border-red-600 dark:border-red-400',
+              className,
+              icon && 'pl-10',
+            )}
+            {...rest}
+          />
         ) : (
           <input
             type={type}

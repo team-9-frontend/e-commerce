@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 const topProducts = [

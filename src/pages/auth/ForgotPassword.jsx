@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-
 import { useForgotPasswordOtp } from '@/api'
 import Button from '@/components/ui/Button'
 import FormField from '@/components/ui/FormField'
@@ -14,9 +13,7 @@ export default function ForgotPassword() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm()
 
   const onSubmit = ({ email }) => {
     sendOtp(

@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import AppRoutes from '@/routes/index'
 
 vi.mock('next-themes', () => ({
