@@ -9,10 +9,11 @@ import {
 } from '@/components/dashboard/stats/DashboardStats'
 import OrdersStats from '@/components/dashboard/stats/OrdersStats'
 import RecentOrders from '@/components/dashboard/stats/RecentOrders'
+import StatsSkeleton from '@/components/dashboard/stats/StatsSkeleton'
 import TopProducts from '@/components/dashboard/stats/TopProducts'
 
 export default function AdminDashboard() {
-  const { data, isLoading, isError, error } = useGetOrdersStats()
+  const { data, isPending, isError, error, refetch } = useGetOrdersStats()
   const stats = data?.dashboard
 
   return (
@@ -27,29 +28,33 @@ export default function AdminDashboard() {
         </p>
       </div>
 
-      {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+      {isPending ? (
+        <StatsSkeleton />
+      ) : isError ? (
+        <div className="card p-4 text-neutral-500">
+          Error: {error?.message}
+          <button onClick={refetch}>Retry</button>
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <TotalOrders totalOrders={stats?.orders?.total} isLoading={isLoading} />
-            <PendingOrders pendingOrders={stats?.orders?.pending} isLoading={isLoading} />
-            <Revenue revenue={stats?.revenue?.total} isLoading={isLoading} />
-            <ThisMonth salesThisMonth={stats?.revenue?.thisMonth} isLoading={isLoading} />
+            <TotalOrders totalOrders={stats?.orders?.total} isLoading={isPending} />
+            <PendingOrders pendingOrders={stats?.orders?.pending} isLoading={isPending} />
+            <Revenue revenue={stats?.revenue?.total} isLoading={isPending} />
+            <ThisMonth salesThisMonth={stats?.revenue?.thisMonth} isLoading={isPending} />
             <TopProduct
-              topProduct={stats?.topProducts?.[0].name}
-              sales={stats?.topProducts?.[0].totalSold}
-              isLoading={isLoading}
+              topProduct={stats?.topProducts?.[0]?.name}
+              sales={stats?.topProducts?.[0]?.totalSold}
+              isLoading={isPending}
             />
-            <TotalUsers totalUsers={stats?.totalCustomers} isLoading={isLoading} />
+            <TotalUsers totalUsers={stats?.totalCustomers} isLoading={isPending} />
           </div>
 
-          <OrdersStats stats={stats?.orders} isLoading={isLoading} />
+          <OrdersStats stats={stats?.orders} isLoading={isPending} />
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <TopProducts topProducts={stats?.topProducts} isLoading={isLoading} />
-
-            <RecentOrders recentOrders={stats?.recentOrders} isLoading={isLoading} />
+            <TopProducts topProducts={stats?.topProducts} />
+            <RecentOrders recentOrders={stats?.recentOrders} />
           </div>
         </>
       )}

@@ -1,4 +1,4 @@
-import {
+﻿import {
   LuFileText,
   LuHouse,
   LuLogOut,
@@ -66,7 +66,11 @@ export default function Sidebar({ className, open, minimized }) {
       )}
     >
       {sidebarData.map((item) => (
-        <Link key={item.path} to={item.path}>
+        <Link
+          key={item.path}
+          to={item.path}
+          className={pathname === item.path ? 'bg-accent-500' : ''}
+        >
           <Button
             variant={pathname === item.path ? 'neutralPrimary' : 'ghost'}
             size={minimized ? 'lg-square' : 'lg'}
@@ -98,3 +102,4 @@ export default function Sidebar({ className, open, minimized }) {
     </aside>
   )
 }
+

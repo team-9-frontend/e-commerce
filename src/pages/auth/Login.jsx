@@ -23,7 +23,7 @@ export default function Login() {
       {
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Login failed!',
+            message: error.response?.data?.message || 'Invalid credentials',
           })
         },
       },
@@ -87,3 +87,4 @@ export default function Login() {
     </div>
   )
 }
+

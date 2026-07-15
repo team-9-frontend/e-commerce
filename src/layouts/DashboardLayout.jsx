@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 
 import { Outlet, useNavigate } from 'react-router-dom'
 
@@ -12,16 +12,16 @@ export default function DashboardLayout() {
   const [open, setOpen] = useState(false)
   const [minimized, setMinimized] = useState(false)
 
-  const { data: user, isLoading } = useCurrentUser()
+  const { data: user, isPending } = useCurrentUser()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (isLoading) return
+    if (isPending) return
     if (!user) return navigate('/login')
     if (user.role !== 'admin') return navigate('/')
-  }, [user, isLoading])
+  }, [user, isPending])
 
-  return isLoading ? (
+  return isPending ? (
     <div className="flex-center min-h-screen">
       <LoadingSpinner className="size-24" />
     </div>
@@ -45,7 +45,7 @@ export default function DashboardLayout() {
         onClick={() => setOpen(!open)}
         className={cn(
           'fixed inset-0 z-10 cursor-default bg-black/50 transition-all lg:hidden',
-          open ? 'opacity-100' : 'invisible opacity-0',
+          open ? 'block' : 'hidden',
         )}
       ></button>
 
@@ -57,3 +57,7 @@ export default function DashboardLayout() {
     </div>
   )
 }
+
+
+
+
