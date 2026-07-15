@@ -13,7 +13,7 @@ export default function ForgotPassword() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm()
+  } = useForm({ mode: 'onTouched' })
 
   const onSubmit = ({ email }) => {
     sendOtp(

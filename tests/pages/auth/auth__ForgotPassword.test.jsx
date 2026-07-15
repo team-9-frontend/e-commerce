@@ -17,5 +17,3 @@ describe('ForgotPassword', () => {
     expect(screen.getByText('Forgot Password')).toBeInTheDocument()
   })
 })
-
-

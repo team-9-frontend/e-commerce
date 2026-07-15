@@ -12,7 +12,7 @@ export default function Login() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm()
+  } = useForm({ mode: 'onTouched' })
 
   const onSubmit = ({ email, password }) => {
     login(

@@ -5,6 +5,7 @@ export default function ConfirmDialog({
   className,
   isOpen,
   setIsOpen,
+  onClose,
   onConfirm,
   isLoading,
   title = 'Confirm Action',
@@ -19,7 +20,13 @@ export default function ConfirmDialog({
   }
 
   return (
-    <Dialog isOpen={isOpen} setIsOpen={setIsOpen} title={title} className={className}>
+    <Dialog
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      onClose={onClose}
+      title={title}
+      className={className}
+    >
       <div className="flex flex-col gap-6">
         <p className="text-center text-neutral-500">{message}</p>
 

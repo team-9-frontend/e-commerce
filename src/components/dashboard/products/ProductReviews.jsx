@@ -3,9 +3,9 @@ import { LuStar, LuText } from 'react-icons/lu'
 import Skeleton from '@/components/ui/Skeleton'
 import { cn } from '@/utils'
 
-export default function ProductReviews({ classNmae, isLoading, reviews }) {
+export default function ProductReviews({ className, isLoading, reviews }) {
   return (
-    <div className={cn('flex flex-col gap-4', classNmae)}>
+    <div className={cn('flex flex-col gap-4', className)}>
       <div className="card flex flex-col gap-4 p-4">
         <h2 className="flex items-center gap-2 font-bold text-neutral-950 capitalize">
           <LuText /> reviews

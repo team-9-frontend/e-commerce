@@ -56,7 +56,7 @@ describe('AppRoutes - smoke test', () => {
 
   it('"/products" Ø¨ÙŠØ±Ù†Ø¯Ø± ØµÙØ­Ø© Products', () => {
     renderAtPath('/products')
-   expect(screen.getByText('Products Page')).toBeInTheDocument()
+    expect(screen.getByText('Products Page')).toBeInTheDocument()
   })
 
   it('"/login" Ø¨ÙŠØ±Ù†Ø¯Ø± ÙÙˆØ±Ù… Ø§Ù„Ù€ Login Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠ', () => {
@@ -95,10 +95,3 @@ describe('AppRoutes - smoke test', () => {
     expect(screen.getAllByText('Products')[0]).toBeInTheDocument()
   })
 })
-
-
-
-
-
-
-

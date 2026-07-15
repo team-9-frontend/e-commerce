@@ -74,6 +74,7 @@ export function useSearchParamsForm({ debounceMs = 300, ...options } = {}) {
 
   return {
     ...form,
+    updateParams,
     urlValues: currentParams,
   }
 }

@@ -8,4 +8,3 @@ describe('Carts', () => {
     expect(screen.getByText('Cart overview')).toBeInTheDocument()
   })
 })
-

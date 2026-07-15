@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useMemo, useState } from 'react'
 import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useGetProducts } from '@/api'
@@ -18,9 +17,11 @@ import { useSearchParamsForm } from '@/utils/forms'
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
-  const [searchParams] = useSearchParams()
 
-  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm()
+  const [searchParams] = useSearchParams()
+  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
+    mode: 'onTouched',
+  })
 
   const { search, category, subcategory } = urlValues
 
@@ -109,7 +110,7 @@ export default function AdminProducts() {
             <LuFilter /> Filters
           </Button>
 
-          <Button type="submit">
+          <Button type="submit" variant="neutralPrimary">
             <LuSearch /> Search
           </Button>
         </div>
