@@ -63,7 +63,7 @@ export default function AdminUsers() {
               <img
                 src={user?.avatar}
                 alt={String(user?.username).slice(0, 1)}
-                className="flex-center size-full object-cover"
+                className="size-full object-cover"
               />
             </div>
           ) : (
