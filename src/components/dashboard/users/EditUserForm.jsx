@@ -4,6 +4,8 @@ import FormField from '@/components/ui/FormField'
 import { useForm } from '@/utils/forms'
 
 export default function AddUserForm({ user, setUser }) {
+  if (!user) return
+
   const { mutate: updateUser, isPending } = useUpdateUser()
 
   const {
@@ -12,6 +14,11 @@ export default function AddUserForm({ user, setUser }) {
     formState: { errors },
   } = useForm({
     mode: 'onTouched',
+    defaultValues: {
+      username: user?.username ?? '',
+      phone: user?.phone ?? '',
+      avatar: user?.avatar ?? '',
+    },
   })
 
   return (
