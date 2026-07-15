@@ -1,16 +1,12 @@
-import { MdDelete } from 'react-icons/md'
-import { IoShieldCheckmarkSharp } from 'react-icons/io5'
-import { FaEdit } from 'react-icons/fa'
+import { useState } from 'react'
+import { FaEdit, FaPlus, FaShieldAlt, FaUser } from 'react-icons/fa'
 import { FaCheck } from 'react-icons/fa6'
 import { FiX } from 'react-icons/fi'
 import { HiUsers } from 'react-icons/hi'
-import { FaShieldAlt } from 'react-icons/fa'
-import { FaUser } from 'react-icons/fa'
-import { FaPlus } from 'react-icons/fa'
+import { IoShieldCheckmarkSharp } from 'react-icons/io5'
+import { MdDelete } from 'react-icons/md'
+import { useAddUser, useDeleteUser, useGetAllUsers, useUpdateUser } from '../../api/hooks/useUsers'
 
-import { useState } from 'react'
-
-import { useGetAllUsers, useAddUser, useUpdateUser, useDeleteUser } from '../../api/hooks/useUsers'
 export default function AdminUsers() {
   const { data, isLoading, error } = useGetAllUsers()
   const addUser = useAddUser()

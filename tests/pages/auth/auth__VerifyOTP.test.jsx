@@ -17,4 +17,3 @@ describe('VerifyOTP', () => {
     expect(screen.getByText('Verify OTP')).toBeInTheDocument()
   })
 })
-

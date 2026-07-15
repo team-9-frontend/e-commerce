@@ -8,4 +8,3 @@ describe('Settings', () => {
     expect(screen.getByText('Preferences and integrations')).toBeInTheDocument()
   })
 })
-

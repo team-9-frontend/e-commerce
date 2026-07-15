@@ -140,4 +140,3 @@ describe('Login', () => {
     await waitFor(() => expect(mockNavigate).toHaveBeenCalled())
   })
 })
-

@@ -17,5 +17,3 @@ describe('Register', () => {
     expect(screen.getByText('Create Account')).toBeInTheDocument()
   })
 })
-
-

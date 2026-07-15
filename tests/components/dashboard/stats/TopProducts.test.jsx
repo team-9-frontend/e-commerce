@@ -34,5 +34,3 @@ describe('TopProducts', () => {
     expect(screen.queryByText(/units sold/)).not.toBeInTheDocument()
   })
 })
-
-
