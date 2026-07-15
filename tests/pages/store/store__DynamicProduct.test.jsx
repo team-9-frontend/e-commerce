@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import DynamicProduct from '@/pages/storeDynamicProduct'
+
+import DynamicProduct from '@/pages/store/DynamicProduct'
 
 describe('DynamicProduct', () => {
   it('يعرض النص الصحيح للصفحة', () => {

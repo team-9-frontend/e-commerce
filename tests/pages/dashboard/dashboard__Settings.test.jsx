@@ -5,6 +5,7 @@ import Settings from '@/pages/dashboard/Settings'
 describe('Settings', () => {
   it('يعرض النص الصحيح للصفحة', () => {
     render(<Settings />)
-    expect(screen.getByText('Settings Page')).toBeInTheDocument()
+    expect(screen.getByText('Preferences and integrations')).toBeInTheDocument()
   })
 })
+

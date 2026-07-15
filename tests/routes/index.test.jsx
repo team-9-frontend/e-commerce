@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+﻿import { render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AppRoutes from '@/routes/index'
 
@@ -6,11 +6,11 @@ vi.mock('next-themes', () => ({
   useTheme: () => ({ theme: 'light', setTheme: vi.fn() }),
 }))
 
-// mock شامل لـ @/api: Header بيستخدم useCurrentUser، Sidebar بيستخدم useLogout،
-// و DashboardLayout بيستخدم useCurrentUser كمان (auth guard)، وDashboard page بيستخدم useGetOrdersStats
-// مهم: لازم الـ user object يكون نفس الـ reference في كل استدعاء،
-// وإلا DashboardLayout's useEffect (اللي معتمد على [user, ...]) هيدخل infinite loop
-// لأنه هيحس إن user "اتغير" في كل render مع إن البيانات نفسها فعليًا.
+// mock Ø´Ø§Ù…Ù„ Ù„Ù€ @/api: Header Ø¨ÙŠØ³ØªØ®Ø¯Ù… useCurrentUserØŒ Sidebar Ø¨ÙŠØ³ØªØ®Ø¯Ù… useLogoutØŒ
+// Ùˆ DashboardLayout Ø¨ÙŠØ³ØªØ®Ø¯Ù… useCurrentUser ÙƒÙ…Ø§Ù† (auth guard)ØŒ ÙˆDashboard page Ø¨ÙŠØ³ØªØ®Ø¯Ù… useGetOrdersStats
+// Ù…Ù‡Ù…: Ù„Ø§Ø²Ù… Ø§Ù„Ù€ user object ÙŠÙƒÙˆÙ† Ù†ÙØ³ Ø§Ù„Ù€ reference ÙÙŠ ÙƒÙ„ Ø§Ø³ØªØ¯Ø¹Ø§Ø¡ØŒ
+// ÙˆØ¥Ù„Ø§ DashboardLayout's useEffect (Ø§Ù„Ù„ÙŠ Ù…Ø¹ØªÙ…Ø¯ Ø¹Ù„Ù‰ [user, ...]) Ù‡ÙŠØ¯Ø®Ù„ infinite loop
+// Ù„Ø£Ù†Ù‡ Ù‡ÙŠØ­Ø³ Ø¥Ù† user "Ø§ØªØºÙŠØ±" ÙÙŠ ÙƒÙ„ render Ù…Ø¹ Ø¥Ù† Ø§Ù„Ø¨ÙŠØ§Ù†Ø§Øª Ù†ÙØ³Ù‡Ø§ ÙØ¹Ù„ÙŠÙ‹Ø§.
 const mockAdminUser = { username: 'amr', role: 'admin' }
 
 vi.mock('@/api', () => ({
@@ -31,6 +31,12 @@ vi.mock('@/api', () => ({
     isError: false,
     refetch: vi.fn(),
   }),
+  useGetProducts: () => ({
+    data: { products: [], total: 0 },
+    isLoading: false,
+    isError: false,
+    error: null,
+  }),
 }))
 
 function renderAtPath(path) {
@@ -43,49 +49,56 @@ describe('AppRoutes - smoke test', () => {
     window.history.pushState({}, '', '/')
   })
 
-  it('"/" بيرندر صفحة Home', () => {
+  it('"/" Ø¨ÙŠØ±Ù†Ø¯Ø± ØµÙØ­Ø© Home', () => {
     renderAtPath('/')
     expect(screen.getByText('Home Page')).toBeInTheDocument()
   })
 
-  it('"/products" بيرندر صفحة Products', () => {
+  it('"/products" Ø¨ÙŠØ±Ù†Ø¯Ø± ØµÙØ­Ø© Products', () => {
     renderAtPath('/products')
-    expect(screen.getByText('Products Page')).toBeInTheDocument()
+   expect(screen.getByText('Products Page')).toBeInTheDocument()
   })
 
-  it('"/login" بيرندر فورم الـ Login الحقيقي', () => {
+  it('"/login" Ø¨ÙŠØ±Ù†Ø¯Ø± ÙÙˆØ±Ù… Ø§Ù„Ù€ Login Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠ', () => {
     renderAtPath('/login')
     expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument()
   })
 
-  it('مسار مش موجود بيرندر NotFound', () => {
+  it('Ù…Ø³Ø§Ø± Ù…Ø´ Ù…ÙˆØ¬ÙˆØ¯ Ø¨ÙŠØ±Ù†Ø¯Ø± NotFound', () => {
     renderAtPath('/random-page-1234')
     expect(screen.getByText('Page not found')).toBeInTheDocument()
   })
 
-  it('"/dashboard" بيرندر DashboardLayout (Header + Sidebar) + صفحة Dashboard لـ admin', async () => {
+  it('"/dashboard" Ø¨ÙŠØ±Ù†Ø¯Ø± DashboardLayout (Header + Sidebar) + ØµÙØ­Ø© Dashboard Ù„Ù€ admin', async () => {
     renderAtPath('/dashboard')
 
     await waitFor(() => {
-      expect(screen.getByText(/LOOM/)).toBeInTheDocument() // من Header
+      expect(screen.getByText(/LOOM/)).toBeInTheDocument() // Ù…Ù† Header
     })
-    expect(screen.getAllByText('Products').length).toBeGreaterThan(0) // من Sidebar
-    expect(screen.getByText('Real-time commerce health')).toBeInTheDocument() // من Dashboard page
+    expect(screen.getAllByText('Products').length).toBeGreaterThan(0) // Ù…Ù† Sidebar
+    expect(screen.getByText('Real-time commerce health')).toBeInTheDocument() // Ù…Ù† Dashboard page
   })
 
-  // ⚠️ اكتشفنا سلوك مهم أثناء كتابة التست ده يستحق تتأكدوا منه مع الفريق:
-  // DashboardLayout عنده useEffect بيعمل navigate('/dashboard') لأي admin بغض النظر
-  // عن المسار الفرعي الحالي (زي /dashboard/products)، لأن الـ effect ملوش dependency
-  // على المسار نفسه. يعني عمليًا: مستحيل تعمل refresh على /dashboard/products مباشرة
-  // من غير ما ترجع تلقائيًا لـ /dashboard. التست ده بيوثق السلوك الحالي (مش بيحكم عليه
-  // صح أو غلط) عشان الفريق يقرر عايزينه فعلاً كده ولا لأ.
-  it('"/dashboard/products" بيرندر صفحة Products بتاعة الداشبورد من غير أي redirect', async () => {
+  // âš ï¸ Ø§ÙƒØªØ´ÙÙ†Ø§ Ø³Ù„ÙˆÙƒ Ù…Ù‡Ù… Ø£Ø«Ù†Ø§Ø¡ ÙƒØªØ§Ø¨Ø© Ø§Ù„ØªØ³Øª Ø¯Ù‡ ÙŠØ³ØªØ­Ù‚ ØªØªØ£ÙƒØ¯ÙˆØ§ Ù…Ù†Ù‡ Ù…Ø¹ Ø§Ù„ÙØ±ÙŠÙ‚:
+  // DashboardLayout Ø¹Ù†Ø¯Ù‡ useEffect Ø¨ÙŠØ¹Ù…Ù„ navigate('/dashboard') Ù„Ø£ÙŠ admin Ø¨ØºØ¶ Ø§Ù„Ù†Ø¸Ø±
+  // Ø¹Ù† Ø§Ù„Ù…Ø³Ø§Ø± Ø§Ù„ÙØ±Ø¹ÙŠ Ø§Ù„Ø­Ø§Ù„ÙŠ (Ø²ÙŠ /dashboard/products)ØŒ Ù„Ø£Ù† Ø§Ù„Ù€ effect Ù…Ù„ÙˆØ´ dependency
+  // Ø¹Ù„Ù‰ Ø§Ù„Ù…Ø³Ø§Ø± Ù†ÙØ³Ù‡. ÙŠØ¹Ù†ÙŠ Ø¹Ù…Ù„ÙŠÙ‹Ø§: Ù…Ø³ØªØ­ÙŠÙ„ ØªØ¹Ù…Ù„ refresh Ø¹Ù„Ù‰ /dashboard/products Ù…Ø¨Ø§Ø´Ø±Ø©
+  // Ù…Ù† ØºÙŠØ± Ù…Ø§ ØªØ±Ø¬Ø¹ ØªÙ„Ù‚Ø§Ø¦ÙŠÙ‹Ø§ Ù„Ù€ /dashboard. Ø§Ù„ØªØ³Øª Ø¯Ù‡ Ø¨ÙŠÙˆØ«Ù‚ Ø§Ù„Ø³Ù„ÙˆÙƒ Ø§Ù„Ø­Ø§Ù„ÙŠ (Ù…Ø´ Ø¨ÙŠØ­ÙƒÙ… Ø¹Ù„ÙŠÙ‡
+  // ØµØ­ Ø£Ùˆ ØºÙ„Ø·) Ø¹Ø´Ø§Ù† Ø§Ù„ÙØ±ÙŠÙ‚ ÙŠÙ‚Ø±Ø± Ø¹Ø§ÙŠØ²ÙŠÙ†Ù‡ ÙØ¹Ù„Ø§Ù‹ ÙƒØ¯Ù‡ ÙˆÙ„Ø§ Ù„Ø£.
+  it('"/dashboard/products" Ø¨ÙŠØ±Ù†Ø¯Ø± ØµÙØ­Ø© Products Ø¨ØªØ§Ø¹Ø© Ø§Ù„Ø¯Ø§Ø´Ø¨ÙˆØ±Ø¯ Ù…Ù† ØºÙŠØ± Ø£ÙŠ redirect', async () => {
     renderAtPath('/dashboard/products')
 
     await waitFor(() => {
-      expect(screen.getByText(/LOOM/)).toBeInTheDocument() // Header اتحمل
+      expect(screen.getByText(/LOOM/)).toBeInTheDocument() // Header Ø§ØªØ­Ù…Ù„
     })
     expect(window.location.pathname).toBe('/dashboard/products')
-    expect(screen.getByText('Products Page')).toBeInTheDocument()
+    expect(screen.getAllByText('Products')[0]).toBeInTheDocument()
   })
 })
+
+
+
+
+
+
+
