@@ -7,7 +7,7 @@ import OrdersDialog from '@/components/orders/OrdersDialog'
 
 import { useGetAllOrders } from '@repo/api'
 import { Badge, FormField, Pagination, Table } from '@repo/ui'
-import { format } from '@repo/utils'
+import { filterData, format } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
 const statusColors = {
@@ -25,6 +25,8 @@ const statusColors = {
   stripe: 'sky',
 }
 
+const EMPTY_ORDERS = []
+
 export default function AdminOrders() {
   const [selected, setSelected] = useState(null)
 
@@ -36,26 +38,25 @@ export default function AdminOrders() {
   const { search, status, payment, method } = urlValues
 
   const { data, isLoading, isError, error } = useGetAllOrders({ limit: 100 })
-  const orders = data?.orders || []
+  const orders = data?.orders || EMPTY_ORDERS
 
   const filteredOrders = useMemo(() => {
-    if (!orders?.length) return []
-
-    const query = search?.toLowerCase().trim()
-
-    return orders.filter((order) => {
-      if (status && order.status !== status) return false
-      if (payment && order.paymentStatus !== payment) return false
-      if (method && order.paymentMethod !== method) return false
-
-      if (query) {
-        const name = order.user?.username || ''
-
-        return order._id?.toLowerCase().includes(query) || name.toLowerCase().includes(query)
-      }
-
-      return true
-    })
+    return filterData(orders, [
+      {
+        [search]: {
+          fields: [
+            '_id',
+            (o) => o.user?.username,
+            (o) => o.user?.email,
+            (o) => o.shippingAddress?.city,
+            (o) => o.shippingAddress?.country,
+          ],
+        },
+      },
+      { [status]: { fields: ['status'], exact: true } },
+      { [payment]: { fields: ['paymentStatus'], exact: true } },
+      { [method]: { fields: ['paymentMethod'], exact: true } },
+    ])
   }, [orders, search, status, payment, method])
 
   const currentPage = searchParams.get('page') || 1

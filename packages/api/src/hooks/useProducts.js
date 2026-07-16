@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { productKeys } from '../keys/productKeys'
+import { productsKeys } from '../keys/productsKeys'
 import { productsService } from '../services/productsService'
 
 // ----------------------------------
@@ -9,7 +9,7 @@ import { productsService } from '../services/productsService'
 
 export const useSearchProducts = (params) => {
   return useQuery({
-    queryKey: productKeys.search(params),
+    queryKey: productsKeys.search(params),
     queryFn: () => productsService.search(params),
     enabled: !!params?.query || Object.keys(params || {}).length > 0,
   })
@@ -17,7 +17,7 @@ export const useSearchProducts = (params) => {
 
 export const useGetProducts = (params) => {
   return useQuery({
-    queryKey: productKeys.list(params),
+    queryKey: productsKeys.list(params),
     queryFn: () => productsService.getAll(params),
     placeholderData: (previousData) => previousData,
   })
@@ -25,7 +25,7 @@ export const useGetProducts = (params) => {
 
 export const useGetProductById = (id) => {
   return useQuery({
-    queryKey: productKeys.detail(id),
+    queryKey: productsKeys.detail(id),
     queryFn: () => productsService.getById(id),
     enabled: !!id,
     refetchInterval: 30000,
@@ -41,7 +41,7 @@ const useProductMutation = (mutationFn) => {
   return useMutation({
     mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: productKeys.all })
+      queryClient.invalidateQueries({ queryKey: productsKeys.all })
     },
   })
 }

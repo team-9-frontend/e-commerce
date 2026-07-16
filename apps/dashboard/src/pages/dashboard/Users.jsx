@@ -7,18 +7,11 @@ import AddUserForm from '@/components/users/AddUserForm'
 import EditUserDialog from '@/components/users/EditUserDialog'
 
 import { useDeleteUser, useGetAllUsers, useUpdateUserRole } from '@repo/api'
-import {
-  Badge,
-  Button,
-  ConfirmDialog,
-  Dialog,
-  FormField,
-  Pagination,
-  Table,
-  Tooltip,
-} from '@repo/ui'
-import { cn } from '@repo/utils'
+import { Badge, Button, ConfirmDialog, FormField, Pagination, Table, Tooltip } from '@repo/ui'
+import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
+
+const EMPTY_USERS = []
 
 export default function AdminUsers() {
   const { mutate: deleteUser, isPending: deleteUserIsPending } = useDeleteUser()
@@ -36,22 +29,12 @@ export default function AdminUsers() {
   const { search } = urlValues
 
   const { data, isLoading, isError, error } = useGetAllUsers({ limit: 100 })
-  const users = data?.users || []
+  const users = data?.users || EMPTY_USERS
 
   const filteredUsers = useMemo(() => {
-    if (!users?.length) return []
-
-    const query = search?.toLowerCase().trim()
-
-    return users.filter((user) => {
-      if (query) {
-        const name = user?.username || ''
-
-        return user._id?.toLowerCase().includes(query) || name.toLowerCase().includes(query)
-      }
-
-      return true
-    })
+    return filterData(users, [
+      { [search]: { fields: ['_id', 'phone', (u) => u.username, (u) => u.email] } },
+    ])
   }, [users, search])
 
   const currentPage = searchParams.get('page') || 1
@@ -135,7 +118,7 @@ export default function AdminUsers() {
         </div>
       ),
     }))
-  }, [page])
+  }, [page, updateUserRole, updateUserRoleIsPending])
 
   return (
     <div className="flex flex-1 flex-col gap-4">

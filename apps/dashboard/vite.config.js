@@ -12,15 +12,4 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
     },
   },
-  test: {
-    environment: 'jsdom',
-    setupFiles: './tests/setup.js',
-    globals: true,
-    css: false,
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'html'],
-      exclude: ['src/main.jsx', 'src/test/**', '**/*.config.js'],
-    },
-  },
 })

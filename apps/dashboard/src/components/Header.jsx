@@ -1,6 +1,5 @@
 import {
   LuBell,
-  LuCircleUserRound,
   LuIndentDecrease,
   LuIndentIncrease,
   LuMenu,

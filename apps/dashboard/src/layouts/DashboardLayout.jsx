@@ -20,7 +20,7 @@ export default function DashboardLayout() {
     if (isLoading) return
     if (!user) return navigate('/login')
     if (user.role !== 'admin') return navigate('/login')
-  }, [user, isLoading])
+  }, [user, isLoading, navigate])
 
   return isLoading ? (
     <div className="flex-center min-h-screen">
