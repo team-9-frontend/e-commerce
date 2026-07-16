@@ -44,7 +44,7 @@ export default function AddUserForm() {
           rules={{
             pattern: {
               value: /^\+[1-9]\d{1,14}$/i,
-              message: 'Invalid phone number',
+              message: 'Invalid phone number (must contain country code)',
             },
           }}
           error={errors.phone}

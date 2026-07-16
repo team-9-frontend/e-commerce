@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { useLogin } from '@repo/api'
 import { Button, FormField } from '@repo/ui'
@@ -6,6 +6,7 @@ import { useForm } from '@repo/utils/forms'
 
 export default function Login() {
   const { mutate: login, isPending } = useLogin()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -19,7 +20,7 @@ export default function Login() {
       { email, password },
       {
         onSuccess: (data) => {
-          if (data?.user.role === 'admin') navigate('/')
+          if (data?.user?.role === 'admin') navigate('/')
         },
         onError: (error) => {
           setError('root', {
@@ -31,7 +32,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex-center flex-1">
+    <div className="flex-center min-h-screen">
       <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
         <p className="mb-6 text-center text-neutral-500">Please log in to continue.</p>
@@ -65,13 +66,6 @@ export default function Login() {
             }}
             error={errors.password}
           />
-
-          <div className="flex flex-col items-start gap-1 text-sm">
-            <span>
-              Don&apos;t have an account? <Link to="/register">Register</Link>
-            </span>
-            <Link to="/forgot-password">Forgot password?</Link>
-          </div>
 
           <Button type="submit" disabled={isPending} className="flex-center">
             {isPending ? 'Loading...' : 'Login'}

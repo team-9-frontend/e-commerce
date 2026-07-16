@@ -27,20 +27,26 @@ export default function OrdersDialog({ order, setOrder }) {
 
   const { mutate: updateStatus, isPending } = useUpdateOrderStatus()
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     mode: 'onTouched',
   })
+
+  console.log(order)
 
   useEffect(() => {
     if (order) {
       setLastOrder(order)
+      reset({
+        status: order.status ?? '',
+        adminNote: order.adminNote ?? '',
+      })
     }
-  }, [order])
+  }, [order, reset])
 
   return (
     <Dialog
       position="right"
-      isOpen={!!order}
+      isOpen={order}
       setIsOpen={setOrder}
       title={
         <div className="flex flex-col">
@@ -167,8 +173,7 @@ export default function OrdersDialog({ order, setOrder }) {
                   'delivered',
                   'cancelled',
                   'returned',
-                ].filter((status) => status !== order?.status)}
-                defaultOption={order?.status}
+                ]}
                 defaultValue={order?.status}
                 className="card overflow-visible shadow-xs"
               />
