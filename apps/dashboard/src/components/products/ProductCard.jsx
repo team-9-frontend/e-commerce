@@ -56,7 +56,7 @@ export default function ProductCard({ isLoading, product }) {
           <div className="flex gap-2">
             {product.tags.map((tag, i) => (
               <span
-                key={tag}
+                key={i}
                 className="rounded-full bg-neutral-100 px-3 py-1 text-sm text-neutral-700 dark:bg-neutral-200"
               >
                 #{tag}

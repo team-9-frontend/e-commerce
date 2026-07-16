@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { reviewKeys } from '../keys/reviewKeys'
+import { reviewsKeys } from '../keys/reviewsKeys'
 import { reviewsService } from '../services/reviewsService'
 
 // ----------------------------------
@@ -9,7 +9,7 @@ import { reviewsService } from '../services/reviewsService'
 
 export const useGetReviews = (productId) => {
   return useQuery({
-    queryKey: reviewKeys.list(productId),
+    queryKey: reviewsKeys.list(productId),
     queryFn: () => reviewsService.getByProductId(productId),
     enabled: !!productId,
   })
@@ -25,7 +25,7 @@ export const usePostReview = () => {
   return useMutation({
     mutationFn: ({ productId, data }) => reviewsService.create(productId, data),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: reviewKeys.list(variables.id) })
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.list(variables.id) })
     },
   })
 }
@@ -36,7 +36,7 @@ export const useDeleteReview = () => {
   return useMutation({
     mutationFn: ({ productId, reviewId }) => reviewsService.remove(productId, reviewId),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: reviewKeys.list(variables.id) })
+      queryClient.invalidateQueries({ queryKey: reviewsKeys.list(variables.id) })
     },
   })
 }

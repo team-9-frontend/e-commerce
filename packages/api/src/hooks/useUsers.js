@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { userKeys } from '../keys/userKeys'
+import { usersKeys } from '../keys/usersKeys'
 import { usersService } from '../services/usersService'
 
 // ----------------------------------
@@ -9,7 +9,7 @@ import { usersService } from '../services/usersService'
 
 export const useGetAllUsers = () => {
   return useQuery({
-    queryKey: userKeys.lists(),
+    queryKey: usersKeys.lists(),
     queryFn: usersService.getAll,
     refetchInterval: 30000,
   })
@@ -17,7 +17,7 @@ export const useGetAllUsers = () => {
 
 export const useGetUserById = (id) => {
   return useQuery({
-    queryKey: userKeys.detail(id),
+    queryKey: usersKeys.detail(id),
     queryFn: () => usersService.getById(id),
     enabled: !!id,
     refetchInterval: 30000,
@@ -34,7 +34,7 @@ const useUserMutation = (mutationFn) => {
   return useMutation({
     mutationFn,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: userKeys.all })
+      queryClient.invalidateQueries({ queryKey: usersKeys.all })
     },
   })
 }

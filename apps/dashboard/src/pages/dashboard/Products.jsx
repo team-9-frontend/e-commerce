@@ -13,8 +13,10 @@ import {
 
 import { useGetProducts } from '@repo/api'
 import { Button, FormField, Pagination } from '@repo/ui'
-import { cn } from '@repo/utils'
+import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
+
+const EMPTY_PRODUCTS = []
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
@@ -29,33 +31,20 @@ export default function AdminProducts() {
   const { data, isLoading, isError, error } = useGetProducts({
     limit: 100,
   })
-
-  const products = data?.products || []
+  const products = data?.products || EMPTY_PRODUCTS
 
   const totalProducts = products.length
   const featuredProducts = products.filter((product) => product.featured).length
   const inStockTotal = products.filter((product) => product.stock > 0).length
   const outOfStockTotal = products.filter((product) => product.stock === 0).length
-
   const categories = Array.from(new Set(products.map((product) => product.category)))
 
   const filteredProducts = useMemo(() => {
-    if (!products?.length) return []
-
-    const query = search?.toLowerCase().trim()
-
-    return products.filter((product) => {
-      if (category && product.category !== category) return false
-      if (subcategory && product.subcategory !== subcategory) return false
-
-      if (query) {
-        const name = product.shippingAddress?.fullName || product.user || ''
-
-        return product._id?.toLowerCase().includes(query) || name.toLowerCase().includes(query)
-      }
-
-      return true
-    })
+    return filterData(products, [
+      { [search]: { fields: ['_id', 'brand', 'slug', 'name', 'shortDescription'] } },
+      { [category]: { fields: ['category'], exact: true } },
+      { [subcategory]: { fields: ['subcategory'] } },
+    ])
   }, [products, search, category, subcategory])
 
   const currentPage = searchParams.get('page') || 1
