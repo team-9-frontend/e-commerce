@@ -26,7 +26,7 @@ export function Dialog({
         position === 'top' && 'items-start justify-stretch',
         position === 'right' && 'items-stretch justify-end',
         position === 'left' && 'items-stretch justify-start',
-        position === 'center' && 'items-center justify-center',
+        position === 'center' && 'items-center justify-center p-6',
         isOpen ? 'opacity-100' : 'invisible opacity-0',
       )}
       onClick={handleClose}

@@ -39,7 +39,7 @@ export function FormField({
             )}
             {...rest}
           >
-            <option value="">{defaultOption}</option>
+            {defaultOption && <option value="">{defaultOption}</option>}
             {options?.map((option, i) => (
               <option key={i} value={option}>
                 {option}
