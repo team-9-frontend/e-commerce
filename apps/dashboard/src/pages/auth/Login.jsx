@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom'
+
 import { useLogin } from '@repo/api'
 import { Button, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
 export default function Login() {
   const { mutate: login, isPending } = useLogin()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -17,7 +20,7 @@ export default function Login() {
       { email, password },
       {
         onSuccess: (data) => {
-          if (data?.user.role === 'admin') navigate('/')
+          if (data?.user?.role === 'admin') navigate('/')
         },
         onError: (error) => {
           setError('root', {
