@@ -76,7 +76,7 @@ export default function Login() {
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          <Button type="submit" disabled={isPending} className="flex-center">
+          <Button type="submit" disabled={isPending}>
             {isPending ? 'Loading...' : 'Login'}
           </Button>
         </form>

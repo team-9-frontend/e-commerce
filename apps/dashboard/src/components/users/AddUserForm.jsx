@@ -94,7 +94,7 @@ export default function AddUserForm() {
 
         <Button type="submit" disabled={isPending} variant="primary">
           <LuUserPlus />
-          <span className="text-nowrap">{isPending ? 'Loading...' : 'create user'}</span>
+          <span>{isPending ? 'Loading...' : 'create user'}</span>
         </Button>
       </div>
     </form>

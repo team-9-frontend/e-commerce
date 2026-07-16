@@ -24,6 +24,7 @@ export default function AdminProducts() {
   const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
+    unDebouncedFields: ['category'],
   })
 
   const { search, category, subcategory } = urlValues
@@ -54,8 +55,8 @@ export default function AdminProducts() {
 
   return (
     <div className="flex flex-1 flex-col gap-4">
-      <div className="card flex items-center justify-between p-4">
-        <div className="space-y-2">
+      <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
+        <div className="w-full space-y-2">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             products
           </p>
@@ -132,6 +133,8 @@ export default function AdminProducts() {
 
       {isError ? (
         <div className="card p-4 text-neutral-500">{error?.message}</div>
+      ) : !page?.length && !isLoading ? (
+        <div className="card p-4 text-neutral-500">No products found</div>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {

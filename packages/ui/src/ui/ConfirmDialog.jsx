@@ -31,7 +31,7 @@ export function ConfirmDialog({
         <p className="text-center text-neutral-500">{message}</p>
 
         <div className="flex gap-4">
-          <Button onClick={handleClose} variant="outline" className="flex-center flex-1">
+          <Button onClick={handleClose} variant="outline" className="flex-1">
             Cancel
           </Button>
 
@@ -39,7 +39,7 @@ export function ConfirmDialog({
             onClick={handleConfirm}
             disabled={isLoading}
             variant="outlineDanger"
-            className="flex-center flex-1"
+            className="flex-1"
           >
             {!isLoading ? 'Confirm' : 'Loading...'}
           </Button>

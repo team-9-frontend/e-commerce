@@ -77,8 +77,8 @@ export default function EditUserDialog({ user, setUser }) {
             error={errors.avatar}
           />
 
-          <Button type="submit" disabled={isPending} variant="primary" className="flex-center">
-            <span className="text-nowrap">{isPending ? 'Saving...' : 'save changes'}</span>
+          <Button type="submit" disabled={isPending} variant="primary">
+            <span>{isPending ? 'Saving...' : 'save changes'}</span>
           </Button>
         </form>
       )}

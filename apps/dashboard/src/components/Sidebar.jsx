@@ -69,7 +69,7 @@ export default function Sidebar({ className, open, minimized }) {
           <Button
             variant={pathname === item.path ? 'primary' : 'ghost'}
             size={minimized ? 'lg-square' : 'lg'}
-            className="w-full"
+            className="w-full justify-start"
           >
             {item.icon}
             <span className={cn('min-w-36 leading-none', minimized ? 'lg:hidden' : '')}>
@@ -87,6 +87,7 @@ export default function Sidebar({ className, open, minimized }) {
         disabled={isPending}
         variant="ghostDanger"
         size={minimized ? 'lg-square' : 'lg'}
+        className="justify-start"
       >
         <LuLogOut size={20} />
         <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>

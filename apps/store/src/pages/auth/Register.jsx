@@ -105,7 +105,7 @@ export default function Register() {
             Already have an account? <Link to="/login">Login</Link>
           </span>
 
-          <Button type="submit" disabled={isPending} className="flex-center">
+          <Button type="submit" disabled={isPending}>
             {isPending ? 'Loading...' : 'Register'}
           </Button>
         </form>

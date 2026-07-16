@@ -33,6 +33,7 @@ export default function AdminOrders() {
   const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
+    unDebouncedFields: ['status', 'payment', 'method'],
   })
 
   const { search, status, payment, method } = urlValues
@@ -110,8 +111,8 @@ export default function AdminOrders() {
 
   return (
     <div className="flex flex-1 flex-col gap-4">
-      <div className="card flex items-center justify-between p-4">
-        <div className="space-y-2">
+      <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
+        <div className="w-full space-y-2">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             orders
           </p>
@@ -120,7 +121,7 @@ export default function AdminOrders() {
             Manage your product inventory, view details, and update listings.
           </p>
         </div>
-        <div className="card p-4 shadow-xs">
+        <div className="card p-4 text-nowrap shadow-xs">
           {data?.total || 0} <span className="text-sm text-neutral-600">total orders</span>
         </div>
       </div>
@@ -182,6 +183,7 @@ export default function AdminOrders() {
           columns={['order', 'customer', 'date', 'status', 'payment', 'method', 'total']}
           data={mappedOrders}
           isLoading={isLoading}
+          noDataMsg="No orders found"
         />
       )}
 

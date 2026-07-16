@@ -70,11 +70,7 @@ export default function VerifyOTP() {
             />
           )}
 
-          <Button
-            type="submit"
-            disabled={resetIsPending || registerIsPending}
-            className="flex-center"
-          >
+          <Button type="submit" disabled={resetIsPending || registerIsPending}>
             {resetIsPending || registerIsPending
               ? 'Loading...'
               : mode === 'reset'
