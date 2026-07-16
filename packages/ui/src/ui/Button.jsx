@@ -24,7 +24,7 @@ export function Button({ children, className, variant = 'primary', size = 'md', 
   return (
     <button
       className={cn(
-        'group relative flex cursor-pointer items-center gap-2 px-4 py-2 text-left font-medium text-neutral-950 capitalize transition-all disabled:pointer-events-none disabled:opacity-50',
+        'group flex-center relative cursor-pointer gap-2 px-4 py-2 text-left font-medium text-nowrap text-neutral-950 capitalize transition-all disabled:pointer-events-none disabled:opacity-50',
         variants[variant],
         sizes[size],
         className,

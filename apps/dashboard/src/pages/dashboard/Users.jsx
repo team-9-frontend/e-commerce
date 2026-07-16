@@ -122,8 +122,8 @@ export default function AdminUsers() {
 
   return (
     <div className="flex flex-1 flex-col gap-4">
-      <div className="card flex items-center justify-between p-4">
-        <div className="space-y-2">
+      <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
+        <div className="w-full space-y-2">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             users
           </p>
@@ -132,13 +132,16 @@ export default function AdminUsers() {
             Manage your product inventory, view details, and update listings.
           </p>
         </div>
-        <div className="card p-4 shadow-xs">
+        <div className="card p-4 text-nowrap shadow-xs">
           {data?.count || 0} <span className="text-sm text-neutral-600">total users</span>
         </div>
       </div>
 
       <div className="card p-4">
-        <form onSubmit={handleSubmit(updateParams)} className="flex items-center gap-4">
+        <form
+          onSubmit={handleSubmit(updateParams)}
+          className="flex gap-4 max-sm:flex-col sm:items-center"
+        >
           <FormField
             id="search"
             icon={<LuSearch />}
@@ -156,7 +159,7 @@ export default function AdminUsers() {
                 'dark:bg-accent-500/15 bg-accent-500/15 border-accent-500/50 text-accent-600 dark:text-accent-400',
             )}
           >
-            <LuPlus /> <span className="text-nowrap">add user</span>
+            <LuPlus /> <span>add user</span>
           </Button>
         </form>
 
@@ -177,6 +180,7 @@ export default function AdminUsers() {
           columns={['user', 'role', 'verified', 'actions']}
           data={mappedusers}
           isLoading={isLoading}
+          noDataMsg="No users found"
         />
       )}
 

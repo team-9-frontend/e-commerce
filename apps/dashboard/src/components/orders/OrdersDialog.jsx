@@ -187,7 +187,7 @@ export default function OrdersDialog({ order, setOrder }) {
                 rows={3}
               />
 
-              <Button type="submit" disabled={isPending} variant="primary" className="flex-center">
+              <Button type="submit" disabled={isPending} variant="primary">
                 {!isPending ? 'Save Changes' : 'Saving...'}
               </Button>
             </form>

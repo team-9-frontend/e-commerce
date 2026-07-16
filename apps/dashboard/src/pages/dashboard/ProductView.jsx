@@ -14,8 +14,8 @@ export default function AdminProductView() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="card flex items-center justify-between p-4">
-        <div className="space-y-2">
+      <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
+        <div className="w-full space-y-2">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             overview
           </p>

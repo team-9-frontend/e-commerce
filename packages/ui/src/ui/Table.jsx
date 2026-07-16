@@ -2,7 +2,13 @@ import { cn } from '@repo/utils'
 
 import { Skeleton } from './Skeleton'
 
-export function Table({ isLoading, loadingRows = 20, columns = [], data = [] }) {
+export function Table({
+  isLoading,
+  loadingRows = 20,
+  columns = [],
+  data = [],
+  noDataMsg = 'No data found',
+}) {
   return (
     <div className="card scrollbar-thin overflow-x-auto">
       <table className="min-w-full border-collapse">
@@ -20,7 +26,7 @@ export function Table({ isLoading, loadingRows = 20, columns = [], data = [] }) 
           {!isLoading && !data?.length > 0 ? (
             <tr>
               <td colSpan={columns.length} className="py-6 text-center text-neutral-500">
-                No data found
+                {noDataMsg}
               </td>
             </tr>
           ) : (
