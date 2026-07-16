@@ -1,0 +1,11 @@
+{
+  "name": "@repo/api",
+  "version": "0.0.0",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.101.2",
+    "axios": "^1.18.1"
+  }
+}
