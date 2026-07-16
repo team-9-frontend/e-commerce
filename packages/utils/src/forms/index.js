@@ -5,16 +5,16 @@ import { useSearchParams } from 'react-router-dom'
 
 export * from 'react-hook-form'
 
-export function useSearchParamsForm({ debounceMs = 300, ...options } = {}) {
-  const [searchParams, setSearchParams] = useSearchParams()
+const paramsToObject = (params) => {
+  const obj = {}
+  params.forEach((value, key) => {
+    obj[key] = value
+  })
+  return obj
+}
 
-  const paramsToObject = (params) => {
-    const obj = {}
-    params.forEach((value, key) => {
-      obj[key] = value
-    })
-    return obj
-  }
+export function useSearchParamsForm({ debounceMs = 300, unDebouncedFields = [], ...options } = {}) {
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const form = useForm({
     ...options,
@@ -27,8 +27,8 @@ export function useSearchParamsForm({ debounceMs = 300, ...options } = {}) {
   const updateParams = useCallback(
     (data) => {
       setSearchParams(
-        () => {
-          const next = new URLSearchParams({})
+        (prev) => {
+          const next = new URLSearchParams(prev)
           Object.entries(data).forEach(([key, value]) => {
             if (value === '' || value === null || value === undefined) {
               next.delete(key)
@@ -50,9 +50,9 @@ export function useSearchParamsForm({ debounceMs = 300, ...options } = {}) {
   useEffect(() => {
     let debounceTimer
 
-    const subscription = watch((value, { name, type }) => {
+    const subscription = watch((value, { name }) => {
       if (!name) return
-      const isDebouncedField = name === 'search'
+      const isDebouncedField = !unDebouncedFields.includes(name)
 
       if (isDebouncedField) {
         clearTimeout(debounceTimer)
@@ -69,9 +69,9 @@ export function useSearchParamsForm({ debounceMs = 300, ...options } = {}) {
       subscription.unsubscribe()
       clearTimeout(debounceTimer)
     }
-  }, [watch, updateParams, debounceMs])
+  }, [watch, updateParams, debounceMs, unDebouncedFields.join(',')])
 
-  const currentParams = useMemo(() => paramsToObject(searchParams), [searchParams, paramsToObject])
+  const currentParams = useMemo(() => paramsToObject(searchParams), [searchParams])
 
   return {
     ...form,
