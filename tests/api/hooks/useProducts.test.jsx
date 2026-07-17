@@ -2,19 +2,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { productKeys } from '@/api//keys/productKeys'
-import { productsService } from '@/api/services/productsService'
-
 import {
+  productsKeys,
+  productsService,
   useCreateProduct,
   useDeleteProduct,
   useGetProductById,
   useGetProducts,
   useSearchProducts,
   useUpdateProduct,
-} from '@/api/hooks/useProducts'
+} from '@repo/api'
 
-vi.mock('@/api/services/productsService', () => ({
+vi.mock('@repo/api', () => ({
   productsService: {
     search: vi.fn(),
     getAll: vi.fn(),
@@ -102,7 +101,7 @@ describe('useProducts mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(productsService.create.mock.calls[0][0]).toEqual(payload)
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: productKeys.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: productsKeys.all })
   })
 
   it('useUpdateProduct calls the service with id and data', async () => {
@@ -117,7 +116,7 @@ describe('useProducts mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(productsService.update).toHaveBeenCalledWith('2', { price: 120 })
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: productKeys.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: productsKeys.all })
   })
 
   it('useDeleteProduct calls the service with id', async () => {
@@ -132,6 +131,6 @@ describe('useProducts mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(productsService.remove).toHaveBeenCalledWith('2')
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: productKeys.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: productsKeys.all })
   })
 })

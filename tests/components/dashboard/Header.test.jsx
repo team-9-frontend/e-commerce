@@ -1,20 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import Header from 'apps/dashboard/src/components/Header'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import Header from '@/components/dashboard/Header'
-
 const mockUseTheme = vi.fn()
-vi.mock('next-themes', () => ({
+vi.mock('@repo/utils', () => ({
   useTheme: (...args) => mockUseTheme(...args),
 }))
 
 const mockUseCurrentUser = vi.fn()
-vi.mock('@/api', () => ({
+vi.mock('@repo/api', () => ({
   useCurrentUser: (...args) => mockUseCurrentUser(...args),
 }))
 
-vi.mock('@/components/ui/Tooltip', () => ({
+vi.mock('@repo/ui', () => ({
   default: ({ children }) => <div>{children}</div>,
 }))
 

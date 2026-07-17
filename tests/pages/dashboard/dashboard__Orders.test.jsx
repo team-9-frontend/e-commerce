@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import Orders from 'apps/dashboard/src/pages/dashboard/Orders'
 import { describe, expect, it } from 'vitest'
-
-import Orders from '@/pages/dashboard/Orders'
 
 describe('Orders', () => {
   it('يعرض النص الصحيح للصفحة', () => {

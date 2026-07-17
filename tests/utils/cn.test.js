@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { cn } from '@/utils/cn'
+import { cn } from '@repo/utils'
 
 describe('cn()', () => {
   it('يدمج كام class simple مع بعض', () => {

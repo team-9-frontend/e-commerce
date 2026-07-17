@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import DashboardStats from 'apps/dashboard/src/components/stats/DashboardStats'
 import { describe, expect, it } from 'vitest'
-
-import DashboardStats from '@/components/dashboard/stats/DashboardStats'
 
 const baseProps = {
   totalOrders: 120,

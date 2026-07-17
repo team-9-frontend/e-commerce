@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import RecentOrders from 'apps/dashboard/src/components/stats/RecentOrders'
 import { describe, expect, it } from 'vitest'
-
-import RecentOrders from '@/components/dashboard/stats/RecentOrders'
 
 const recentOrders = [
   {

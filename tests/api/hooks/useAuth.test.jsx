@@ -2,11 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { authService } from '@/api/services/authService'
-
-import { authKeys } from '@/api//keys/authKeys'
-
 import {
+  authKeys,
+  authService,
   useAdminTest,
   useCurrentUser,
   useForgotPasswordOtp,
@@ -16,14 +14,14 @@ import {
   useUpdateUserRole,
   useVerifyForgotPasswordOtp,
   useVerifyRegisterOtp,
-} from '@/api/hooks/useAuth'
+} from '@repo/api'
 
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }))
 
-vi.mock('@/api/services/authService', () => ({
+vi.mock('@repo/api', () => ({
   authService: {
     getCurrentUser: vi.fn(),
     adminTest: vi.fn(),

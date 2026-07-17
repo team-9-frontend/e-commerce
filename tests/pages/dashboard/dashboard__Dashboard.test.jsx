@@ -1,31 +1,30 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import AdminDashboard from 'apps/dashboard/src/pages/dashboard/Dashboard'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-import AdminDashboard from '@/pages/dashboard/Dashboard'
 
 const mockRefetch = vi.fn()
 const mockUseGetOrdersStats = vi.fn()
 
-vi.mock('@/api', () => ({
+vi.mock('@repo/api', () => ({
   useGetOrdersStats: (...args) => mockUseGetOrdersStats(...args),
 }))
 
 // بنعمل mock للكومبوننتات الفرعية عشان التست ده يركز بس على منطق
 // الـ AdminDashboard نفسه (loading / error / success)، وكل كومبوننت
 // من دول متغطي بتستاته الخاصة بيه لوحده.
-vi.mock('@/components/dashboard/stats/DashboardStats', () => ({
+vi.mock('apps/dashboard/src/components/stats/DashboardStats', () => ({
   default: () => <div>DashboardStats-mock</div>,
 }))
-vi.mock('@/components/dashboard/stats/OrderStatus', () => ({
+vi.mock('apps/dashboard/src/components/stats/OrderStatus', () => ({
   default: () => <div>OrderStatus-mock</div>,
 }))
-vi.mock('@/components/dashboard/stats/RecentOrders', () => ({
+vi.mock('apps/dashboard/src/components/stats/RecentOrders', () => ({
   default: () => <div>RecentOrders-mock</div>,
 }))
-vi.mock('@/components/dashboard/stats/StatsSkeleton', () => ({
+vi.mock('apps/dashboard/src/components/stats/StatsSkeleton', () => ({
   default: () => <div>StatsSkeleton-mock</div>,
 }))
-vi.mock('@/components/dashboard/stats/TopProducts', () => ({
+vi.mock('apps/dashboard/src/components/stats/TopProducts', () => ({
   default: () => <div>TopProducts-mock</div>,
 }))
 

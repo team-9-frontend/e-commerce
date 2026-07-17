@@ -2,11 +2,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { cartKeys } from '@/api//keys/cartKeys'
-import { orderKeys } from '@/api//keys/orderKeys'
-import { ordersService } from '@/api/services/ordersService'
-
 import {
+  cartKeys,
+  ordersKeys,
+  ordersService,
   useCancelOrder,
   useCreateOrder,
   useGetAdminCarts,
@@ -16,9 +15,9 @@ import {
   useGetOrderById,
   useGetOrdersStats,
   useUpdateOrderStatus,
-} from '@/api/hooks/useOrders'
+} from '@repo/api'
 
-vi.mock('@/api/services/ordersService', () => ({
+vi.mock('@repo/api', () => ({
   ordersService: {
     getOrdersDashboard: vi.fn(),
     getAdminOrderById: vi.fn(),
@@ -137,7 +136,7 @@ describe('useOrders mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ordersService.createOrder.mock.calls[0][0]).toEqual(payload)
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: orderKeys.user.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ordersKeys.user.all })
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: cartKeys.all })
   })
 
@@ -153,7 +152,7 @@ describe('useOrders mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ordersService.cancelOrder).toHaveBeenCalledWith('99')
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: orderKeys.user.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ordersKeys.user.all })
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: cartKeys.all })
   })
 
@@ -169,6 +168,6 @@ describe('useOrders mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(ordersService.updateOrderStatus).toHaveBeenCalledWith('7', { status: 'shipped' })
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: orderKeys.admin.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ordersKeys.admin.all })
   })
 })

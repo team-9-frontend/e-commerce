@@ -1,12 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import Login from 'apps/store/src/pages/auth/Login'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { authService } from '@/api/services/authService'
-
-import Login from '@/pages/auth/Login'
+import { authService } from '@repo/api'
 
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async (importOriginal) => {
@@ -14,7 +13,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
   return { ...actual, useNavigate: () => mockNavigate }
 })
 
-vi.mock('@/api/services/authService', () => ({
+vi.mock('@repo/api', () => ({
   authService: {
     login: vi.fn(),
   },
@@ -34,8 +33,8 @@ function renderLogin() {
 }
 
 async function fillAndSubmit(email, password) {
-  await userEvent.type(screen.getByPlaceholderText('Enter your email'), email)
-  await userEvent.type(screen.getByPlaceholderText('Enter your password'), password)
+  await userEvent.type(screen.getByPlaceholderText('email'), email)
+  await userEvent.type(screen.getByPlaceholderText('password'), password)
   await userEvent.click(screen.getByRole('button', { name: /login/i }))
 }
 
@@ -48,7 +47,7 @@ describe('Login', () => {
 
   it('يعرض رسالة خطأ لو سايب الإيميل فاضي وعمل blur', async () => {
     renderLogin()
-    const emailInput = screen.getByPlaceholderText('Enter your email')
+    const emailInput = screen.getByPlaceholderText('email')
     await userEvent.click(emailInput)
     await userEvent.tab()
     expect(await screen.findByText('Email is required')).toBeInTheDocument()
@@ -56,7 +55,7 @@ describe('Login', () => {
 
   it('يعرض رسالة خطأ لو الإيميل مش بصيغة صحيحة', async () => {
     renderLogin()
-    const emailInput = screen.getByPlaceholderText('Enter your email')
+    const emailInput = screen.getByPlaceholderText('email')
     await userEvent.type(emailInput, 'not-an-email')
     await userEvent.tab()
     expect(await screen.findByText('Invalid email address')).toBeInTheDocument()
@@ -64,7 +63,7 @@ describe('Login', () => {
 
   it('يعرض رسالة خطأ لو الباسورد أقل من 8 حروف', async () => {
     renderLogin()
-    const passwordInput = screen.getByPlaceholderText('Enter your password')
+    const passwordInput = screen.getByPlaceholderText('password')
     await userEvent.type(passwordInput, '123')
     await userEvent.tab()
     expect(await screen.findByText('Must be at least 8 characters')).toBeInTheDocument()

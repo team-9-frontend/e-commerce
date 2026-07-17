@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import OrderStatus from 'apps/dashboard/src/components/stats/OrderStatus'
 import { describe, expect, it } from 'vitest'
-
-import OrderStatus from '@/components/dashboard/stats/OrderStatus'
 
 const orders = {
   pending: 3,

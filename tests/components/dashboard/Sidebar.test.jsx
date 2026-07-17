@@ -1,15 +1,14 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import Sidebar from 'apps/dashboard/src/components/Sidebar'
 import { MemoryRouter } from 'react-router-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import Sidebar from '@/components/dashboard/Sidebar'
-
 const mockUseLogout = vi.fn()
-vi.mock('@/api', () => ({
+vi.mock('@repo/api', () => ({
   useLogout: (...args) => mockUseLogout(...args),
 }))
 
-vi.mock('@/components/ui/Tooltip', () => ({
+vi.mock('@repo/ui', () => ({
   default: ({ children }) => <div>{children}</div>,
 }))
 
