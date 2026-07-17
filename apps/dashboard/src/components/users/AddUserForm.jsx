@@ -6,7 +6,7 @@ import { cn } from '@repo/utils'
 import { useForm } from '@repo/utils/forms'
 
 export default function AddUserForm() {
-  const { mutate: addUser, isPending } = useAddUser()
+  const { mutate: addUser, isPending: addingUser } = useAddUser()
 
   const {
     register,
@@ -92,9 +92,9 @@ export default function AddUserForm() {
           <LuTrash /> clear
         </Button>
 
-        <Button type="submit" disabled={isPending} variant="primary">
+        <Button type="submit" disabled={addingUser} variant="primary">
           <LuUserPlus />
-          <span>{isPending ? 'Loading...' : 'create user'}</span>
+          <span>{addingUser ? 'Loading...' : 'create user'}</span>
         </Button>
       </div>
     </form>

@@ -5,7 +5,7 @@ import { Button, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
 export default function ForgotPassword() {
-  const { mutate: sendOtp, isPending } = useForgotPasswordOtp()
+  const { mutate: sendOtp, isPending: sendingOtp } = useForgotPasswordOtp()
   const navigate = useNavigate()
 
   const {
@@ -59,8 +59,8 @@ export default function ForgotPassword() {
             error={errors.email}
           />
 
-          <Button type="submit" disabled={isPending} className="flex-center">
-            {isPending ? 'Sending...' : 'Send OTP'}
+          <Button type="submit" disabled={sendingOtp} className="flex-center">
+            {sendingOtp ? 'Sending...' : 'Send OTP'}
           </Button>
         </form>
 

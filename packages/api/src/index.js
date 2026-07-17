@@ -1,5 +1,7 @@
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query'
 
+export * from '@tanstack/react-query'
+
 export * from './hooks/useAuth'
 export * from './hooks/useCart'
 export * from './hooks/useOrders'
@@ -7,8 +9,6 @@ export * from './hooks/useProducts'
 export * from './hooks/useReviews'
 export * from './hooks/useUsers'
 export * from './hooks/useWishlist'
-
-export * from '@tanstack/react-query'
 
 export const queryClient = new QueryClient({
   defaultOptions: {

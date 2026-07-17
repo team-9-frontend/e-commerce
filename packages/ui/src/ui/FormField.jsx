@@ -2,14 +2,13 @@ import { cn } from '@repo/utils'
 
 export function FormField({
   className,
+  id,
   icon,
+  label,
   labelIcon,
   type = 'text',
   options,
   defaultOption,
-  id,
-  label,
-  placeholder,
   register,
   rules,
   error,
@@ -50,7 +49,6 @@ export function FormField({
           <textarea
             id={id}
             {...(register && register(id, rules))}
-            placeholder={placeholder}
             className={cn(
               'focus:border-accent-500 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
               error && 'border-red-600 dark:border-red-400',
@@ -64,7 +62,6 @@ export function FormField({
             type={type}
             id={id}
             {...(register && register(id, rules))}
-            placeholder={placeholder}
             className={cn(
               'focus:border-accent-500 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
               error && 'border-red-600 dark:border-red-400',

@@ -5,7 +5,7 @@ import { Button, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
 export default function Login() {
-  const { mutate: login, isPending } = useLogin()
+  const { mutate: login, isPending: logingin } = useLogin()
   const navigate = useNavigate()
 
   const {
@@ -67,8 +67,8 @@ export default function Login() {
             error={errors.password}
           />
 
-          <Button type="submit" disabled={isPending} className="flex-center">
-            {isPending ? 'Loading...' : 'Login'}
+          <Button type="submit" disabled={logingin} className="flex-center">
+            {logingin ? 'Loading...' : 'Login'}
           </Button>
         </form>
 

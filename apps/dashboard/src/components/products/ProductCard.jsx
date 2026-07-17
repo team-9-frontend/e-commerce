@@ -7,7 +7,7 @@ import { useDeleteProduct } from '@repo/api'
 import { Badge, Button, ConfirmDialog, Skeleton, Swiper } from '@repo/ui'
 
 export default function ProductCard({ isLoading, product }) {
-  const { mutate: deleteProduct, isPending } = useDeleteProduct()
+  const { mutate: deleteProduct, isPending: deletingProduct } = useDeleteProduct()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
@@ -111,7 +111,7 @@ export default function ProductCard({ isLoading, product }) {
             <ConfirmDialog
               isOpen={isDialogOpen}
               setIsOpen={setIsDialogOpen}
-              isLoading={isPending}
+              isLoading={deletingProduct}
               onConfirm={() => {
                 deleteProduct(product._id, {
                   onSuccess: () => {

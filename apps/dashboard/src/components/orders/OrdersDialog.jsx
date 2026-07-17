@@ -25,7 +25,7 @@ const statusColors = {
 export default function OrdersDialog({ order, setOrder }) {
   const [lastOrder, setLastOrder] = useState(null)
 
-  const { mutate: updateStatus, isPending } = useUpdateOrderStatus()
+  const { mutate: updateStatus, isPending: updatingStatus } = useUpdateOrderStatus()
 
   const { register, handleSubmit, reset } = useForm({
     mode: 'onTouched',
@@ -187,8 +187,8 @@ export default function OrdersDialog({ order, setOrder }) {
                 rows={3}
               />
 
-              <Button type="submit" disabled={isPending} variant="primary">
-                {!isPending ? 'Save Changes' : 'Saving...'}
+              <Button type="submit" disabled={updatingStatus} variant="primary">
+                {!updatingStatus ? 'Save Changes' : 'Saving...'}
               </Button>
             </form>
           </div>

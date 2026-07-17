@@ -15,7 +15,7 @@ import { Button, Tooltip } from '@repo/ui'
 import { cn } from '@repo/utils'
 
 export default function Sidebar({ className, open, minimized }) {
-  const { mutate: logout, isPending } = useLogout()
+  const { mutate: logout, isPending: logingout } = useLogout()
   const { pathname } = useLocation()
 
   const sidebarData = [
@@ -84,7 +84,7 @@ export default function Sidebar({ className, open, minimized }) {
       <div className="flex-1"></div>
       <Button
         onClick={() => logout()}
-        disabled={isPending}
+        disabled={logingout}
         variant="ghostDanger"
         size={minimized ? 'lg-square' : 'lg'}
         className="justify-start"

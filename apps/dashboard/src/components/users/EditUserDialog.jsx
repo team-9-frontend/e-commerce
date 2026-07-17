@@ -7,7 +7,7 @@ import { useForm } from '@repo/utils/forms'
 export default function EditUserDialog({ user, setUser }) {
   const [lastUser, setLastUser] = useState(null)
 
-  const { mutate: updateUser, isPending } = useUpdateUser()
+  const { mutate: updateUser, isPending: updatingUser } = useUpdateUser()
 
   const {
     register,
@@ -77,8 +77,8 @@ export default function EditUserDialog({ user, setUser }) {
             error={errors.avatar}
           />
 
-          <Button type="submit" disabled={isPending} variant="primary">
-            <span>{isPending ? 'Saving...' : 'save changes'}</span>
+          <Button type="submit" disabled={updatingUser} variant="primary">
+            <span>{updatingUser ? 'Saving...' : 'save changes'}</span>
           </Button>
         </form>
       )}

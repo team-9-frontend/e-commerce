@@ -5,7 +5,7 @@ import { Button, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
 export default function Login() {
-  const { mutate: login, isPending } = useLogin()
+  const { mutate: login, isPending: logingin } = useLogin()
   const navigate = useNavigate()
 
   const {
@@ -76,8 +76,8 @@ export default function Login() {
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
-          <Button type="submit" disabled={isPending}>
-            {isPending ? 'Loading...' : 'Login'}
+          <Button type="submit" disabled={logingin}>
+            {logingin ? 'Loading...' : 'Login'}
           </Button>
         </form>
 
