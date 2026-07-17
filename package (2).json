@@ -1,5 +1,5 @@
 {
-  "name":"koda-product-crud",
+  "name":"product-crud",
   "private":true,
   "version":"1.0.0",
   "type":"module",
