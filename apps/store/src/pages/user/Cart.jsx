@@ -1,68 +1,51 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 import {
   useApplyCoupon,
   useClearCart,
   useGetCart,
-  useRemoveCoupon,
   useRemoveCartItem,
+  useRemoveCoupon,
   useUpdateCartItem,
-} from "@/api/hooks/useCart";
-
-import Button from "@/components/ui/Button";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
+} from '@repo/api'
+import { Button, LoadingSpinner } from '@repo/ui'
 
 export default function Cart() {
-  const [coupon, setCoupon] = useState("");
+  const [coupon, setCoupon] = useState('')
 
-  const { data: cart, isLoading, isError } = useGetCart();
+  const { data: cart, isLoading, isError } = useGetCart()
 
-  const { mutate: updateCart, isPending: updating } =
-    useUpdateCartItem();
+  const { mutate: updateCart, isPending: updating } = useUpdateCartItem()
 
-  const { mutate: removeItem, isPending: removing } =
-    useRemoveCartItem();
+  const { mutate: removeItem, isPending: removing } = useRemoveCartItem()
 
-  const { mutate: applyCoupon, isPending: applyingCoupon } =
-    useApplyCoupon();
+  const { mutate: applyCoupon, isPending: applyingCoupon } = useApplyCoupon()
 
-  const { mutate: removeCoupon, isPending: removingCoupon } =
-    useRemoveCoupon();
+  const { mutate: removeCoupon, isPending: removingCoupon } = useRemoveCoupon()
 
-  const { mutate: clearCart, isPending: clearing } =
-    useClearCart();
+  const { mutate: clearCart, isPending: clearing } = useClearCart()
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner />
   }
 
   if (isError) {
-    return (
-      <div className="p-8 text-center text-red-500">
-        Something went wrong.
-      </div>
-    );
+    return <div className="p-8 text-center text-red-500">Something went wrong.</div>
   }
 
   if (!cart?.items?.length) {
     return (
       <div className="mx-auto flex max-w-3xl flex-col items-center py-24">
-        <h1 className="text-3xl font-bold">
-          Your cart is empty
-        </h1>
+        <h1 className="text-3xl font-bold">Your cart is empty</h1>
 
-        <p className="mt-3 text-neutral-500">
-          Add some products to your cart.
-        </p>
+        <p className="mt-3 text-neutral-500">Add some products to your cart.</p>
       </div>
-    );
+    )
   }
 
   return (
     <div className="mx-auto max-w-6xl p-6">
-      <h1 className="mb-8 text-3xl font-bold">
-        Shopping Cart
-      </h1>
+      <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
 
       {/* Coupon */}
 
@@ -83,23 +66,17 @@ export default function Cart() {
                 code: coupon.trim(),
               },
               {
-                onSuccess: () => setCoupon(""),
-                onError: (error) =>
-                  alert(error.response?.data?.message),
-              }
+                onSuccess: () => setCoupon(''),
+              },
             )
           }
         >
-          {applyingCoupon ? "Applying..." : "Apply"}
+          {applyingCoupon ? 'Applying...' : 'Apply'}
         </Button>
 
         {cart.coupon && (
-          <Button
-            variant="outlineDanger"
-            disabled={removingCoupon}
-            onClick={() => removeCoupon()}
-          >
-            {removingCoupon ? "Removing..." : "Remove Coupon"}
+          <Button variant="outlineDanger" disabled={removingCoupon} onClick={() => removeCoupon()}>
+            {removingCoupon ? 'Removing...' : 'Remove Coupon'}
           </Button>
         )}
       </div>
@@ -113,20 +90,12 @@ export default function Cart() {
             className="flex flex-col items-center justify-between gap-4 rounded-xl border p-5 shadow-sm md:flex-row"
           >
             <div className="flex items-center gap-4">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="h-24 w-24 rounded-lg object-cover"
-              />
+              <img src={item.image} alt={item.name} className="h-24 w-24 rounded-lg object-cover" />
 
               <div>
-                <h2 className="text-lg font-semibold">
-                  {item.name}
-                </h2>
+                <h2 className="text-lg font-semibold">{item.name}</h2>
 
-                <p className="mt-1 text-neutral-500">
-                  ${item.price}
-                </p>
+                <p className="mt-1 text-neutral-500">${item.price}</p>
               </div>
             </div>
 
@@ -135,39 +104,25 @@ export default function Cart() {
                 size="sm-square"
                 disabled={updating || item.quantity <= 1}
                 onClick={() =>
-                  updateCart(
-                    {
-                      productId: item.product,
-                      quantity: item.quantity - 1,
-                    },
-                    {
-                      onError: (error) =>
-                        alert(error.response?.data?.message),
-                    }
-                  )
+                  updateCart({
+                    productId: item.product,
+                    quantity: item.quantity - 1,
+                  })
                 }
               >
                 -
               </Button>
 
-              <span className="min-w-6 text-center font-semibold">
-                {item.quantity}
-              </span>
+              <span className="min-w-6 text-center font-semibold">{item.quantity}</span>
 
               <Button
                 size="sm-square"
                 disabled={updating}
                 onClick={() =>
-                  updateCart(
-                    {
-                      productId: item.product,
-                      quantity: item.quantity + 1,
-                    },
-                    {
-                      onError: (error) =>
-                        alert(error.response?.data?.message),
-                    }
-                  )
+                  updateCart({
+                    productId: item.product,
+                    quantity: item.quantity + 1,
+                  })
                 }
               >
                 +
@@ -176,12 +131,7 @@ export default function Cart() {
               <Button
                 variant="ghostDanger"
                 disabled={removing}
-                onClick={() =>
-                  removeItem(item.product, {
-                    onError: (error) =>
-                      alert(error.response?.data?.message),
-                  })
-                }
+                onClick={() => removeItem(item.product)}
               >
                 Remove
               </Button>
@@ -218,14 +168,14 @@ export default function Cart() {
           disabled={clearing}
           className="w-full justify-center"
           onClick={() => {
-            if (window.confirm("Are you sure you want to clear your cart?")) {
-              clearCart();
+            if (window.confirm('Are you sure you want to clear your cart?')) {
+              clearCart()
             }
           }}
         >
-          {clearing ? "Clearing..." : "Clear Cart"}
+          {clearing ? 'Clearing...' : 'Clear Cart'}
         </Button>
       </div>
     </div>
-  );
+  )
 }

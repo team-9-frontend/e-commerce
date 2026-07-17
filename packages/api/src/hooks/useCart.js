@@ -29,9 +29,9 @@ const useCartMutation = (mutationFn) => {
   })
 }
 
-export const useAddToCart = () => useCartMutation(cartService.addItem(data))
-export const useApplyCoupon = () => useCartMutation(cartService.applyCoupon(data))
-export const useUpdateCartItem = () => useCartMutation(cartService.updateItem(data))
-export const useRemoveCartItem = () => useCartMutation(cartService.removeItem(id))
+export const useAddToCart = () => useCartMutation((data) => cartService.addItem(data))
+export const useApplyCoupon = () => useCartMutation((data) => cartService.applyCoupon(data))
+export const useUpdateCartItem = () => useCartMutation((data) => cartService.updateItem(data))
+export const useRemoveCartItem = () => useCartMutation((id) => cartService.removeItem(id))
 export const useClearCart = () => useCartMutation(cartService.clear)
 export const useRemoveCoupon = () => useCartMutation(cartService.removeCoupon)

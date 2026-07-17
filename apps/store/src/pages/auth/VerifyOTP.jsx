@@ -16,15 +16,12 @@ export default function VerifyOTP() {
 
   const {
     register,
+    control,
     handleSubmit,
     setError,
-    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onTouched',
-    defaultValues: {
-      otp: '',
-    },
   })
 
   const onSubmit = ({ otp, newPassword }) => {
@@ -46,11 +43,13 @@ export default function VerifyOTP() {
       <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Verify OTP</h1>
         <p className="mb-6 text-center text-neutral-500">
-          Enter the OTP sent to your email and your new password.
+          {mode === 'reset'
+            ? 'Enter the OTP sent to your email and your new password.'
+            : 'Enter the OTP sent to your email to verify.'}
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <OtpInput name="otp" register={register} setValue={setValue} error={errors.otp} />
+          <OtpInput control={control} error={errors.otp} />
 
           {mode === 'reset' && (
             <FormField
