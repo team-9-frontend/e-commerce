@@ -1,8 +1,5 @@
 {
-  "plugins": [
-    "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss"
-  ],
+  "plugins": ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
 
   "endOfLine": "lf",
   "printWidth": 100,
@@ -18,16 +15,24 @@
   "embeddedLanguageFormatting": "auto",
 
   "importOrder": [
-    "^(react|react-dom)$",
-    "^next(/.*)?$",
+    "^(react/(.*)$)|^(react$)",
+    "^(next/(.*)$)|^(next$)",
+    "",
+    "<BUILTIN_MODULES>",
+    "",
     "<THIRD_PARTY_MODULES>",
+    "",
     "^@/(.*)$",
+    "",
+    "^@repo/(.*)$",
+    "",
     "^\\.\\./",
+    "",
     "^\\./",
+    "",
     "^.+\\.(css|scss|sass)$"
   ],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true,
+  "importOrderTypeScriptVersion": "5.0.0",
   "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
 
   "tailwindFunctions": ["clsx", "tw", "cn"]

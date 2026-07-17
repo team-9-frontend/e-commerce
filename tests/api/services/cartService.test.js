@@ -1,9 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import api from '@/api/client'
-import { cartService } from '@/api/services/cartService'
+import api, { cartService } from '@repo/api'
 
-vi.mock('@/api/client', () => ({
+vi.mock('@repo/api', () => ({
   default: {
     get: vi.fn(),
     post: vi.fn(),

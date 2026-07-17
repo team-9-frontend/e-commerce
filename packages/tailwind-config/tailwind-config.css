@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+@source '../**/*.{js,jsx}';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-accent-50: var(--color-indigo-50);
+  --color-accent-100: var(--color-indigo-100);
+  --color-accent-200: var(--color-indigo-200);
+  --color-accent-300: var(--color-indigo-300);
+  --color-accent-400: var(--color-indigo-400);
+  --color-accent-500: var(--color-indigo-500);
+  --color-accent-600: var(--color-indigo-600);
+  --color-accent-700: var(--color-indigo-700);
+  --color-accent-800: var(--color-indigo-800);
+  --color-accent-900: var(--color-indigo-900);
+  --color-accent-950: var(--color-indigo-950);
+
+  --color-neutral-50: var(--color-gray-50);
+  --color-neutral-100: var(--color-gray-100);
+  --color-neutral-200: var(--color-gray-200);
+  --color-neutral-300: var(--color-gray-300);
+  --color-neutral-400: var(--color-gray-400);
+  --color-neutral-500: var(--color-gray-500);
+  --color-neutral-600: var(--color-gray-600);
+  --color-neutral-700: var(--color-gray-700);
+  --color-neutral-800: var(--color-gray-800);
+  --color-neutral-900: var(--color-gray-900);
+  --color-neutral-950: var(--color-gray-950);
+
+  --font-fancy: 'Libre Bodoni', serif;
+  --font-mono: 'Roboto Mono', monospace;
+}
+
+.dark {
+  --color-neutral-50: var(--color-gray-950);
+  --color-neutral-100: var(--color-gray-900);
+  --color-neutral-200: var(--color-gray-800);
+  --color-neutral-300: var(--color-gray-700);
+  --color-neutral-400: var(--color-gray-600);
+  --color-neutral-500: var(--color-gray-500);
+  --color-neutral-600: var(--color-gray-400);
+  --color-neutral-700: var(--color-gray-300);
+  --color-neutral-800: var(--color-gray-200);
+  --color-neutral-900: var(--color-gray-100);
+  --color-neutral-950: var(--color-gray-50);
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility container {
+  @apply mx-auto px-6;
+}
+
+@layer base {
+  * {
+    @apply transition-colors duration-300;
+  }
+
+  body {
+    @apply selection:bg-accent-500/20 bg-neutral-50 text-neutral-950;
+  }
+
+  a {
+    @apply text-accent-600 dark:text-accent-400 hover:text-teal-600 dark:hover:text-teal-400;
+  }
+}
+
+@layer components {
+  .card {
+    @apply overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-md dark:bg-neutral-100 dark:shadow-none;
+  }
+
+  .shimmer {
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+}

@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import Cart from 'apps/store/src/pages/user/Cart'
 import { describe, expect, it } from 'vitest'
-
-import Cart from '@/pages/user/Cart'
 
 describe('Cart', () => {
   it('يعرض النص الصحيح للصفحة', () => {

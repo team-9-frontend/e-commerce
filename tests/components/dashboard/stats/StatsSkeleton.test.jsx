@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react'
+import StatsSkeleton from 'apps/dashboard/src/components/stats/StatsSkeleton'
 import { describe, expect, it } from 'vitest'
-
-import StatsSkeleton from '@/components/dashboard/stats/StatsSkeleton'
 
 describe('StatsSkeleton', () => {
   it('يعرض 6 كروت skeleton للإحصائيات من غير ما يكراش', () => {

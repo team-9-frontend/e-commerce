@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import ProductView from 'apps/dashboard/src/pages/dashboard/ProductView'
 import { describe, expect, it } from 'vitest'
-
-import ProductView from '@/pages/dashboard/ProductView'
 
 describe('ProductView', () => {
   it('يعرض النص الصحيح للصفحة', () => {

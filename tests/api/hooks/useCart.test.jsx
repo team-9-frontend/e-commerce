@@ -2,8 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { cartKeys } from '@/api//keys/cartKeys'
 import {
+  cartKeys,
+  cartService,
   useAddToCart,
   useApplyCoupon,
   useClearCart,
@@ -11,10 +12,9 @@ import {
   useRemoveCartItem,
   useRemoveCoupon,
   useUpdateCartItem,
-} from '@/api/hooks/useCart'
-import { cartService } from '@/api/services/cartService'
+} from '@repo/api'
 
-vi.mock('@/api/services/cartService', () => ({
+vi.mock('@repo/api', () => ({
   cartService: {
     getCart: vi.fn(),
     addItem: vi.fn(),

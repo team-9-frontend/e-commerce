@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import Payment from 'apps/store/src/pages/checkout/Payment'
 import { describe, expect, it } from 'vitest'
-
-import Payment from '@/pages/checkout/Payment'
 
 describe('Payment', () => {
   it('يعرض النص الصحيح للصفحة', () => {

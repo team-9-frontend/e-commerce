@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render } from '@testing-library/react'
-import { ThemeProvider } from 'next-themes'
 import { MemoryRouter } from 'react-router-dom'
+
+import { ThemeProvider } from '@repo/utils'
 
 /**
  * بيرندر أي كومبوننت وهو ملفوف بكل الـ providers الحقيقية اللي main.jsx بيستخدمها:

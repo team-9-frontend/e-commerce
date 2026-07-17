@@ -1,7 +1,6 @@
 ﻿import { fireEvent, render, screen } from '@testing-library/react'
+import DashboardLayout from 'apps/dashboard/src/layouts/DashboardLayout'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-import DashboardLayout from '@/layouts/DashboardLayout'
 
 const mockNavigate = vi.fn()
 const mockUseCurrentUser = vi.fn()
@@ -15,14 +14,14 @@ vi.mock('react-router-dom', async (importOriginal) => {
   }
 })
 
-vi.mock('@/api', () => ({
+vi.mock('@repo/api', () => ({
   useCurrentUser: (...args) => mockUseCurrentUser(...args),
 }))
 
-vi.mock('@/components/dashboard/Header', () => ({
+vi.mock('apps/dashboard/src/components/Header', () => ({
   default: () => <div>Header-mock</div>,
 }))
-vi.mock('@/components/dashboard/Sidebar', () => ({
+vi.mock('apps/dashboard/src/components/Sidebar', () => ({
   default: () => <div>Sidebar-mock</div>,
 }))
 

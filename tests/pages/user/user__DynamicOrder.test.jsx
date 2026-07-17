@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import DynamicOrder from 'apps/store/src/pages/user/DynamicOrder'
 import { describe, expect, it } from 'vitest'
-
-import DynamicOrder from '@/pages/user/DynamicOrder'
 
 describe('DynamicOrder', () => {
   it('يعرض النص الصحيح للصفحة', () => {
