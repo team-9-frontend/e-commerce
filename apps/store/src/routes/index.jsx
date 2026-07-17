@@ -4,7 +4,7 @@ import MainLayout from '@/layouts/MainLayout'
 import ForgotPassword from '@/pages/auth/ForgotPassword'
 import Login from '@/pages/auth/Login'
 import Register from '@/pages/auth/Register'
-import VerifyOTP from '@/pages/auth/VerifyOTP'
+import VerifyOtp from '@/pages/auth/VerifyOtp'
 import Checkout from '@/pages/checkout/Checkout'
 import OrderSuccess from '@/pages/checkout/OrderSuccess'
 import Payment from '@/pages/checkout/Payment'
@@ -28,7 +28,7 @@ export default function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/verify-otp" element={<VerifyOtp />} />
 
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<DynamicProduct />} />

@@ -4,15 +4,15 @@ import { useVerifyForgotPasswordOtp, useVerifyRegisterOtp } from '@repo/api'
 import { Button, FormField, OtpInput } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
-export default function VerifyOTP() {
+export default function VerifyOtp() {
   const navigate = useNavigate()
   const location = useLocation()
 
   const email = location.state?.email
   const mode = location.state?.mode
 
-  const { mutate: verifyResetOTP, isPending: resetIsPending } = useVerifyForgotPasswordOtp()
-  const { mutate: verifyRegisterOTP, isPending: registerIsPending } = useVerifyRegisterOtp()
+  const { mutate: verifyResetOtp, isPending: verifyingResetOtp } = useVerifyForgotPasswordOtp()
+  const { mutate: verifyRegisterOtp, isPending: verifyingRegisterOtp } = useVerifyRegisterOtp()
 
   const {
     register,
@@ -25,7 +25,7 @@ export default function VerifyOTP() {
   })
 
   const onSubmit = ({ otp, newPassword }) => {
-    const mutate = mode === 'reset' ? verifyResetOTP : verifyRegisterOTP
+    const mutate = mode === 'reset' ? verifyResetOtp : verifyRegisterOtp
     const variables = mode === 'reset' ? { email, otp, newPassword } : { email, otp }
 
     mutate(variables, {
@@ -69,8 +69,8 @@ export default function VerifyOTP() {
             />
           )}
 
-          <Button type="submit" disabled={resetIsPending || registerIsPending}>
-            {resetIsPending || registerIsPending
+          <Button type="submit" disabled={verifyingResetOtp || verifyingRegisterOtp}>
+            {verifyingResetOtp || verifyingRegisterOtp
               ? 'Loading...'
               : mode === 'reset'
                 ? 'Reset Password'

@@ -5,7 +5,7 @@ import { Button, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
 export default function Register() {
-  const { mutate: sendRegisterOtp, isPending } = useSendRegisterOtp()
+  const { mutate: sendRegisterOtp, isPending: sendingRegisterOtp } = useSendRegisterOtp()
   const navigate = useNavigate()
 
   const {
@@ -105,8 +105,8 @@ export default function Register() {
             Already have an account? <Link to="/login">Login</Link>
           </span>
 
-          <Button type="submit" disabled={isPending}>
-            {isPending ? 'Loading...' : 'Register'}
+          <Button type="submit" disabled={sendingRegisterOtp}>
+            {sendingRegisterOtp ? 'Loading...' : 'Register'}
           </Button>
         </form>
 

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { LuMinus, LuPlus } from 'react-icons/lu'
+
 import {
   useApplyCoupon,
   useClearCart,
@@ -110,7 +112,7 @@ export default function Cart() {
                   })
                 }
               >
-                -
+                <LuMinus />
               </Button>
 
               <span className="min-w-6 text-center font-semibold">{item.quantity}</span>
@@ -125,7 +127,7 @@ export default function Cart() {
                   })
                 }
               >
-                +
+                <LuPlus />
               </Button>
 
               <Button

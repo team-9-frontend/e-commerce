@@ -14,8 +14,8 @@ import { useSearchParamsForm } from '@repo/utils/forms'
 const EMPTY_USERS = []
 
 export default function AdminUsers() {
-  const { mutate: deleteUser, isPending: deleteUserIsPending } = useDeleteUser()
-  const { mutate: updateUserRole, isPending: updateUserRoleIsPending } = useUpdateUserRole()
+  const { mutate: deleteUser, isPending: deletingUser } = useDeleteUser()
+  const { mutate: updateUserRole, isPending: updatingUserRole } = useUpdateUserRole()
 
   const [addUserToggle, setAddUserToggle] = useState(false)
   const [editUser, setEditUser] = useState(null)
@@ -93,7 +93,7 @@ export default function AdminUsers() {
           <Button
             variant="outline"
             size="md-square"
-            disabled={updateUserRoleIsPending}
+            disabled={updatingUserRole}
             onClick={() => {
               updateUserRole({
                 userId: user._id,
@@ -118,7 +118,7 @@ export default function AdminUsers() {
         </div>
       ),
     }))
-  }, [page, updateUserRole, updateUserRoleIsPending])
+  }, [page, updateUserRole, updatingUserRole])
 
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -196,7 +196,7 @@ export default function AdminUsers() {
             },
           })
         }
-        isLoading={deleteUserIsPending}
+        isLoading={deletingUser}
         title="Confirm Deletion"
       />
 
