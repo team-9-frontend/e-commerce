@@ -1,14 +1,20 @@
 import { useState } from 'react'
 
-import { LuGlobe, LuHeart, LuHeartCrack, LuMessageCircle, LuShoppingCart, LuTrash2, LuX, LuZap } from 'react-icons/lu'
+import {
+  LuGlobe,
+  LuHeart,
+  LuHeartCrack,
+  LuMessageCircle,
+  LuShoppingCart,
+  LuTrash2,
+  LuX,
+  LuZap,
+} from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
-import { useAddToCart, useClearWishlist, useGetWishlist, useRemoveFromWishlist } from '@/api'
-import Button from '@/components/ui/Button'
-import ConfirmDialog from '@/components/ui/ConfirmDialog'
-import Skeleton from '@/components/ui/Skeleton'
-import { cn } from '@/utils'
-import toast from '@/components/ui/toast'
+import { useAddToCart, useClearWishlist, useGetWishlist, useRemoveFromWishlist } from '@repo/api'
+import { Button, ConfirmDialog, Skeleton, toast } from '@repo/ui'
+import { cn } from '@repo/utils'
 
 export default function Wishlist() {
   const [confirmClearOpen, setConfirmClearOpen] = useState(false)
@@ -241,7 +247,7 @@ function WishlistCard({ product, isLoading, isRemoving, isAddingToCart, onRemove
         onClick={onRemove}
         disabled={isRemoving}
         title="Remove from wishlist"
-        className="hover:text-rose-600 dark:hover:text-rose-400 absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full bg-neutral-50/85 text-lg opacity-80 shadow transition-all hover:opacity-100 disabled:pointer-events-none disabled:opacity-50"
+        className="absolute top-3 right-3 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full bg-neutral-50/85 text-lg opacity-80 shadow transition-all hover:text-rose-600 hover:opacity-100 disabled:pointer-events-none disabled:opacity-50 dark:hover:text-rose-400"
       >
         <LuX />
       </button>
@@ -300,9 +306,7 @@ function WishlistCard({ product, isLoading, isRemoving, isAddingToCart, onRemove
           disabled={outOfStock || isAddingToCart}
         >
           {!outOfStock && <LuShoppingCart size={16} className="shrink-0" />}
-          <span>
-            {outOfStock ? 'Out of Stock' : isAddingToCart ? 'Adding...' : 'Add to Cart'}
-          </span>
+          <span>{outOfStock ? 'Out of Stock' : isAddingToCart ? 'Adding...' : 'Add to Cart'}</span>
         </Button>
       </div>
     </div>
