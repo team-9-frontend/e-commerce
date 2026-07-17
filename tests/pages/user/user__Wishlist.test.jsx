@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import Wishlist from 'apps/store/src/pages/user/Wishlist'
 import { describe, expect, it } from 'vitest'
-
-import Wishlist from '@/pages/user/Wishlist'
 
 describe('Wishlist', () => {
   it('يعرض النص الصحيح للصفحة', () => {

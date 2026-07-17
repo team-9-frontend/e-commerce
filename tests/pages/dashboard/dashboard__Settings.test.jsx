@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react'
+import Settings from 'apps/dashboard/src/pages/dashboard/Settings'
 import { describe, expect, it } from 'vitest'
-
-import Settings from '@/pages/dashboard/Settings'
 
 describe('Settings', () => {
   it('يعرض النص الصحيح للصفحة', () => {
     render(<Settings />)
-    expect(screen.getByText('Settings Page')).toBeInTheDocument()
+    expect(screen.getByText('Preferences and integrations')).toBeInTheDocument()
   })
 })

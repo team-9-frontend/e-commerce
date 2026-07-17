@@ -2,17 +2,17 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { userKeys } from '@/api//keys/userKeys'
 import {
   useAddUser,
   useDeleteUser,
   useGetAllUsers,
   useGetUserById,
+  usersKeys,
+  usersService,
   useUpdateUser,
-} from '@/api/hooks/useUsers'
-import { usersService } from '@/api/services/usersService'
+} from '@repo/api'
 
-vi.mock('@/api/services/usersService', () => ({
+vi.mock('@repo/api', () => ({
   usersService: {
     getAll: vi.fn(),
     getById: vi.fn(),
@@ -82,7 +82,7 @@ describe('useUsers mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(usersService.add.mock.calls[0][0]).toEqual(payload)
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: userKeys.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: usersKeys.all })
   })
 
   it('useUpdateUser calls the service with id and data', async () => {
@@ -97,7 +97,7 @@ describe('useUsers mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(usersService.update).toHaveBeenCalledWith('2', { name: 'Sara Updated' })
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: userKeys.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: usersKeys.all })
   })
 
   it('useDeleteUser calls the service with id', async () => {
@@ -112,6 +112,6 @@ describe('useUsers mutation hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(usersService.remove).toHaveBeenCalledWith('2')
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: userKeys.all })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: usersKeys.all })
   })
 })

@@ -1,0 +1,37 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+
+import { cartKeys } from '../keys/cartKeys'
+import { cartService } from '../services/cartService'
+
+// ----------------------------------
+// QUERIES
+// ----------------------------------
+
+export const useGetCart = () => {
+  return useQuery({
+    queryKey: cartKeys.all,
+    queryFn: cartService.getCart,
+  })
+}
+
+// ----------------------------------
+// MUTATIONS
+// ----------------------------------
+
+const useCartMutation = (mutationFn) => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: cartKeys.all })
+    },
+  })
+}
+
+export const useAddToCart = () => useCartMutation((data) => cartService.addItem(data))
+export const useApplyCoupon = () => useCartMutation((data) => cartService.applyCoupon(data))
+export const useUpdateCartItem = () => useCartMutation((data) => cartService.updateItem(data))
+export const useRemoveCartItem = () => useCartMutation((id) => cartService.removeItem(id))
+export const useClearCart = () => useCartMutation(cartService.clear)
+export const useRemoveCoupon = () => useCartMutation(cartService.removeCoupon)

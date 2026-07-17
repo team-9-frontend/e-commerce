@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import ProductEdit from 'apps/dashboard/src/pages/dashboard/ProductEdit'
 import { describe, expect, it } from 'vitest'
-
-import ProductEdit from '@/pages/dashboard/ProductEdit'
 
 describe('ProductEdit', () => {
   it('يعرض النص الصحيح للصفحة', () => {

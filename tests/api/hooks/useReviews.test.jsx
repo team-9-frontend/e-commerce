@@ -2,11 +2,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { reviewKeys } from '@/api//keys/reviewKeys'
-import { useDeleteReview, useGetReviews, usePostReview } from '@/api/hooks/useReviews'
-import { reviewsService } from '@/api/services/reviewsService'
+import {
+  reviewsKeys,
+  reviewsService,
+  useDeleteReview,
+  useGetReviews,
+  usePostReview,
+} from '@repo/api'
 
-vi.mock('@/api/services/reviewsService', () => ({
+vi.mock('@repo/api', () => ({
   reviewsService: {
     getByProductId: vi.fn(),
     create: vi.fn(),
@@ -60,7 +64,7 @@ describe('useReviews hooks', () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(reviewsService.create).toHaveBeenCalledWith('1', { rating: 5, comment: 'Great!' })
     // Note: onSuccess reads variables.id (not variables.productId) when building the key.
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: reviewKeys.list(undefined) })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: reviewsKeys.list(undefined) })
   })
 
   it('useDeleteReview calls the service and invalidates the reviews list', async () => {
@@ -76,6 +80,6 @@ describe('useReviews hooks', () => {
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(reviewsService.remove).toHaveBeenCalledWith('1', 'r1')
-    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: reviewKeys.list(undefined) })
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: reviewsKeys.list(undefined) })
   })
 })

@@ -1,8 +1,7 @@
 import { render, screen } from '@testing-library/react'
+import MainLayout from 'apps/store/src/layouts/MainLayout'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
-
-import MainLayout from '@/layouts/MainLayout'
 
 describe('MainLayout', () => {
   it('يعرض محتوى الـ Outlet جوه الـ layout', () => {
