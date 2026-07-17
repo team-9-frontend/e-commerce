@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
+
 import { clsx } from 'clsx'
+import { isValid } from 'date-fns'
 import { twMerge } from 'tailwind-merge'
 
 export * from 'date-fns'
@@ -8,11 +11,25 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs))
 }
 
+export function useDebounce(value, delay = 400) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedValue(value)
+    }, delay)
+    return () => clearTimeout(timeout)
+  }, [value, delay])
+  return debouncedValue
+}
+
 export function filterData(items = [], filters = []) {
   if (!items?.length) return []
 
-  return items.filter((item) => {
-    return filters.every((filterObj) => {
+  const filterRules = filters.filter((f) => !f.sort)
+  const sortRule = filters.find((f) => f.sort)
+
+  const result = items.filter((item) => {
+    return filterRules.every((filterObj) => {
       const entries = Object.entries(filterObj)
       if (entries.length === 0) return true
 
@@ -28,10 +45,19 @@ export function filterData(items = [], filters = []) {
       if (range) {
         const parts = query.split(',')
 
-        const isInactive = parts.every((val) => !val || val === 'null' || val === 'undefined')
-        if (isInactive) return true
+        if (
+          parts.every((val) => !val || val.trim() === '' || val === 'null' || val === 'undefined')
+        ) {
+          return true
+        }
 
         const [rawMin, rawMax] = parts
+
+        const parseBound = (val, fallback) => {
+          if (!val || val.trim() === '' || val === 'null' || val === 'undefined') return fallback
+          const num = Number(val)
+          return isNaN(num) ? fallback : num
+        }
 
         return fields.some((field) => {
           const itemValue = typeof field === 'function' ? field(item) : item[field]
@@ -43,16 +69,16 @@ export function filterData(items = [], filters = []) {
           if (isDate) {
             const valDate = new Date(itemValue).getTime()
 
-            const minDate = isValid(rawMin) ? new Date(rawMin).getTime() : -Infinity
-            const maxDate = isValid(rawMax) ? new Date(rawMax).getTime() : Infinity
+            const minDate = parseBound(rawMin, -Infinity)
+            const maxDate = parseBound(rawMax, Infinity)
 
             return valDate >= minDate && valDate <= maxDate
           }
 
           const valNum = Number(itemValue)
 
-          const minNum = isValid(rawMin) ? Number(rawMin) : -Infinity
-          const maxNum = isValid(rawMax) ? Number(rawMax) : Infinity
+          const minNum = parseBound(rawMin, -Infinity)
+          const maxNum = parseBound(rawMax, Infinity)
 
           return valNum >= minNum && valNum <= maxNum
         })
@@ -78,4 +104,35 @@ export function filterData(items = [], filters = []) {
       )
     })
   })
+
+  if (sortRule) {
+    const [query, config] = Object.entries(sortRule).find(([key]) => key !== 'sort') || []
+
+    if (query && query !== 'undefined' && query !== 'null' && config?.mapping) {
+      const activeSort = config.mapping[query.toLowerCase()]
+
+      if (activeSort) {
+        result.sort((a, b) => {
+          let valA = a[activeSort.field]
+          let valB = b[activeSort.field]
+
+          const isDate = valA instanceof Date || (!isNaN(Date.parse(valA)) && isNaN(Number(valA)))
+
+          if (isDate) {
+            valA = new Date(valA).getTime()
+            valB = new Date(valB).getTime()
+          } else {
+            valA = Number(valA) || 0
+            valB = Number(valB) || 0
+          }
+
+          if (valA < valB) return -1 * activeSort.direction
+          if (valA > valB) return 1 * activeSort.direction
+          return 0
+        })
+      }
+    }
+  }
+
+  return result
 }

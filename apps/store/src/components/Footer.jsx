@@ -17,11 +17,11 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="flex border-t border-neutral-200 bg-white shadow dark:bg-neutral-100 dark:shadow-none">
-      <div className="container flex flex-col gap-8 py-12">
+      <div className="container flex flex-col gap-8 py-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-          <div className="flex flex-col gap-4">
-            <Link to="/" className="text-neutral-950">
-              <h1 className="font-fancy hidden pt-1 text-xl font-bold sm:block">
+          <div className="flex flex-col gap-2">
+            <Link to="/" className="w-fit text-neutral-950">
+              <h1 className="font-fancy text-xl font-bold">
                 LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
               </h1>
             </Link>
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <h2 className="font-bold capitalize">quick links</h2>
+            <h2 className="font-medium capitalize">quick links</h2>
 
             <div className="flex flex-col gap-2">
               {quickLinks.map(({ to, label }) => (
@@ -49,7 +49,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <h2 className="font-bold capitalize">follow us</h2>
+            <h2 className="font-medium capitalize">follow us</h2>
 
             <div className="flex gap-2">
               {socialLinks.map(({ icon, to, label }) => (

@@ -41,7 +41,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
-            id="email"
+            name="email"
             label="email"
             type="email"
             placeholder="email"
@@ -57,7 +57,7 @@ export default function Login() {
           />
 
           <FormField
-            id="password"
+            name="password"
             label="password"
             type="password"
             placeholder="password"

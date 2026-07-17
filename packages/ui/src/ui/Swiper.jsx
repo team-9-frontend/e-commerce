@@ -55,7 +55,7 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
                   src={image.url}
                   alt={`${image.public_id} ${i + 1}`}
                   className={cn(
-                    'aspect-video w-full bg-neutral-50 object-cover sm:aspect-square dark:bg-neutral-200',
+                    'aspect-video w-full bg-neutral-50 object-cover transition-all hover:scale-105 sm:aspect-square dark:bg-neutral-200',
                     className,
                   )}
                 />
@@ -70,14 +70,14 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
           <>
             <button
               ref={(node) => setPrevEl(node)}
-              className="text-accent-600 dark:text-accent-400 absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 text-xl opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:-translate-x-1/3"
+              className="text-accent-600 dark:text-accent-400 absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:-translate-x-1/3"
             >
               <LuChevronLeft />
             </button>
 
             <button
               ref={(node) => setNextEl(node)}
-              className="text-accent-600 dark:text-accent-400 absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 text-xl opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:translate-x-1/3"
+              className="text-accent-600 dark:text-accent-400 absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:translate-x-1/3"
             >
               <LuChevronRight />
             </button>
@@ -101,7 +101,11 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
                   isSelected ? 'border-accent-500 card border-2' : '',
                 )}
               >
-                <img src={image.url} alt={image.public_id} className="size-full object-cover" />
+                <img
+                  src={image.url}
+                  alt={image.public_id}
+                  className="size-full object-cover transition-all hover:scale-105"
+                />
               </button>
             ) : (
               <Skeleton key={i} className="aspect-square" parentClassName="card max-w-1/4 flex-1" />

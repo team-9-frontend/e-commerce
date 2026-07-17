@@ -54,7 +54,7 @@ export default function VerifyOtp() {
           {mode === 'reset' && (
             <FormField
               label="New Password"
-              id="newPassword"
+              name="newPassword"
               type="password"
               placeholder="Enter new password"
               register={register}

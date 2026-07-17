@@ -20,7 +20,7 @@ export function Pagination({ className, totalPages = 1 }) {
   }
 
   return (
-    <div className={cn('flex-center gap-2', className)}>
+    <div className={cn('flex-center mt-auto gap-2', className)}>
       <Button
         variant="ghost"
         size="md-square"

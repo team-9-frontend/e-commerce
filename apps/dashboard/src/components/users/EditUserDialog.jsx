@@ -47,7 +47,7 @@ export default function EditUserDialog({ user, setUser }) {
         >
           <FormField
             label="username"
-            id="username"
+            name="username"
             type="text"
             placeholder="username"
             register={register}
@@ -56,7 +56,7 @@ export default function EditUserDialog({ user, setUser }) {
 
           <FormField
             label="phone"
-            id="phone"
+            name="phone"
             type="tel"
             placeholder="phone number"
             register={register}
@@ -71,7 +71,7 @@ export default function EditUserDialog({ user, setUser }) {
 
           <FormField
             label="avatar"
-            id="avatar"
+            name="avatar"
             placeholder="avatar url"
             register={register}
             error={errors.avatar}
