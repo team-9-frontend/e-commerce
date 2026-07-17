@@ -1,0 +1,11 @@
+input,
+textarea {
+  width: 300px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+}
