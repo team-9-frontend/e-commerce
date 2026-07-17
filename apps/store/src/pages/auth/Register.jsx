@@ -43,7 +43,7 @@ export default function Register() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
             label="username"
-            id="username"
+            name="username"
             type="text"
             placeholder="username"
             register={register}
@@ -55,7 +55,7 @@ export default function Register() {
 
           <FormField
             label="phone"
-            id="phone"
+            name="phone"
             type="tel"
             placeholder="phone number"
             register={register}
@@ -71,7 +71,7 @@ export default function Register() {
 
           <FormField
             label="email"
-            id="email"
+            name="email"
             type="email"
             placeholder="email"
             register={register}
@@ -87,7 +87,7 @@ export default function Register() {
 
           <FormField
             label="password"
-            id="password"
+            name="password"
             type="password"
             placeholder="password"
             register={register}

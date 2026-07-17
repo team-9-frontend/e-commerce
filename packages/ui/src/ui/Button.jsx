@@ -15,7 +15,7 @@ const sizes = {
   sm: 'px-2 py-1 text-sm rounded-lg',
   md: 'px-4 py-2 rounded-lg',
   lg: 'px-5 py-3 text-lg rounded-xl',
-  'sm-square': 'px-1 py-1 text-sm rounded-lg',
+  'sm-square': 'px-2 py-2 text-sm rounded-lg',
   'md-square': 'px-2 py-2 rounded-lg',
   'lg-square': 'px-3 py-3 text-lg rounded-xl',
 }

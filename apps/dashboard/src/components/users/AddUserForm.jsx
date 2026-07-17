@@ -25,7 +25,7 @@ export default function AddUserForm() {
       <div className={cn('grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4')}>
         <FormField
           label="username"
-          id="username"
+          name="username"
           type="text"
           placeholder="username"
           register={register}
@@ -37,7 +37,7 @@ export default function AddUserForm() {
 
         <FormField
           label="phone"
-          id="phone"
+          name="phone"
           type="tel"
           placeholder="phone number"
           register={register}
@@ -52,7 +52,7 @@ export default function AddUserForm() {
 
         <FormField
           label="email"
-          id="email"
+          name="email"
           type="email"
           placeholder="email"
           register={register}
@@ -68,7 +68,7 @@ export default function AddUserForm() {
 
         <FormField
           label="password"
-          id="password"
+          name="password"
           type="password"
           placeholder="password"
           register={register}

@@ -46,6 +46,8 @@ const useWishlistMutation = (mutationFn) => {
   })
 }
 
-export const useAddToWishlist = () => useWishlistMutation(wishlistService.add)
-export const useRemoveFromWishlist = () => useWishlistMutation(wishlistService.remove)
+export const useAddToWishlist = () =>
+  useWishlistMutation((productId) => wishlistService.add(productId))
+export const useRemoveFromWishlist = () =>
+  useWishlistMutation((productId) => wishlistService.remove(productId))
 export const useClearWishlist = () => useWishlistMutation(wishlistService.clear)

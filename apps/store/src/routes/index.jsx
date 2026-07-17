@@ -9,12 +9,12 @@ import Checkout from '@/pages/checkout/Checkout'
 import OrderSuccess from '@/pages/checkout/OrderSuccess'
 import Payment from '@/pages/checkout/Payment'
 import NotFound from '@/pages/NotFound'
-import DynamicProduct from '@/pages/store/DynamicProduct'
 import Home from '@/pages/store/Home'
 import Products from '@/pages/store/Products'
+import ProductView from '@/pages/store/ProductView'
 import Cart from '@/pages/user/Cart'
-import DynamicOrder from '@/pages/user/DynamicOrder'
 import Orders from '@/pages/user/Orders'
+import OrderView from '@/pages/user/OrderView'
 import Profile from '@/pages/user/Profile'
 import Wishlist from '@/pages/user/Wishlist'
 
@@ -31,11 +31,11 @@ export default function AppRoutes() {
           <Route path="/verify-otp" element={<VerifyOtp />} />
 
           <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<DynamicProduct />} />
+          <Route path="/products/:id" element={<ProductView />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/orders" element={<Orders />} />
-          <Route path="/profile/orders/:id" element={<DynamicOrder />} />
+          <Route path="/profile/orders/:id" element={<OrderView />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
 

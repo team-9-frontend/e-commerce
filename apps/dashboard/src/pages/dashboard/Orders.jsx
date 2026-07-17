@@ -25,7 +25,7 @@ const statusColors = {
   stripe: 'sky',
 }
 
-const EMPTY_ORDERS = []
+const EMPTY_ARRAY = []
 
 export default function AdminOrders() {
   const [selected, setSelected] = useState(null)
@@ -39,7 +39,7 @@ export default function AdminOrders() {
   const { search, status, payment, method } = urlValues
 
   const { data, isLoading, isError, error } = useGetAllOrders({ limit: 100 })
-  const orders = data?.orders || EMPTY_ORDERS
+  const orders = data?.orders || EMPTY_ARRAY
 
   const filteredOrders = useMemo(() => {
     return filterData(orders, [
@@ -131,7 +131,7 @@ export default function AdminOrders() {
         className="card flex items-center gap-4 p-4 max-sm:flex-col"
       >
         <FormField
-          id="search"
+          name="search"
           icon={<LuSearch />}
           placeholder="Search ID, customer..."
           register={register}
@@ -141,7 +141,7 @@ export default function AdminOrders() {
         <div className="flex items-center gap-4 max-sm:w-full">
           <FormField
             type="select"
-            id="status"
+            name="status"
             register={register}
             options={[
               'pending',
@@ -158,7 +158,7 @@ export default function AdminOrders() {
 
           <FormField
             type="select"
-            id="payment"
+            name="payment"
             register={register}
             options={['pending', 'paid', 'failed', 'refunded']}
             defaultOption="all payments"
@@ -167,7 +167,7 @@ export default function AdminOrders() {
 
           <FormField
             type="select"
-            id="method"
+            name="method"
             register={register}
             options={['cash', 'stripe']}
             defaultOption="all methods"
@@ -187,7 +187,7 @@ export default function AdminOrders() {
         />
       )}
 
-      <Pagination totalPages={totalPages} className="mt-auto" />
+      <Pagination totalPages={totalPages} />
 
       <OrdersDialog order={selected} setOrder={setSelected} />
     </div>

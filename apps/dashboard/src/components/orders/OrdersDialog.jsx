@@ -134,7 +134,7 @@ export default function OrdersDialog({ order, setOrder }) {
               </div>
               <div className="flex items-center justify-between p-3 px-4 text-sm">
                 <h2 className="font-medium text-neutral-600">
-                  Tax ({Math.floor((order?.tax / order?.totalPrice) * 100)}%)
+                  Tax ({Math.ceil((order?.tax / order?.totalPrice) * 100)}%)
                 </h2>
                 <p className="font-medium">${order?.tax}</p>
               </div>
@@ -163,7 +163,7 @@ export default function OrdersDialog({ order, setOrder }) {
             >
               <FormField
                 type="select"
-                id="status"
+                name="status"
                 register={register}
                 options={[
                   'pending',
@@ -180,7 +180,7 @@ export default function OrdersDialog({ order, setOrder }) {
 
               <FormField
                 type="textarea"
-                id="adminNote"
+                name="adminNote"
                 register={register}
                 placeholder="Admin Note (optional)..."
                 className="card overflow-visible shadow-xs outline-none"
