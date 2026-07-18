@@ -20,17 +20,11 @@ export default function ProductCard({ isLoading, product, wishlist }) {
   return (
     <div className="card group">
       <Swiper images={product?.images} isLoading={isLoading}>
-        {product?.category && (
-          <Badge color="sky" className="flex-center absolute top-0 z-10 mt-4 ml-4 gap-2">
-            {product.category}
-          </Badge>
-        )}
+        <div className="flex-center absolute top-0 z-10 mt-4 ml-4 gap-2">
+          {product?.category && <Badge color="sky">{product.category}</Badge>}
 
-        {discountPercentage > 0 && (
-          <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-4 mb-4">
-            -{discountPercentage}%
-          </Badge>
-        )}
+          {discountPercentage > 0 && <Badge color="emerald">-{discountPercentage}%</Badge>}
+        </div>
 
         {!isLoading && (
           <Button
