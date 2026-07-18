@@ -1,7 +1,4 @@
-import { useEffect, useState } from 'react'
-
 import { clsx } from 'clsx'
-import { isValid } from 'date-fns'
 import { twMerge } from 'tailwind-merge'
 
 export * from 'date-fns'
@@ -9,17 +6,6 @@ export * from 'next-themes'
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs))
-}
-
-export function useDebounce(value, delay = 400) {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-    return () => clearTimeout(timeout)
-  }, [value, delay])
-  return debouncedValue
 }
 
 export function filterData(items = [], filters = []) {
