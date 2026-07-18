@@ -1,4 +1,5 @@
 import { LuShoppingCart, LuX } from 'react-icons/lu'
+import { Link } from 'react-router-dom'
 
 import { Button, Skeleton } from '@repo/ui'
 import { cn } from '@repo/utils'
