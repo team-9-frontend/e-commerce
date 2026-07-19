@@ -41,7 +41,7 @@ export default function AppRoutes() {
 
           <Route path="/payment" element={<Payment />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/order-success" element={<OrderSuccess />} />
+          <Route path="/order-success/:id" element={<OrderSuccess />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>

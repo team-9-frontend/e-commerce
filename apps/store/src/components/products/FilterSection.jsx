@@ -38,31 +38,20 @@ export default function FilterSection() {
   ]
 
   useEffect(() => {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev)
-      const currentMin = params.get('minPrice') || ''
-      const currentMax = params.get('maxPrice') || ''
-      if (currentMin !== debouncedMinPrice) {
-        if (debouncedMinPrice) {
-          params.set('minPrice', debouncedMinPrice)
-        } else {
-          params.delete('minPrice')
-        }
-        params.delete('page')
-        return params
-      }
-      if (currentMax !== debouncedMaxPrice) {
-        if (debouncedMaxPrice) {
-          params.set('maxPrice', debouncedMaxPrice)
-        } else {
-          params.delete('maxPrice')
-        }
-        params.delete('page')
-        return params
-      }
-      return prev
-    })
-  }, [debouncedMinPrice, debouncedMaxPrice, setSearchParams])
+    const params = new URLSearchParams(searchParams)
+    const currentMin = params.get('minPrice') || ''
+    const currentMax = params.get('maxPrice') || ''
+    if (currentMin !== debouncedMinPrice || currentMax !== debouncedMaxPrice) {
+      if (debouncedMinPrice) params.set('minPrice', debouncedMinPrice)
+      else params.delete('minPrice')
+
+      if (debouncedMaxPrice) params.set('maxPrice', debouncedMaxPrice)
+      else params.delete('maxPrice')
+
+      params.delete('page')
+      setSearchParams(params, { replace: true })
+    }
+  }, [debouncedMinPrice, debouncedMaxPrice, setSearchParams, searchParams])
 
   useEffect(() => {
     const urlMin = urlMinPrice || ''
@@ -79,33 +68,29 @@ export default function FilterSection() {
   }, [urlMaxPrice])
 
   const handleCategoryChange = (categoryValue) => {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev)
-      if (categoryValue === 'all') {
-        params.delete('category')
-      } else {
-        params.set('category', categoryValue)
-      }
-      params.delete('page')
-      return params
-    })
+    const params = new URLSearchParams(searchParams)
+    if (categoryValue === 'all') {
+      params.delete('category')
+    } else {
+      params.set('category', categoryValue)
+    }
+    params.delete('page')
+    setSearchParams(params, { replace: true })
   }
 
   const handleSortChange = (value) => {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev)
-      if (!value || value === 'default') {
-        params.delete('sort')
-      } else {
-        params.set('sort', value)
-      }
-      params.delete('page')
-      return params
-    })
+    const params = new URLSearchParams(searchParams)
+    if (!value || value === 'default') {
+      params.delete('sort')
+    } else {
+      params.set('sort', value)
+    }
+    params.delete('page')
+    setSearchParams(params, { replace: true })
   }
 
   const handleClearAll = () => {
-    setSearchParams({})
+    setSearchParams({}, { replace: true })
     setMinPrice('')
     setMaxPrice('')
   }

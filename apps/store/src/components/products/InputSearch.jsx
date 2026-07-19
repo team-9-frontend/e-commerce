@@ -11,26 +11,22 @@ export default function InputSearch() {
   const debouncedSearch = useDebounce(search, 500)
 
   useEffect(() => {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev)
-      const currentSearch = params.get('search') ?? ''
-      if (currentSearch === debouncedSearch) {
-        return prev
-      }
+    const params = new URLSearchParams(searchParams)
+    const currentSearch = params.get('search') || ''
+    if (currentSearch === debouncedSearch) return
 
-      if (debouncedSearch.trim()) {
-        params.set('search', debouncedSearch)
-      } else {
-        params.delete('search')
-      }
-      params.delete('page')
-      return params
-    })
-  }, [debouncedSearch, setSearchParams])
+    if (debouncedSearch.trim()) {
+      params.set('search', debouncedSearch)
+    } else {
+      params.delete('search')
+    }
+    params.delete('page')
+    setSearchParams(params, { replace: true })
+  }, [debouncedSearch, setSearchParams, searchParams])
 
   return (
     <div className="relative w-full">
-      <LuSearch className="inset-s-3.5 absolute top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+      <LuSearch className="absolute inset-s-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
       <input
         type="text"
         placeholder="Search products..."

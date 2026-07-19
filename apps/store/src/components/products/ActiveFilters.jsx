@@ -23,16 +23,14 @@ export default function ActiveFilters() {
   })
 
   const removeFilter = (key) => {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev)
-      params.delete(key)
-      params.delete('page')
-      return params
-    })
+    const params = new URLSearchParams(searchParams)
+    params.delete(key)
+    params.delete('page')
+    setSearchParams(params, { replace: true })
   }
 
   const clearAllFilters = () => {
-    setSearchParams({})
+    setSearchParams({}, { replace: true })
   }
 
   if (filterEntries.length === 0) return null
