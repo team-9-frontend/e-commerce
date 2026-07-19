@@ -5,7 +5,6 @@ import { LuFilter } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
 import { cn } from '@repo/utils'
-
 import { useDebounce } from '@repo/utils/hooks'
 
 import Select from './Select'
