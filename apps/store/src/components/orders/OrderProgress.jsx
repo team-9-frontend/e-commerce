@@ -18,10 +18,10 @@ export default function OrderProgress({ status }) {
       </h3>
 
       <div className="relative flex items-start justify-between">
-        {/* الخط الرمادي */}
+        
         <div className="absolute top-4 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-700" />
 
-        {/* الخط الأزرق */}
+
         <div
           className="absolute top-4 left-0 h-0.5 bg-brand-600 transition-all duration-300"
           style={{
