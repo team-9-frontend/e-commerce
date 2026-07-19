@@ -32,7 +32,7 @@ export default function Wishlist() {
                 'Loading your wishlist...'
               ) : (
                 <Badge>
-                  {products.length} saved product{products.length > 1 && 's'}
+                  {products.length} saved product{!(products.length === 1) && 's'}
                 </Badge>
               )}
             </p>
