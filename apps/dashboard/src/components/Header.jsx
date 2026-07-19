@@ -31,7 +31,7 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           size="md-square"
           className="lg:hidden"
         >
-          {open ? <LuX size={20} /> : <LuMenu size={20} />}
+          {open ? <LuX /> : <LuMenu />}
         </Button>
 
         <Button
@@ -40,13 +40,11 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           size="md-square"
           className="hidden lg:block"
         >
-          {minimized ? <LuIndentIncrease size={20} /> : <LuIndentDecrease size={20} />}
+          {minimized ? <LuIndentIncrease /> : <LuIndentDecrease />}
         </Button>
 
-        <Link to="/" className="text-neutral-950">
-          <h1 className="font-fancy hidden pt-1 text-xl font-bold sm:block">
-            LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
-          </h1>
+        <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-sm:hidden">
+          LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
         </Link>
       </div>
 
@@ -56,12 +54,12 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
           variant="ghost"
           size="md-square"
         >
-          {theme === 'dark' ? <LuSun size={20} /> : <LuMoon size={20} />}
+          {theme === 'dark' ? <LuSun /> : <LuMoon />}
           <Tooltip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</Tooltip>
         </Button>
 
         <Button variant="ghost" size="md-square">
-          <LuBell size={20} />
+          <LuBell />
           <Tooltip position="bottom">Notifications</Tooltip>
         </Button>
 

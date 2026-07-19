@@ -20,18 +20,18 @@ const sizes = {
   'lg-square': 'px-3 py-3 text-lg rounded-xl',
 }
 
-export function Button({ children, className, variant = 'primary', size = 'md', icon, ...rest }) {
+export function Button({ children, className, variant = 'primary', size = 'md', ...rest }) {
   return (
     <button
       className={cn(
-        'group flex-center relative cursor-pointer gap-2 px-4 py-2 text-left font-medium text-nowrap text-neutral-950 capitalize transition-all disabled:pointer-events-none disabled:opacity-50',
+        'group flex-center relative cursor-pointer gap-2 px-4 py-2 font-medium text-nowrap text-neutral-950 capitalize transition-all disabled:pointer-events-none disabled:opacity-50',
         variants[variant],
         sizes[size],
         className,
       )}
       {...rest}
     >
-      {icon} {children}
+      {children}
     </button>
   )
 }
