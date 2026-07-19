@@ -1,4 +1,4 @@
-import { LuTrash, LuUserPlus } from 'react-icons/lu'
+import { LuTrash2, LuUserPlus } from 'react-icons/lu'
 
 import { useAddUser } from '@repo/api'
 import { Button, FormField } from '@repo/ui'
@@ -89,7 +89,7 @@ export default function AddUserForm() {
         )}
       >
         <Button variant="ghostDanger" type="reset" onClick={reset}>
-          <LuTrash /> clear
+          <LuTrash2 /> clear
         </Button>
 
         <Button type="submit" disabled={addingUser} variant="primary">

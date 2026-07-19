@@ -12,7 +12,7 @@ import {
 } from '@/components/stats/DashboardStats'
 
 import { useGetProducts } from '@repo/api'
-import { Button, FormField, Pagination } from '@repo/ui'
+import { Button, Error, FormField, Pagination } from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -59,7 +59,7 @@ export default function AdminProducts() {
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             products
           </p>
-          <h2 className="text-3xl">Products</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">Products</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>
@@ -131,9 +131,9 @@ export default function AdminProducts() {
       </form>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : !page?.length && !isLoading ? (
-        <div className="card p-4 text-neutral-500">No products found</div>
+        <Error message="No products found" />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {

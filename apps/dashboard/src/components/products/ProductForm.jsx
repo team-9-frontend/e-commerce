@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { LuTrash, LuX } from 'react-icons/lu'
+import { LuTrash2, LuX } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useCreateProduct, useUpdateProduct } from '@repo/api'
@@ -119,7 +119,7 @@ export default function ProductForm({ product, dialog }) {
                             field.onChange(currentImages.filter((_, index) => index !== i))
                           }}
                         >
-                          <LuTrash />
+                          <LuTrash2 />
                         </Button>
                       </div>
                     )
