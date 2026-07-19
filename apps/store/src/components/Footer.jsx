@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const quickLinks = [
   { label: 'Shop', to: '/products' },
-  { label: 'My Orders', to: '/profile/orders' },
+  { label: 'My Orders', to: '/orders' },
   { label: 'Wishlist', to: '/wishlist' },
   { label: 'Profile', to: '/profile' },
 ]
