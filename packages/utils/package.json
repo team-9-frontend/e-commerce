@@ -4,7 +4,8 @@
   "exports": {
     ".": "./src/index.js",
     "./toasts": "./src/toasts",
-    "./forms": "./src/forms"
+    "./forms": "./src/forms",
+    "./hooks": "./src/hooks"
   },
   "dependencies": {
     "react-hook-form": "^7.81.0",

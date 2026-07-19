@@ -1,21 +1,21 @@
 import { useMemo, useState } from 'react'
 
-import { LuPen, LuPlus, LuSearch, LuShield, LuShieldCheck, LuTrash } from 'react-icons/lu'
+import { LuPen, LuPlus, LuSearch, LuTrash } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
 import AddUserForm from '@/components/users/AddUserForm'
 import EditUserDialog from '@/components/users/EditUserDialog'
+import RoleToggleButton from '@/components/users/RoleToggleButton'
 
-import { useDeleteUser, useGetAllUsers, useUpdateUserRole } from '@repo/api'
+import { useDeleteUser, useGetAllUsers } from '@repo/api'
 import { Badge, Button, ConfirmDialog, FormField, Pagination, Table, Tooltip } from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
-const EMPTY_USERS = []
+const EMPTY_ARRAY = []
 
 export default function AdminUsers() {
   const { mutate: deleteUser, isPending: deletingUser } = useDeleteUser()
-  const { mutate: updateUserRole, isPending: updatingUserRole } = useUpdateUserRole()
 
   const [addUserToggle, setAddUserToggle] = useState(false)
   const [editUser, setEditUser] = useState(null)
@@ -29,7 +29,7 @@ export default function AdminUsers() {
   const { search } = urlValues
 
   const { data, isLoading, isError, error } = useGetAllUsers({ limit: 100 })
-  const users = data?.users || EMPTY_USERS
+  const users = data?.users || EMPTY_ARRAY
 
   const filteredUsers = useMemo(() => {
     return filterData(users, [
@@ -90,21 +90,7 @@ export default function AdminUsers() {
             <LuPen />
             <Tooltip position="top">edit user</Tooltip>
           </Button>
-          <Button
-            variant="outline"
-            size="md-square"
-            disabled={updatingUserRole}
-            onClick={() => {
-              updateUserRole({
-                userId: user._id,
-                role: user.role === 'admin' ? 'customer' : 'admin',
-              })
-            }}
-            className="hover:border-emerald-500/50 hover:bg-emerald-500/15 hover:text-emerald-600 dark:hover:bg-emerald-500/15 dark:hover:text-emerald-400"
-          >
-            {user.role === 'admin' ? <LuShieldCheck /> : <LuShield />}
-            <Tooltip position="top">toggle admin role</Tooltip>
-          </Button>
+          <RoleToggleButton user={user} />
           <Button
             variant="outlineDanger"
             size="md-square"
@@ -118,7 +104,7 @@ export default function AdminUsers() {
         </div>
       ),
     }))
-  }, [page, updateUserRole, updatingUserRole])
+  }, [page])
 
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -143,7 +129,7 @@ export default function AdminUsers() {
           className="flex gap-4 max-sm:flex-col sm:items-center"
         >
           <FormField
-            id="search"
+            name="search"
             icon={<LuSearch />}
             placeholder="Search ID, customer..."
             register={register}
@@ -184,7 +170,7 @@ export default function AdminUsers() {
         />
       )}
 
-      <Pagination totalPages={totalPages} className="mt-auto" />
+      <Pagination totalPages={totalPages} />
 
       <ConfirmDialog
         isOpen={deleteUserId}

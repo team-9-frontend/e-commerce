@@ -11,47 +11,56 @@ export default function ProductCard({ isLoading, product }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
-    <div className="card">
+    <div className="card flex flex-col">
       <Swiper images={product?.images} isLoading={isLoading}>
         {product?.featured && (
-          <Badge color="amber" className="flex-center absolute top-0 z-10 mt-6 ml-6 gap-2">
+          <Badge color="amber" className="flex-center absolute top-0 z-10 mt-4 ml-4 gap-2">
             <LuStar />
             Featured
           </Badge>
         )}
-        <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-6 mb-6">
+        <Badge color="emerald" className="absolute right-0 bottom-0 z-10 mr-4 mb-4">
           {product?.stock ? `${product.stock} In Stock` : 'Out of Stock'}
         </Badge>
       </Swiper>
 
-      <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-1 flex-col gap-2 p-4">
         <div>
-          <h2 className="text-lg font-medium sm:text-xl">
+          <h2 className="mb-1 line-clamp-1 text-lg font-medium sm:text-xl">
             {!isLoading ? product.name : <Skeleton width="75%" />}
           </h2>
-          <p className="mb-2 line-clamp-1 text-sm font-medium text-neutral-500">
+          <p className="line-clamp-1 text-sm font-medium text-neutral-500">
             {!isLoading ? (
-              [product.category, product.subcategory, product.brand].join(' • ')
+              [
+                product.category || 'no category',
+                product.subcategory || 'no subcategory',
+                product.brand || 'no brand',
+              ].join(' • ')
             ) : (
               <Skeleton width="50%" />
             )}
           </p>
-          <p className="line-clamp-1 text-sm text-neutral-500">
-            {!isLoading ? product.shortDescription || 'no description' : <Skeleton width="60%" />}
-          </p>
         </div>
+
+        <p className="line-clamp-1 text-sm text-neutral-500">
+          {!isLoading ? product.shortDescription || 'no description' : <Skeleton width="60%" />}
+        </p>
+
         <p className="text-4xl font-bold">
           {!isLoading ? (
             <>
               ${product.price}
-              <span className="ml-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
-                {`-$${product.discountPrice} off`}
-              </span>
+              {product?.discountPrice && (
+                <span className="ml-2 text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                  {`-$${product.discountPrice} off`}
+                </span>
+              )}
             </>
           ) : (
             <Skeleton width="30%" />
           )}
         </p>
+
         {!isLoading ? (
           <div className="flex gap-2">
             {product.tags.map((tag, i) => (
@@ -68,7 +77,7 @@ export default function ProductCard({ isLoading, product }) {
         )}
 
         {!isLoading ? (
-          <div className="flex items-center gap-2 border-t border-neutral-200 pt-4">
+          <div className="mt-auto flex items-center gap-2 border-t border-neutral-200 pt-4">
             <Link to={`/products/view/${product._id}`}>
               <Button
                 variant="outline"

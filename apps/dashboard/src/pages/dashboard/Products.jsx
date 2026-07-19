@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { LuBoxes, LuFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
+import { LuBoxes, LuListFilter, LuPlus, LuSearch, LuTag } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import ProductCard from '@/components/products/ProductCard'
@@ -16,7 +16,7 @@ import { Button, FormField, Pagination } from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
-const EMPTY_PRODUCTS = []
+const EMPTY_ARRAY = []
 
 export default function AdminProducts() {
   const [filters, setFilters] = useState(false)
@@ -32,13 +32,13 @@ export default function AdminProducts() {
   const { data, isLoading, isError, error } = useGetProducts({
     limit: 100,
   })
-  const products = data?.products || EMPTY_PRODUCTS
+  const products = data?.products || EMPTY_ARRAY
 
   const totalProducts = products.length
   const featuredProducts = products.filter((product) => product.featured).length
   const inStockTotal = products.filter((product) => product.stock > 0).length
   const outOfStockTotal = products.filter((product) => product.stock === 0).length
-  const categories = Array.from(new Set(products.map((product) => product.category)))
+  const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
 
   const filteredProducts = useMemo(() => {
     return filterData(products, [
@@ -82,7 +82,7 @@ export default function AdminProducts() {
       <form onSubmit={handleSubmit(updateParams)} className="card p-4">
         <div className="flex items-center gap-4">
           <FormField
-            id="search"
+            name="search"
             icon={<LuSearch />}
             placeholder="Search products..."
             register={register}
@@ -98,7 +98,7 @@ export default function AdminProducts() {
                 'dark:bg-accent-500/15 bg-accent-500/15 border-accent-500/50 text-accent-600 dark:text-accent-400',
             )}
           >
-            <LuFilter /> Filters
+            <LuListFilter /> Filters
           </Button>
 
           <Button type="submit" variant="primary">
@@ -110,7 +110,7 @@ export default function AdminProducts() {
           <div className={cn('mt-4 flex gap-4 overflow-hidden border-t border-neutral-200 pt-4')}>
             <FormField
               type="select"
-              id="category"
+              name="category"
               label="category"
               labelIcon={<LuBoxes />}
               register={register}
@@ -120,7 +120,7 @@ export default function AdminProducts() {
             />
 
             <FormField
-              id="subcategory"
+              name="subcategory"
               label="subcategory"
               labelIcon={<LuTag />}
               placeholder="e.g. smartphones"
@@ -139,12 +139,13 @@ export default function AdminProducts() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {
             const product = page?.[i]
-            return <ProductCard key={i} product={product} isLoading={isLoading} />
+
+            return <ProductCard key={i} isLoading={isLoading} product={product} />
           })}
         </div>
       )}
 
-      <Pagination totalPages={totalPages} className="mt-auto" />
+      <Pagination totalPages={totalPages} />
     </div>
   )
 }

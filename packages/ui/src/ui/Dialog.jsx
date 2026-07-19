@@ -29,7 +29,11 @@ export function Dialog({
         position === 'center' && 'items-center justify-center p-6',
         isOpen ? 'opacity-100' : 'invisible opacity-0',
       )}
-      onClick={handleClose}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          handleClose()
+        }
+      }}
     >
       <div
         className={cn(
@@ -42,7 +46,6 @@ export function Dialog({
           isOpen ? 'translate-0 opacity-100' : 'invisible opacity-0',
           className,
         )}
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
           <h2 className="font-mono text-sm tracking-wider text-neutral-950 uppercase">{title}</h2>
