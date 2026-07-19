@@ -20,10 +20,8 @@ export default function Footer() {
       <div className="container flex flex-col gap-8 py-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           <div className="flex flex-col gap-2">
-            <Link to="/" className="w-fit text-neutral-950">
-              <h1 className="font-fancy text-xl font-bold">
-                LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
-              </h1>
+            <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950">
+              LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
             </Link>
 
             <p className="max-w-sm text-sm text-neutral-500">
