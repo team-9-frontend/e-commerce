@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { LuTrash2, LuX } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
@@ -24,6 +24,7 @@ export default function ProductForm({ product, dialog }) {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -43,6 +44,36 @@ export default function ProductForm({ product, dialog }) {
       images: [],
     },
   })
+
+  // Cache object URLs per File so we don't regenerate/leak them on every
+  // unrelated re-render (typing in another field, etc). Revoke anything
+  // that's no longer part of the current selection.
+  const objectUrlCacheRef = useRef(new Map())
+  const watchedUploadedImages = watch('images') || []
+
+  const uploadedImagePreviewUrls = useMemo(() => {
+    const cache = objectUrlCacheRef.current
+    const nextCache = new Map()
+
+    const urls = watchedUploadedImages.map((file) => {
+      const url = cache.get(file) || URL.createObjectURL(file)
+      nextCache.set(file, url)
+      return url
+    })
+
+    cache.forEach((url, file) => {
+      if (!nextCache.has(file)) URL.revokeObjectURL(url)
+    })
+
+    objectUrlCacheRef.current = nextCache
+    return urls
+  }, [watchedUploadedImages])
+
+  useEffect(() => {
+    return () => {
+      objectUrlCacheRef.current.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [])
 
   const onSubmit = async (data) => {
     const formData = new FormData()
@@ -203,8 +234,8 @@ export default function ProductForm({ product, dialog }) {
                     )
                   })}
 
-                  {uploadedImages.map((image, i) => {
-                    const src = image instanceof File ? URL.createObjectURL(image) : image
+                  {uploadedImages.map((_, i) => {
+                    const src = uploadedImagePreviewUrls[i]
 
                     return (
                       <div key={i} className="group card relative size-48 shadow-none">
@@ -451,7 +482,7 @@ export default function ProductForm({ product, dialog }) {
           {editingProduct || creatingProduct ? 'Saving...' : 'Save Changes'}
         </Button>
         <Button
-          type="reset"
+          type="button"
           variant="ghostDanger"
           onClick={() => {
             reset()

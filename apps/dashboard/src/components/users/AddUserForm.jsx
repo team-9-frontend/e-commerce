@@ -88,7 +88,7 @@ export default function AddUserForm() {
           'mt-4 flex justify-end gap-4 overflow-hidden border-t border-neutral-200 pt-4',
         )}
       >
-        <Button variant="ghostDanger" type="reset" onClick={reset}>
+        <Button variant="ghostDanger" type="button" onClick={reset}>
           <LuTrash2 /> clear
         </Button>
 
