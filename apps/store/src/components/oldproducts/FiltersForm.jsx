@@ -30,7 +30,7 @@ export default function FiltersForm({ className }) {
     if (minprice || maxprice) {
       trigger(['minprice', 'maxprice'])
     }
-  }, [minprice, maxprice, urlValues])
+  }, [minprice, maxprice, urlValues, trigger])
 
   return (
     <form

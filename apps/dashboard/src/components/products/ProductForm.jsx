@@ -9,6 +9,8 @@ import { cn } from '@repo/utils'
 import { Controller, useForm } from '@repo/utils/forms'
 import { toast } from '@repo/utils/toasts'
 
+const EMPTY_ARRAY = []
+
 export default function ProductForm({ product, dialog }) {
   const { mutate: createProduct, isPending: creatingProduct } = useCreateProduct()
   const { mutate: editProduct, isPending: editingProduct } = useUpdateProduct()
@@ -49,7 +51,7 @@ export default function ProductForm({ product, dialog }) {
   // unrelated re-render (typing in another field, etc). Revoke anything
   // that's no longer part of the current selection.
   const objectUrlCacheRef = useRef(new Map())
-  const watchedUploadedImages = watch('images') || []
+  const watchedUploadedImages = watch('images') || EMPTY_ARRAY
 
   const uploadedImagePreviewUrls = useMemo(() => {
     const cache = objectUrlCacheRef.current
