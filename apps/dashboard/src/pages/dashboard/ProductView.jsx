@@ -32,29 +32,27 @@ export default function AdminProductView() {
       {isError ? (
         <div className="card p-4 text-neutral-500">{error?.message}</div>
       ) : (
-        <>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <div className="flex flex-col gap-4">
-              <Swiper images={product?.images} isLoading={isLoading} showImages isCard />
+        <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
+          <div className="flex flex-col gap-4">
+            <Swiper images={product?.images} isLoading={isLoading} showImages isCard />
 
-              <ProductReviews
-                reviews={product?.reviews}
-                isLoading={isLoading}
-                className="max-lg:hidden xl:hidden"
-              />
-            </div>
-
-            <div className="flex flex-col gap-4">
-              <ProductInfo product={product} isLoading={isLoading} />
-
-              <ProductReviews
-                reviews={product?.reviews}
-                isLoading={isLoading}
-                className="lg:max-xl:hidden"
-              />
-            </div>
+            <ProductReviews
+              reviews={product?.reviews}
+              isLoading={isLoading}
+              className="max-lg:hidden xl:hidden"
+            />
           </div>
-        </>
+
+          <div className="flex flex-col gap-4">
+            <ProductInfo product={product} isLoading={isLoading} />
+
+            <ProductReviews
+              reviews={product?.reviews}
+              isLoading={isLoading}
+              className="lg:max-xl:hidden"
+            />
+          </div>
+        </div>
       )}
     </div>
   )

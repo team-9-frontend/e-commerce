@@ -23,7 +23,6 @@ export default function AdminProducts() {
 
   const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
-    mode: 'onTouched',
     unDebouncedFields: ['category'],
   })
 
@@ -109,12 +108,12 @@ export default function AdminProducts() {
         <div className={cn('grid transition-all', filters ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
           <div className={cn('mt-4 flex gap-4 overflow-hidden border-t border-neutral-200 pt-4')}>
             <FormField
-              type="select"
               name="category"
               label="category"
               labelIcon={<LuBoxes />}
               register={register}
-              options={categories}
+              type="select"
+              options={['electronics', 'phones', 'fashion', 'home', 'beauty', 'sports']}
               defaultOption="all categories"
               className="w-full"
             />

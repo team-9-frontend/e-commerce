@@ -5,7 +5,7 @@ import Login from '@/pages/auth/Login'
 import AdminCarts from '@/pages/dashboard/Carts'
 import AdminDashboard from '@/pages/dashboard/Dashboard'
 import AdminOrders from '@/pages/dashboard/Orders'
-import AdminProductAdd from '@/pages/dashboard/ProductAdd'
+import AdminProductCreate from '@/pages/dashboard/ProductCreate'
 import AdminProductEdit from '@/pages/dashboard/ProductEdit'
 import AdminProducts from '@/pages/dashboard/Products'
 import AdminProductView from '@/pages/dashboard/ProductView'
@@ -25,7 +25,7 @@ export default function DashboardRoutes() {
           <Route path="/products" element={<AdminProducts />} />
           <Route path="/products/edit/:id" element={<AdminProductEdit />} />
           <Route path="/products/view/:id" element={<AdminProductView />} />
-          <Route path="/products/add" element={<AdminProductAdd />} />
+          <Route path="/products/create" element={<AdminProductCreate />} />
 
           <Route path="/orders" element={<AdminOrders />} />
 

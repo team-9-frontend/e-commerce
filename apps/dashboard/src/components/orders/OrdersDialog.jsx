@@ -27,9 +27,7 @@ export default function OrdersDialog({ order, setOrder }) {
 
   const { mutate: updateStatus, isPending: updatingStatus } = useUpdateOrderStatus()
 
-  const { register, handleSubmit, reset } = useForm({
-    mode: 'onTouched',
-  })
+  const { register, handleSubmit, reset } = useForm()
 
   console.log(order)
 
@@ -162,9 +160,9 @@ export default function OrdersDialog({ order, setOrder }) {
               className="card flex flex-col gap-4 p-4"
             >
               <FormField
-                type="select"
                 name="status"
                 register={register}
+                type="select"
                 options={[
                   'pending',
                   'confirmed',
@@ -179,16 +177,16 @@ export default function OrdersDialog({ order, setOrder }) {
               />
 
               <FormField
-                type="textarea"
                 name="adminNote"
                 register={register}
                 placeholder="Admin Note (optional)..."
                 className="card overflow-visible shadow-xs outline-none"
+                type="textarea"
                 rows={3}
               />
 
               <Button type="submit" disabled={updatingStatus} variant="primary">
-                {!updatingStatus ? 'Save Changes' : 'Saving...'}
+                {updatingStatus ? 'Saving...' : 'Save Changes'}
               </Button>
             </form>
           </div>
