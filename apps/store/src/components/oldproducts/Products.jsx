@@ -17,9 +17,7 @@ export default function Products() {
   const [searchParams] = useSearchParams()
   const [filters, setFilters] = useState(false)
 
-  const { register, handleSubmit, setValue, updateParams, urlValues } = useSearchParamsForm({
-    mode: 'onTouched',
-  })
+  const { register, handleSubmit, setValue, updateParams, urlValues } = useSearchParamsForm()
   const { search, category, minprice, maxprice, sort } = urlValues
 
   const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
@@ -112,7 +110,7 @@ export default function Products() {
       )}
 
       <div className="flex items-start gap-4">
-        <FiltersForm categories={categories} className="max-lg:hidden" />
+        <FiltersForm className="max-lg:hidden" />
 
         <div className="flex-1">
           {isError ? (

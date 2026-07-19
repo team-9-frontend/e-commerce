@@ -14,9 +14,7 @@ export default function EditUserDialog({ user, setUser }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm()
 
   useEffect(() => {
     if (user) {
@@ -78,7 +76,7 @@ export default function EditUserDialog({ user, setUser }) {
           />
 
           <Button type="submit" disabled={updatingUser} variant="primary">
-            <span>{updatingUser ? 'Saving...' : 'save changes'}</span>
+            <span>{updatingUser ? 'Saving...' : 'Save Changes'}</span>
           </Button>
         </form>
       )}

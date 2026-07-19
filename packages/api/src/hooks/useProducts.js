@@ -46,7 +46,7 @@ const useProductMutation = (mutationFn) => {
   })
 }
 
-export const useCreateProduct = () => useProductMutation(productsService.create)
+export const useCreateProduct = () => useProductMutation((data) => productsService.create(data))
 export const useUpdateProduct = () =>
   useProductMutation(({ id, data }) => productsService.update(id, data))
 export const useDeleteProduct = () => useProductMutation((id) => productsService.remove(id))

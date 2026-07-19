@@ -22,9 +22,7 @@ export default function AdminUsers() {
   const [deleteUserId, setDeleteUserId] = useState(null)
 
   const [searchParams] = useSearchParams()
-  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
-    mode: 'onTouched',
-  })
+  const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm()
 
   const { search } = urlValues
 

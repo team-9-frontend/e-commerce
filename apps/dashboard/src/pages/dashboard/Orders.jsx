@@ -32,7 +32,6 @@ export default function AdminOrders() {
 
   const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
-    mode: 'onTouched',
     unDebouncedFields: ['status', 'payment', 'method'],
   })
 
@@ -140,9 +139,9 @@ export default function AdminOrders() {
 
         <div className="flex items-center gap-4 max-sm:w-full">
           <FormField
-            type="select"
             name="status"
             register={register}
+            type="select"
             options={[
               'pending',
               'confirmed',
@@ -157,18 +156,18 @@ export default function AdminOrders() {
           />
 
           <FormField
-            type="select"
             name="payment"
             register={register}
+            type="select"
             options={['pending', 'paid', 'failed', 'refunded']}
             defaultOption="all payments"
             className="flex-1 sm:w-fit"
           />
 
           <FormField
-            type="select"
             name="method"
             register={register}
+            type="select"
             options={['cash', 'stripe']}
             defaultOption="all methods"
             className="flex-1 sm:w-fit"
