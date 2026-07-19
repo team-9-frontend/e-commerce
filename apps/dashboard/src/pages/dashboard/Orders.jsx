@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom'
 import OrdersDialog from '@/components/orders/OrdersDialog'
 
 import { useGetAllOrders } from '@repo/api'
-import { Badge, FormField, Pagination, Table } from '@repo/ui'
+import { Badge, Error, FormField, Pagination, Table } from '@repo/ui'
 import { filterData, format } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -115,7 +115,7 @@ export default function AdminOrders() {
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             orders
           </p>
-          <h2 className="text-3xl">orders</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">orders</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>
@@ -176,7 +176,7 @@ export default function AdminOrders() {
       </form>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : (
         <Table
           columns={['order', 'customer', 'date', 'status', 'payment', 'method', 'total']}

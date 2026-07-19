@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { LuTrash, LuX } from 'react-icons/lu'
+import { LuTrash2, LuX } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useCreateProduct, useUpdateProduct } from '@repo/api'
@@ -14,6 +14,7 @@ export default function ProductForm({ product, dialog }) {
   const { mutate: editProduct, isPending: editingProduct } = useUpdateProduct()
 
   const [tagInput, setTagInput] = useState('')
+  const [deletionQueue, setDeletionQueue] = useState([])
 
   const { pathname } = useLocation()
 
@@ -22,6 +23,8 @@ export default function ProductForm({ product, dialog }) {
     control,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -38,9 +41,39 @@ export default function ProductForm({ product, dialog }) {
       tags: product?.tags || [],
       featured: product?.featured || false,
       isActive: product?.isActive || false,
-      images: product?.images.map((image) => image.url) || [],
+      images: [],
     },
   })
+
+  // Cache object URLs per File so we don't regenerate/leak them on every
+  // unrelated re-render (typing in another field, etc). Revoke anything
+  // that's no longer part of the current selection.
+  const objectUrlCacheRef = useRef(new Map())
+  const watchedUploadedImages = watch('images') || []
+
+  const uploadedImagePreviewUrls = useMemo(() => {
+    const cache = objectUrlCacheRef.current
+    const nextCache = new Map()
+
+    const urls = watchedUploadedImages.map((file) => {
+      const url = cache.get(file) || URL.createObjectURL(file)
+      nextCache.set(file, url)
+      return url
+    })
+
+    cache.forEach((url, file) => {
+      if (!nextCache.has(file)) URL.revokeObjectURL(url)
+    })
+
+    objectUrlCacheRef.current = nextCache
+    return urls
+  }, [watchedUploadedImages])
+
+  useEffect(() => {
+    return () => {
+      objectUrlCacheRef.current.forEach((url) => URL.revokeObjectURL(url))
+    }
+  }, [])
 
   const onSubmit = async (data) => {
     const formData = new FormData()
@@ -49,18 +82,30 @@ export default function ProductForm({ product, dialog }) {
       if (key === 'images') {
         value.forEach((image) => formData.append('images', image))
       } else if (key === 'tags') {
-        formData.append('tags', JSON.stringify(value))
+        value.forEach((tag) => formData.append('tags', tag))
       } else {
         formData.append(key, value)
       }
     })
 
-    console.log(formData)
-
     if (product) {
-      editProduct({ id: product._id, data: formData })
+      formData.append('deletedImages', JSON.stringify(deletionQueue))
+      editProduct(
+        { id: product._id, data: formData },
+        {
+          onSuccess: (data) => {
+            toast.success(data.message)
+            setValue('images', [])
+          },
+        },
+      )
     } else {
-      createProduct(formData)
+      createProduct(formData, {
+        onSuccess: (data) => {
+          toast.success(data.message)
+          setValue('images', [])
+        },
+      })
     }
   }
 
@@ -73,7 +118,8 @@ export default function ProductForm({ product, dialog }) {
         name="images"
         control={control}
         render={({ field }) => {
-          const currentImages = field.value || []
+          const uploadedImages = field.value || []
+          const productImages = product?.images || []
 
           return (
             <div className="flex flex-col gap-2">
@@ -85,26 +131,53 @@ export default function ProductForm({ product, dialog }) {
                 type="file"
                 multiple
                 accept="image/*"
-                className="block w-full text-sm text-neutral-500 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-neutral-100 file:px-4 file:py-2 file:text-sm file:font-semibold hover:file:bg-neutral-200"
+                className="block w-full text-sm text-neutral-500 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-neutral-100 file:px-4 file:py-2 file:text-sm file:font-semibold file:transition-colors hover:file:bg-neutral-200 dark:file:bg-neutral-200 dark:hover:file:bg-neutral-300"
                 onChange={(e) => {
                   const files = Array.from(e.target.files)
-                  const total = currentImages.length + files.length
 
-                  if (total > 5) {
+                  const MAX_FILE_SIZE = 2 * 1024 * 1024
+                  const MAX_TOTAL_SIZE = 5 * 1024 * 1024
+
+                  const validFiles = files.filter((file) => {
+                    if (file.size > MAX_FILE_SIZE) {
+                      toast.error(`"${file.name}" exceeds the 2MB limit.`)
+                      return false
+                    }
+                    return true
+                  })
+
+                  const currentTotalSize = uploadedImages.reduce((sum, file) => sum + file.size, 0)
+                  const incomingTotalSize = validFiles.reduce((sum, file) => sum + file.size, 0)
+
+                  if (currentTotalSize + incomingTotalSize > MAX_TOTAL_SIZE) {
+                    toast.error(
+                      'Total upload size exceeds the 5MB limit. Please remove some files.',
+                    )
+                    e.target.value = ''
+                    return
+                  }
+
+                  const totalCount =
+                    productImages.length + uploadedImages.length - deletionQueue.length
+
+                  if (totalCount + validFiles.length > 5) {
                     toast.error('You can only upload a maximum of 5 images.')
                     e.target.value = ''
                     return
                   }
 
-                  if (files.length > 0) field.onChange([...currentImages, ...files])
+                  if (validFiles.length > 0) {
+                    field.onChange([...uploadedImages, ...validFiles])
+                  }
+
                   e.target.value = ''
                 }}
               />
 
-              {currentImages.length > 0 && (
+              {(productImages.length > 0 || uploadedImages.length > 0) && (
                 <div className="mt-2 flex flex-wrap gap-4">
-                  {currentImages.map((image, i) => {
-                    const src = image instanceof File ? URL.createObjectURL(image) : image
+                  {productImages.map((image, i) => {
+                    const src = image.url
 
                     return (
                       <div key={i} className="group card relative size-48 shadow-none">
@@ -114,12 +187,83 @@ export default function ProductForm({ product, dialog }) {
                           type="button"
                           variant="custom"
                           size="md-square"
-                          className="invisible absolute top-0 right-0 z-10 mt-4 mr-4 rounded-full border-none bg-neutral-50 opacity-0 transition-all group-hover:visible group-hover:opacity-100 hover:text-red-600 dark:hover:text-red-400"
+                          className={cn(
+                            'invisible absolute top-0 right-0 z-10 mt-4 mr-4 rounded-full bg-neutral-50/85 p-2 opacity-0 shadow transition-all group-hover:visible group-hover:opacity-100 hover:bg-red-500 hover:text-neutral-50 dark:hover:text-neutral-950',
+                            deletionQueue.includes(image.public_id) &&
+                              'visible bg-red-500/85 text-neutral-50 opacity-100 dark:text-neutral-950',
+                          )}
                           onClick={() => {
-                            field.onChange(currentImages.filter((_, index) => index !== i))
+                            const isCurrentlyDeleted = deletionQueue.includes(image.public_id)
+
+                            if (isCurrentlyDeleted) {
+                              const totalActiveIfRestored =
+                                productImages.length -
+                                deletionQueue.length +
+                                uploadedImages.length +
+                                1
+
+                              if (totalActiveIfRestored > 5) {
+                                toast.error(
+                                  'You can only have a maximum of 5 images. Remove another image first.',
+                                )
+                                return
+                              }
+
+                              setDeletionQueue(deletionQueue.filter((id) => id !== image.public_id))
+                            } else {
+                              const totalActiveIfRemoved =
+                                productImages.length -
+                                deletionQueue.length +
+                                uploadedImages.length -
+                                1
+
+                              if (totalActiveIfRemoved < 1) {
+                                toast.error(
+                                  'A product must have at least one image. Add another image first.',
+                                )
+                                return
+                              }
+
+                              setDeletionQueue([...deletionQueue, image.public_id])
+                            }
                           }}
                         >
-                          <LuTrash />
+                          <LuTrash2 />
+                        </Button>
+                      </div>
+                    )
+                  })}
+
+                  {uploadedImages.map((_, i) => {
+                    const src = uploadedImagePreviewUrls[i]
+
+                    return (
+                      <div key={i} className="group card relative size-48 shadow-none">
+                        <img src={src} alt={`preview-${i}`} className="size-full object-cover" />
+
+                        <Button
+                          type="button"
+                          variant="custom"
+                          size="md-square"
+                          className="invisible absolute top-0 right-0 z-10 mt-4 mr-4 rounded-full bg-neutral-50/85 p-2 opacity-0 shadow transition-all group-hover:visible group-hover:opacity-100 hover:bg-red-500 hover:text-neutral-50 dark:hover:text-neutral-950"
+                          onClick={() => {
+                            const totalActiveIfRemoved =
+                              productImages.length -
+                              deletionQueue.length +
+                              uploadedImages.length -
+                              1
+
+                            if (totalActiveIfRemoved < 1) {
+                              toast.error(
+                                'A product must have at least one image. Add another image first.',
+                              )
+                              return
+                            }
+
+                            field.onChange(uploadedImages.filter((_, index) => index !== i))
+                          }}
+                        >
+                          <LuTrash2 />
                         </Button>
                       </div>
                     )
@@ -337,7 +481,15 @@ export default function ProductForm({ product, dialog }) {
         <Button type="submit" disabled={editingProduct || creatingProduct}>
           {editingProduct || creatingProduct ? 'Saving...' : 'Save Changes'}
         </Button>
-        <Button type="reset" variant="ghostDanger" onClick={reset}>
+        <Button
+          type="button"
+          variant="ghostDanger"
+          onClick={() => {
+            reset()
+            setTagInput('')
+            setDeletionQueue([])
+          }}
+        >
           Reset
         </Button>
         {pathname === '/products' || (

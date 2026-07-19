@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { LuPen, LuPlus, LuSearch, LuTrash } from 'react-icons/lu'
+import { LuPen, LuPlus, LuSearch, LuTrash2 } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
 import AddUserForm from '@/components/users/AddUserForm'
@@ -8,7 +8,16 @@ import EditUserDialog from '@/components/users/EditUserDialog'
 import RoleToggleButton from '@/components/users/RoleToggleButton'
 
 import { useDeleteUser, useGetAllUsers } from '@repo/api'
-import { Badge, Button, ConfirmDialog, FormField, Pagination, Table, Tooltip } from '@repo/ui'
+import {
+  Badge,
+  Button,
+  ConfirmDialog,
+  Error,
+  FormField,
+  Pagination,
+  Table,
+  Tooltip,
+} from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -96,7 +105,7 @@ export default function AdminUsers() {
               setDeleteUserId(user._id)
             }}
           >
-            <LuTrash />
+            <LuTrash2 />
             <Tooltip position="top">delete user</Tooltip>
           </Button>
         </div>
@@ -111,7 +120,7 @@ export default function AdminUsers() {
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             users
           </p>
-          <h2 className="text-3xl">users</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">users</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>
@@ -158,7 +167,7 @@ export default function AdminUsers() {
       </div>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : (
         <Table
           columns={['user', 'role', 'verified', 'actions']}

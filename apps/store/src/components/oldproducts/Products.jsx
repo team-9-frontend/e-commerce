@@ -7,7 +7,7 @@ import FiltersForm from '@/components/products/FiltersForm'
 import ProductCard from '@/components/products/ProductCard'
 
 import { useGetProducts, useGetWishlist } from '@repo/api'
-import { Badge, Button, Dialog, FormField, Pagination } from '@repo/ui'
+import { Badge, Button, Dialog, Error, FormField, Pagination } from '@repo/ui'
 import { filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -21,9 +21,10 @@ export default function Products() {
   const { search, category, minprice, maxprice, sort } = urlValues
 
   const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
+  const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
+  
   const { data, isLoading, isError, error } = useGetProducts({ limit: 100 })
   const products = data?.products || EMPTY_ARRAY
-  const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
 
   const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
 
@@ -114,9 +115,9 @@ export default function Products() {
 
         <div className="flex-1">
           {isError ? (
-            <div className="card p-4 text-neutral-500">{error?.message}</div>
+            <Error message={error?.message} />
           ) : !page?.length && !isLoading ? (
-            <div className="card p-4 text-neutral-500">No products found</div>
+            <Error message="No products found" />
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {

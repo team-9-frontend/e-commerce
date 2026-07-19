@@ -11,6 +11,7 @@ import RecentOrders from '@/components/stats/RecentOrders'
 import TopProducts from '@/components/stats/TopProducts'
 
 import { useGetOrdersStats } from '@repo/api'
+import { Error } from '@repo/ui'
 
 export default function AdminDashboard() {
   const { data, isLoading, isError, error } = useGetOrdersStats()
@@ -22,14 +23,14 @@ export default function AdminDashboard() {
         <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
           admin overview
         </p>
-        <h2 className="text-3xl">Real-time commerce health</h2>
+        <h2 className="text-2xl font-medium sm:text-3xl">Real-time commerce health</h2>
         <p className="text-sm text-neutral-500">
           Monitor your storefront with clarity and live metrics.
         </p>
       </div>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : (
         <>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">

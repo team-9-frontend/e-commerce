@@ -124,7 +124,7 @@ export default function FiltersForm({ className }) {
       </div>
 
       <Button
-        type="reset"
+        type="button"
         onClick={() => {
           setValue('category', '')
           setValue('minprice', '')

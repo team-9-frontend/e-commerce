@@ -29,8 +29,6 @@ export default function OrdersDialog({ order, setOrder }) {
 
   const { register, handleSubmit, reset } = useForm()
 
-  console.log(order)
-
   useEffect(() => {
     if (order) {
       setLastOrder(order)
