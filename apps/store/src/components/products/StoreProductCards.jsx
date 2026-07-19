@@ -128,7 +128,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
         />
 
         {/* Badges */}
-        <div className="inset-s-3 absolute top-3 z-10 flex flex-wrap gap-1.5">
+        <div className="absolute inset-s-3 top-3 z-10 flex flex-wrap gap-1.5">
           <span className="border-accent-200/30 bg-accent-100/80 text-accent-800 dark:border-accent-800/30 dark:bg-accent-950/80 dark:text-accent-200 rounded-lg border px-2.5 py-1 text-xs font-semibold capitalize shadow-xs backdrop-blur-sm">
             {product.category}
           </span>
@@ -142,7 +142,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
         {/* Wishlist Button */}
         <button
           onClick={handleWishlistToggle}
-          className="inset-e-3 absolute top-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-neutral-200 text-neutral-400 shadow-sm transition-colors hover:text-rose-500 dark:text-neutral-500 dark:shadow-none"
+          className="absolute inset-e-3 top-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-neutral-200 text-neutral-400 shadow-sm transition-colors hover:text-rose-500 dark:text-neutral-500 dark:shadow-none"
         >
           <LuHeart className={cn('h-4 w-4', isWishlisted && 'fill-rose-500 text-rose-500')} />
         </button>
