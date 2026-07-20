@@ -30,7 +30,7 @@ export default function AdminProductEdit() {
         </div>
         <Link to="/products">
           <Button variant="ghost">
-            <LuArrowLeft size={20} /> Go Back
+            <LuArrowLeft /> Go Back
           </Button>
         </Link>
       </div>

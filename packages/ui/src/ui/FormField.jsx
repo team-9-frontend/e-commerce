@@ -22,7 +22,7 @@ export function FormField({
       {label && (
         <label
           htmlFor={id}
-          className="flex-center text-neutral-600 w-fit cursor-pointer gap-1 text-sm font-medium capitalize"
+          className="flex-center w-fit cursor-pointer gap-1 text-sm font-medium text-neutral-600 capitalize"
         >
           {labelIcon} {label}
         </label>

@@ -1,4 +1,4 @@
-import { LuTrash2, LuUserPlus } from 'react-icons/lu'
+import { LuLoaderCircle, LuTrash2, LuUserPlus } from 'react-icons/lu'
 
 import { useAddUser } from '@repo/api'
 import { Button, FormField } from '@repo/ui'
@@ -94,7 +94,9 @@ export default function AddUserForm() {
 
         <Button type="submit" disabled={addingUser} variant="primary">
           <LuUserPlus />
-          <span>{addingUser ? 'Loading...' : 'create user'}</span>
+          <span>
+            {addingUser ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'create user'}
+          </span>
         </Button>
       </div>
     </form>

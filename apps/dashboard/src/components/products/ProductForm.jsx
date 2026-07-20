@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { LuTrash2, LuX } from 'react-icons/lu'
+import { LuLoaderCircle, LuTrash2, LuX } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useCreateProduct, useUpdateProduct } from '@repo/api'
@@ -481,7 +481,11 @@ export default function ProductForm({ product, dialog }) {
 
       <div className="flex gap-4">
         <Button type="submit" disabled={editingProduct || creatingProduct}>
-          {editingProduct || creatingProduct ? 'Saving...' : 'Save Changes'}
+          {editingProduct || creatingProduct ? (
+            <LuLoaderCircle className="h-[1.5em] animate-spin" />
+          ) : (
+            'Save Changes'
+          )}
         </Button>
         <Button
           type="button"

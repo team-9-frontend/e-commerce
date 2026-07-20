@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { LuTrash2, LuX } from 'react-icons/lu'
+import { LuLoaderCircle, LuTrash2, LuX } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
 import CartProductCard from '@/components/cart/CartProductCard'
@@ -149,7 +149,7 @@ export default function Wishlist() {
                     )
                   }
                 >
-                  {applyingCoupon ? 'Applying...' : 'Apply'}
+                  {applyingCoupon ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Apply'}
                 </Button>
               </div>
 

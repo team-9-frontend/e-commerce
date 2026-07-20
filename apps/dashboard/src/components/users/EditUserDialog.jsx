@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { LuLoaderCircle } from 'react-icons/lu'
+
 import { useUpdateUser } from '@repo/api'
 import { Button, Dialog, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
@@ -76,7 +78,13 @@ export default function EditUserDialog({ user, setUser }) {
           />
 
           <Button type="submit" disabled={updatingUser} variant="primary">
-            <span>{updatingUser ? 'Saving...' : 'Save Changes'}</span>
+            <span>
+              {updatingUser ? (
+                <LuLoaderCircle className="h-[1.5em] animate-spin" />
+              ) : (
+                'Save Changes'
+              )}
+            </span>
           </Button>
         </form>
       )}

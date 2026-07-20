@@ -75,12 +75,12 @@ export default function AdminUsers() {
       ),
       role: (
         <Badge color={user.role === 'admin' ? 'amber' : 'sky'} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {user.role}
+          <span className="size-1 text-xl leading-0">•</span> {user.role}
         </Badge>
       ),
       verified: (
         <Badge color={user.isVerified ? 'emerald' : 'rose'} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span>
+          <span className="size-1 text-xl leading-0">•</span>
           {user.isVerified ? 'verified' : 'not verified'}
         </Badge>
       ),
@@ -116,7 +116,7 @@ export default function AdminUsers() {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
-        <div className="w-full space-y-2">
+        <div className="space-y-2 max-sm:w-full">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             users
           </p>
@@ -125,7 +125,7 @@ export default function AdminUsers() {
             Manage your product inventory, view details, and update listings.
           </p>
         </div>
-        <div className="card p-4 text-nowrap shadow-xs">
+        <div className="card p-4 shadow-xs">
           {data?.count || 0} <span className="text-sm text-neutral-600">total users</span>
         </div>
       </div>

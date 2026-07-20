@@ -87,17 +87,17 @@ export default function AdminOrders() {
       ),
       status: (
         <Badge color={statusColors[order.status]} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {order.status}
+          <span className="size-1 text-xl leading-0">•</span> {order.status}
         </Badge>
       ),
       payment: (
         <Badge color={statusColors[order.paymentStatus]} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {order.paymentStatus}
+          <span className="size-1 text-xl leading-0">•</span> {order.paymentStatus}
         </Badge>
       ),
       method: (
         <Badge color={statusColors[order.paymentMethod]} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {order.paymentMethod}
+          <span className="size-1 text-xl leading-0">•</span> {order.paymentMethod}
         </Badge>
       ),
       total: (
@@ -111,7 +111,7 @@ export default function AdminOrders() {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
-        <div className="w-full space-y-2">
+        <div className="space-y-2 max-sm:w-full">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             orders
           </p>

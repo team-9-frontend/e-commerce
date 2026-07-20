@@ -11,21 +11,21 @@ export default function PaymentSummary({ order }) {
       <div className="mb-4 space-y-1">
         <p className="text-sm text-slate-600 dark:text-slate-400">
           Method:
-          <span className="ml-2 font-medium capitalize text-slate-900 dark:text-slate-100">
+          <span className="ml-2 font-medium text-slate-900 capitalize dark:text-slate-100">
             {order.paymentMethod}
           </span>
         </p>
 
         <p className="text-sm text-slate-600 dark:text-slate-400">
           Status:
-          <span className="ml-2 font-medium capitalize text-slate-900 dark:text-slate-100">
+          <span className="ml-2 font-medium text-slate-900 capitalize dark:text-slate-100">
             {order.paymentStatus}
           </span>
         </p>
       </div>
 
       {/* <div className="border-t border-slate-200 pt-4 dark:border-slate-700"> */}
-        {/* <div className="mb-2 flex justify-between text-sm text-slate-700 dark:text-slate-300">
+      {/* <div className="mb-2 flex justify-between text-sm text-slate-700 dark:text-slate-300">
           <span>Subtotal</span>
           <span>EGP {order.subtotal}</span>
         </div>
@@ -45,15 +45,11 @@ export default function PaymentSummary({ order }) {
           <span>- EGP {order.discount}</span>
         </div> */}
 
-        <div className="mt-4 flex justify-between border-t border-slate-200 pt-4 text-lg font-bold dark:border-slate-700">
-          <span className="text-slate-900 dark:text-slate-100">
-            Total
-          </span>
+      <div className="mt-4 flex justify-between border-t border-slate-200 pt-4 text-lg font-bold dark:border-slate-700">
+        <span className="text-slate-900 dark:text-slate-100">Total</span>
 
-          <span className="text-brand-600">
-            EGP {order.totalPrice}
-          </span>
-        </div>
+        <span className="text-brand-600">EGP {order.totalPrice}</span>
+      </div>
       {/* </div> */}
 
       <p className="mt-4 text-xs text-slate-500 dark:text-slate-400">

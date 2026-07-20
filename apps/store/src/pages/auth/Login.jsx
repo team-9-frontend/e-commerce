@@ -1,3 +1,4 @@
+import { LuLoaderCircle } from 'react-icons/lu'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useLogin } from '@repo/api'
@@ -75,7 +76,7 @@ export default function Login() {
           </div>
 
           <Button type="submit" disabled={logingin}>
-            {logingin ? 'Loading...' : 'Login'}
+            {logingin ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Login'}
           </Button>
         </form>
 

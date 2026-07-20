@@ -1,20 +1,17 @@
 import { FaTimesCircle } from 'react-icons/fa'
+import { LuLoaderCircle } from 'react-icons/lu'
 
 import { useCancelOrder } from '@repo/api'
 
 export default function CancelOrderButton({ order }) {
   const { mutate, isPending } = useCancelOrder()
 
-  const canCancel =
-    order.status === 'pending' ||
-    order.status === 'confirmed'
+  const canCancel = order.status === 'pending' || order.status === 'confirmed'
 
   if (!canCancel) return null
 
   const handleCancel = () => {
-    const confirmed = window.confirm(
-      'Are you sure you want to cancel this order?'
-    )
+    const confirmed = window.confirm('Are you sure you want to cancel this order?')
 
     if (!confirmed) return
 
@@ -30,7 +27,7 @@ export default function CancelOrderButton({ order }) {
       >
         <FaTimesCircle />
 
-        {isPending ? 'Cancelling...' : 'Cancel Order'}
+        {isPending ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Cancel Order'}
       </button>
     </div>
   )
