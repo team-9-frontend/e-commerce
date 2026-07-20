@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { LuX } from 'react-icons/lu'
+import { LuLoaderCircle, LuX } from 'react-icons/lu'
 
 import { useUpdateOrderStatus } from '@repo/api'
 import { Badge, Button, Dialog, FormField } from '@repo/ui'
@@ -184,7 +184,11 @@ export default function OrdersDialog({ order, setOrder }) {
               />
 
               <Button type="submit" disabled={updatingStatus} variant="primary">
-                {updatingStatus ? 'Saving...' : 'Save Changes'}
+                {updatingStatus ? (
+                  <LuLoaderCircle className="h-[1.5em] animate-spin" />
+                ) : (
+                  'Save Changes'
+                )}
               </Button>
             </form>
           </div>

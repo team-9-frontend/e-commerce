@@ -1,3 +1,5 @@
+import { LuLoaderCircle } from 'react-icons/lu'
+
 import { Button } from './Button'
 import { Dialog } from './Dialog'
 
@@ -41,7 +43,7 @@ export function ConfirmDialog({
             variant="outlineDanger"
             className="flex-1"
           >
-            {!isLoading ? 'Confirm' : 'Loading...'}
+            {!isLoading ? 'Confirm' : <LuLoaderCircle className="h-[1.5em] animate-spin" />}
           </Button>
         </div>
       </div>

@@ -9,9 +9,7 @@ export default function ShippingAddress({ address }) {
       </h3>
 
       <div className="space-y-3 text-sm text-slate-700 dark:text-slate-300">
-        <p className="font-medium text-slate-900 dark:text-slate-100">
-          {address.fullName}
-        </p>
+        <p className="font-medium text-slate-900 dark:text-slate-100">{address.fullName}</p>
 
         <p>{address.address}</p>
 
@@ -19,9 +17,7 @@ export default function ShippingAddress({ address }) {
           {address.city}, {address.country}
         </p>
 
-        {address.postalCode && (
-          <p>Postal Code: {address.postalCode}</p>
-        )}
+        {address.postalCode && <p>Postal Code: {address.postalCode}</p>}
 
         <p>{address.phone}</p>
       </div>

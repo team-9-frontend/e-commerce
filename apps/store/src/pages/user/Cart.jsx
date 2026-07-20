@@ -1,183 +1,189 @@
 import { useState } from 'react'
 
-import { LuMinus, LuPlus } from 'react-icons/lu'
+import { LuLoaderCircle, LuTrash2, LuX } from 'react-icons/lu'
+import { Link } from 'react-router-dom'
 
-import {
-  useApplyCoupon,
-  useClearCart,
-  useGetCart,
-  useRemoveCartItem,
-  useRemoveCoupon,
-  useUpdateCartItem,
-} from '@repo/api'
-import { Button, LoadingSpinner } from '@repo/ui'
+import CartProductCard from '@/components/cart/CartProductCard'
 
-export default function Cart() {
+import { useApplyCoupon, useClearCart, useGetCart, useRemoveCoupon } from '@repo/api'
+import { Badge, Button, ConfirmDialog, Error, FormField } from '@repo/ui'
+
+const EMPTY_ARRAY = []
+
+export default function Wishlist() {
+  const [isDialogOpen, setIsDialogOpen] = useState('')
   const [coupon, setCoupon] = useState('')
 
-  const { data: cart, isLoading, isError } = useGetCart()
-
-  const { mutate: updateCart, isPending: updating } = useUpdateCartItem()
-
-  const { mutate: removeItem, isPending: removing } = useRemoveCartItem()
-
+  const { mutate: clearCart, isPending: clearingCart } = useClearCart()
   const { mutate: applyCoupon, isPending: applyingCoupon } = useApplyCoupon()
-
   const { mutate: removeCoupon, isPending: removingCoupon } = useRemoveCoupon()
 
-  const { mutate: clearCart, isPending: clearing } = useClearCart()
-
-  if (isLoading) {
-    return <LoadingSpinner />
-  }
-
-  if (isError) {
-    return <div className="p-8 text-center text-red-500">Something went wrong.</div>
-  }
-
-  if (!cart?.items?.length) {
-    return (
-      <div className="mx-auto flex max-w-3xl flex-col items-center py-24">
-        <h1 className="text-3xl font-bold">Your cart is empty</h1>
-
-        <p className="mt-3 text-neutral-500">Add some products to your cart.</p>
-      </div>
-    )
-  }
+  const { data: cart, isLoading, isError, error } = useGetCart()
+  const products = cart?.items || EMPTY_ARRAY
 
   return (
-    <div className="mx-auto max-w-6xl p-6">
-      <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
+    <div className="flex flex-1 flex-col gap-4 py-8">
+      <div className="card relative flex items-center justify-between gap-4 p-4">
+        <div className="from-accent-500/10 pointer-events-none absolute inset-0 bg-linear-to-l via-transparent to-transparent" />
 
-      {/* Coupon */}
-
-      <div className="mb-8 flex flex-wrap gap-3">
-        <input
-          type="text"
-          placeholder="Coupon Code"
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value)}
-          className="rounded-lg border px-4 py-2"
-        />
+        <div className="flex gap-4">
+          <div className="bg-accent-600 dark:bg-accent-400 w-2 rounded-full" />
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-bold sm:text-3xl">My Cart</h2>
+            <p className="products-center flex gap-2 text-sm text-neutral-500">
+              {isLoading ? (
+                'Loading your cart...'
+              ) : (
+                <Badge>
+                  {cart?.itemCount} product{!(cart?.itemCount === 1) && 's'}
+                </Badge>
+              )}
+            </p>
+          </div>
+        </div>
 
         <Button
-          disabled={applyingCoupon || !coupon.trim()}
-          onClick={() =>
-            applyCoupon(
-              {
-                code: coupon.trim(),
-              },
-              {
-                onSuccess: () => setCoupon(''),
-              },
-            )
-          }
+          variant="ghostDanger"
+          onClick={() => setIsDialogOpen(true)}
+          disabled={!products || isLoading || clearingCart}
         >
-          {applyingCoupon ? 'Applying...' : 'Apply'}
+          <LuTrash2 /> Clear All
         </Button>
-
-        {cart.coupon && (
-          <Button variant="outlineDanger" disabled={removingCoupon} onClick={() => removeCoupon()}>
-            {removingCoupon ? 'Removing...' : 'Remove Coupon'}
-          </Button>
-        )}
       </div>
 
-      {/* Cart Items */}
+      {isError ? (
+        <Error message={error?.message} />
+      ) : !products && !isLoading ? (
+        <Error
+          message="Your cart is empty"
+          description="
+          Add products to your cart and find them here."
+          link="/products"
+          linkMessage="Browse Products"
+        />
+      ) : (
+        <div className="flex items-start gap-4 max-lg:flex-col">
+          <div className="flex flex-1 flex-col gap-4">
+            {Array.from({ length: isLoading ? 3 : products?.length }).map((_, i) => {
+              const product = products?.[i]
 
-      <div className="space-y-4">
-        {cart.items.map((item) => (
-          <div
-            key={item._id}
-            className="flex flex-col items-center justify-between gap-4 rounded-xl border p-5 shadow-sm md:flex-row"
-          >
-            <div className="flex items-center gap-4">
-              <img src={item.image} alt={item.name} className="h-24 w-24 rounded-lg object-cover" />
+              return <CartProductCard key={i} isLoading={isLoading} product={product} />
+            })}
+          </div>
 
-              <div>
-                <h2 className="text-lg font-semibold">{item.name}</h2>
+          <div className="card flex w-full min-w-96 flex-col gap-4 p-4 lg:w-1/4">
+            <h2 className="text-lg">Order Summary</h2>
 
-                <p className="mt-1 text-neutral-500">${item.price}</p>
+            <div className="flex flex-col gap-2">
+              <div className="products-center flex justify-between text-sm text-neutral-600">
+                <span>Subtotal</span>
+                <span>${cart?.subtotal || 0}</span>
+              </div>
+
+              <div className="products-center flex justify-between text-sm text-neutral-600">
+                <span>Discount</span>
+                <span>${cart?.discountAmount || 0}</span>
+              </div>
+
+              <div className="products-center flex justify-between text-sm text-neutral-600">
+                <span>Shipping</span>
+                <span>${cart?.shipping || 0}</span>
+              </div>
+
+              <span className="text-xs text-neutral-500">
+                Free shipping on orders over EGP 1,000
+              </span>
+
+              <div className="products-center flex justify-between border-t border-neutral-200 pt-2 text-sm font-medium text-neutral-950">
+                <span>Total</span>
+                <span className="text-accent-600 dark:text-accent-400">${cart?.total || 0}</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Button
-                size="sm-square"
-                disabled={updating || item.quantity <= 1}
-                onClick={() =>
-                  updateCart({
-                    productId: item.product,
-                    quantity: item.quantity - 1,
-                  })
-                }
-              >
-                <LuMinus />
-              </Button>
+            <div className="flex flex-col gap-2">
+              {cart?.coupon && (
+                <Badge className="inline-flex w-fit items-center gap-1">
+                  {cart?.coupon}
+                  <button
+                    disabled={removingCoupon}
+                    onClick={removeCoupon}
+                    className="cursor-pointer"
+                  >
+                    <LuX />
+                  </button>
+                </Badge>
+              )}
 
-              <span className="min-w-6 text-center font-semibold">{item.quantity}</span>
+              <div className="flex-center gap-2">
+                <FormField
+                  placeholder="Coupon Code"
+                  value={coupon}
+                  className="flex-1 py-1 text-sm"
+                  onChange={(e) => setCoupon(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      applyCoupon(
+                        {
+                          code: coupon.trim(),
+                        },
+                        {
+                          onSuccess: () => setCoupon(''),
+                        },
+                      )
+                    }
+                  }}
+                />
 
-              <Button
-                size="sm-square"
-                disabled={updating}
-                onClick={() =>
-                  updateCart({
-                    productId: item.product,
-                    quantity: item.quantity + 1,
-                  })
-                }
-              >
-                <LuPlus />
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={applyingCoupon || !coupon.trim()}
+                  onClick={() =>
+                    applyCoupon(
+                      {
+                        code: coupon.trim(),
+                      },
+                      {
+                        onSuccess: () => setCoupon(''),
+                      },
+                    )
+                  }
+                >
+                  {applyingCoupon ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Apply'}
+                </Button>
+              </div>
 
-              <Button
-                variant="ghostDanger"
-                disabled={removing}
-                onClick={() => removeItem(item.product)}
-              >
-                Remove
-              </Button>
+              <Link to="/checkout">
+                <Button variant="primary" className="w-full normal-case">
+                  Proceed to Checkout
+                </Button>
+              </Link>
+
+              <Link to="/products" className="text-center">
+                Continue Shopping
+              </Link>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Summary */}
-
-      <div className="mt-8 rounded-xl border p-6 shadow-sm">
-        <div className="mb-2 flex justify-between">
-          <span>Items</span>
-          <span>{cart.itemCount}</span>
         </div>
+      )}
 
-        <div className="mb-2 flex justify-between">
-          <span>Subtotal</span>
-          <span>${cart.subtotal}</span>
-        </div>
-
-        <div className="mb-2 flex justify-between">
-          <span>Discount</span>
-          <span>${cart.discountAmount}</span>
-        </div>
-
-        <div className="mb-4 flex justify-between text-xl font-bold">
-          <span>Total</span>
-          <span>${cart.total}</span>
-        </div>
-
-        <Button
-          variant="outlineDanger"
-          disabled={clearing}
-          className="w-full justify-center"
-          onClick={() => {
-            if (window.confirm('Are you sure you want to clear your cart?')) {
-              clearCart()
-            }
-          }}
-        >
-          {clearing ? 'Clearing...' : 'Clear Cart'}
-        </Button>
-      </div>
+      <ConfirmDialog
+        isOpen={isDialogOpen}
+        setIsOpen={setIsDialogOpen}
+        onConfirm={() =>
+          clearCart(
+            {},
+            {
+              onSuccess: () => {
+                setIsDialogOpen(false)
+              },
+            },
+          )
+        }
+        isLoading={clearingCart}
+        title="Clear Cart"
+        message="Are you sure you want to remove all products from your cart? This action cannot be undone."
+      />
     </div>
   )
 }

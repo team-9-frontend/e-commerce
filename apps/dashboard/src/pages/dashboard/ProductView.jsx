@@ -24,7 +24,7 @@ export default function AdminProductView() {
         </div>
         <Link to="/products">
           <Button variant="ghost">
-            <LuArrowLeft size={20} /> Go Back
+            <LuArrowLeft /> Go Back
           </Button>
         </Link>
       </div>

@@ -1,4 +1,4 @@
-import { LuHeart, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
+import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
 import { useAddToCart, useAddToWishlist, useRemoveFromWishlist } from '@repo/api'
@@ -109,7 +109,7 @@ export default function ProductCard({ isLoading, product, wishlist }) {
                 <LuShoppingCart /> Add to Card
               </>
             ) : (
-              'Loading...'
+              <LuLoaderCircle className="h-[1.5em] animate-spin" />
             )}
           </Button>
         ) : (

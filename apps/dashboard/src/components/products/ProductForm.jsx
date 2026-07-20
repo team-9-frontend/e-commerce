@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { LuTrash2, LuX } from 'react-icons/lu'
+import { LuLoaderCircle, LuTrash2, LuX } from 'react-icons/lu'
 import { Link, useLocation } from 'react-router-dom'
 
 import { useCreateProduct, useUpdateProduct } from '@repo/api'
@@ -8,6 +8,8 @@ import { Button, FormField } from '@repo/ui'
 import { cn } from '@repo/utils'
 import { Controller, useForm } from '@repo/utils/forms'
 import { toast } from '@repo/utils/toasts'
+
+const EMPTY_ARRAY = []
 
 export default function ProductForm({ product, dialog }) {
   const { mutate: createProduct, isPending: creatingProduct } = useCreateProduct()
@@ -49,7 +51,7 @@ export default function ProductForm({ product, dialog }) {
   // unrelated re-render (typing in another field, etc). Revoke anything
   // that's no longer part of the current selection.
   const objectUrlCacheRef = useRef(new Map())
-  const watchedUploadedImages = watch('images') || []
+  const watchedUploadedImages = watch('images') || EMPTY_ARRAY
 
   const uploadedImagePreviewUrls = useMemo(() => {
     const cache = objectUrlCacheRef.current
@@ -479,7 +481,11 @@ export default function ProductForm({ product, dialog }) {
 
       <div className="flex gap-4">
         <Button type="submit" disabled={editingProduct || creatingProduct}>
-          {editingProduct || creatingProduct ? 'Saving...' : 'Save Changes'}
+          {editingProduct || creatingProduct ? (
+            <LuLoaderCircle className="h-[1.5em] animate-spin" />
+          ) : (
+            'Save Changes'
+          )}
         </Button>
         <Button
           type="button"

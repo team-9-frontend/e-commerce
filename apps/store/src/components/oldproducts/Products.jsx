@@ -22,7 +22,7 @@ export default function Products() {
 
   const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
   const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
-  
+
   const { data, isLoading, isError, error } = useGetProducts({ limit: 100 })
   const products = data?.products || EMPTY_ARRAY
 

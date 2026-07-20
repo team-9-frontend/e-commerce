@@ -1,12 +1,6 @@
 import { FaCheckCircle, FaRegCircle } from 'react-icons/fa'
 
-const steps = [
-  'pending',
-  'confirmed',
-  'processing',
-  'shipped',
-  'delivered',
-]
+const steps = ['pending', 'confirmed', 'processing', 'shipped', 'delivered']
 
 export default function OrderProgress({ status }) {
   const currentStep = steps.indexOf(status)
@@ -18,17 +12,12 @@ export default function OrderProgress({ status }) {
       </h3>
 
       <div className="relative flex items-start justify-between">
-        
-        <div className="absolute top-4 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-700" />
-
+        <div className="absolute top-4 right-0 left-0 h-0.5 bg-slate-200 dark:bg-slate-700" />
 
         <div
-          className="absolute top-4 left-0 h-0.5 bg-brand-600 transition-all duration-300"
+          className="bg-brand-600 absolute top-4 left-0 h-0.5 transition-all duration-300"
           style={{
-            width:
-              currentStep <= 0
-                ? '0%'
-                : `${(currentStep / (steps.length - 1)) * 100}%`,
+            width: currentStep <= 0 ? '0%' : `${(currentStep / (steps.length - 1)) * 100}%`,
           }}
         />
 
@@ -36,10 +25,7 @@ export default function OrderProgress({ status }) {
           const completed = index <= currentStep
 
           return (
-            <div
-              key={step}
-              className="relative z-10 flex flex-col items-center"
-            >
+            <div key={step} className="relative z-10 flex flex-col items-center">
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full ${
                   completed
@@ -56,9 +42,7 @@ export default function OrderProgress({ status }) {
 
               <span
                 className={`mt-2 text-xs capitalize ${
-                  completed
-                    ? 'font-medium text-brand-600'
-                    : 'text-slate-500 dark:text-slate-400'
+                  completed ? 'text-brand-600 font-medium' : 'text-slate-500 dark:text-slate-400'
                 }`}
               >
                 {step}

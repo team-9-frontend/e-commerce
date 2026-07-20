@@ -1,16 +1,4 @@
-import {
-  LuBell,
-  LuHeart,
-  LuIndentDecrease,
-  LuIndentIncrease,
-  LuMenu,
-  LuMoon,
-  LuSearch,
-  LuShoppingCart,
-  LuSun,
-  LuUser,
-  LuX,
-} from 'react-icons/lu'
+import { LuHeart, LuMoon, LuSearch, LuShoppingCart, LuSun, LuUser } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
 import { useCurrentUser } from '@repo/api'
@@ -78,13 +66,23 @@ export default function Header() {
           <Tooltip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</Tooltip>
         </Button>
 
-        <Link to="/profile" className="text-inherit">
-          <Button variant="ghost" size="md-square" className="flex gap-2">
-            <LuUser />
+        {!user && !isLoading ? (
+          <Link to="/login" className="text-inherit">
+            <Button variant="ghost" size="sm" className="text-md flex gap-2">
+              <LuUser />
 
-            <h3 className="font-medium">{!isLoading ? user?.username : 'profile'}</h3>
-          </Button>
-        </Link>
+              <h3 className="font-medium">login</h3>
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/profile" className="text-inherit">
+            <Button variant="ghost" size="sm" className="text-md flex gap-2">
+              <LuUser />
+
+              <h3 className="font-medium">{!isLoading ? user?.username : 'profile'}</h3>
+            </Button>
+          </Link>
+        )}
       </div>
     </header>
   )

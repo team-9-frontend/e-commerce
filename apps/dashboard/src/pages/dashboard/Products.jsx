@@ -37,7 +37,6 @@ export default function AdminProducts() {
   const featuredProducts = products.filter((product) => product.featured).length
   const inStockTotal = products.filter((product) => product.stock > 0).length
   const outOfStockTotal = products.filter((product) => product.stock === 0).length
-  const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
 
   const filteredProducts = useMemo(() => {
     return filterData(products, [
