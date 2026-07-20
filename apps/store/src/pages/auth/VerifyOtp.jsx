@@ -21,7 +21,7 @@ export default function VerifyOtp() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm()
+  } = useForm({ mode: 'onTouched' })
 
   const onSubmit = ({ otp, newPassword }) => {
     const mutate = mode === 'reset' ? verifyResetOtp : verifyRegisterOtp

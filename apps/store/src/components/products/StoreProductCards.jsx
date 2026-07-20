@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { BiLoaderAlt } from 'react-icons/bi'
 import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 

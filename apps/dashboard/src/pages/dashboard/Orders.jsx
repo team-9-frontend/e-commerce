@@ -32,6 +32,7 @@ export default function AdminOrders() {
 
   const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
+    mode: 'onTouched',
     unDebouncedFields: ['status', 'payment', 'method'],
   })
 

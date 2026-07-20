@@ -27,7 +27,7 @@ export default function OrdersDialog({ order, setOrder }) {
 
   const { mutate: updateStatus, isPending: updatingStatus } = useUpdateOrderStatus()
 
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit, reset } = useForm({ mode: 'onTouched' })
 
   useEffect(() => {
     if (order) {
