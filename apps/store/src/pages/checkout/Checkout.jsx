@@ -68,7 +68,7 @@ export default function Checkout() {
       </div>
 
       <div className="flex items-start gap-4 max-lg:flex-col">
-        <form onSubmit={handleSubmit(onSubmit)} className="card flex flex-1 flex-col gap-4 p-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="card flex w-full flex-col gap-4 p-4">
           <h2 className="mb-4 text-2xl font-semibold text-gray-800">Shipping Address</h2>
 
           <FormField
