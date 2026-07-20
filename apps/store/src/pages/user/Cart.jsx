@@ -1,16 +1,19 @@
 import { useState } from 'react'
 
 import { LuLoaderCircle, LuTrash2, LuX } from 'react-icons/lu'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import CartProductCard from '@/components/cart/CartProductCard'
 
 import { useApplyCoupon, useClearCart, useGetCart, useRemoveCoupon } from '@repo/api'
 import { Badge, Button, ConfirmDialog, Error, FormField } from '@repo/ui'
+import { toast } from '@repo/utils/toasts'
 
 const EMPTY_ARRAY = []
 
 export default function Wishlist() {
+  const navigate = useNavigate()
+
   const [isDialogOpen, setIsDialogOpen] = useState('')
   const [coupon, setCoupon] = useState('')
 
@@ -153,11 +156,17 @@ export default function Wishlist() {
                 </Button>
               </div>
 
-              <Link to="/checkout">
-                <Button variant="primary" className="w-full normal-case">
-                  Proceed to Checkout
-                </Button>
-              </Link>
+              <Button
+                variant="primary"
+                className="w-full normal-case"
+                onClick={() => {
+                  if (!cart?.itemCount)
+                    return toast.error('Must have atleast 1 product in the cart to proceed')
+                  navigate('/cart')
+                }}
+              >
+                Proceed to Checkout
+              </Button>
 
               <Link to="/products" className="text-center">
                 Continue Shopping

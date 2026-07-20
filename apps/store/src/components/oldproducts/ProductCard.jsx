@@ -104,12 +104,12 @@ export default function ProductCard({ isLoading, product, wishlist }) {
             }
             className="normal-case"
           >
-            {!addingToCart ? (
+            {addingToCart ? (
+              <LuLoaderCircle className="h-[1.5em] animate-spin" />
+            ) : (
               <>
                 <LuShoppingCart /> Add to Card
               </>
-            ) : (
-              <LuLoaderCircle className="h-[1.5em] animate-spin" />
             )}
           </Button>
         ) : (

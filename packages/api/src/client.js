@@ -21,7 +21,8 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
     }
-    return Promise.reject(error)
+    const customError = error.response?.data ?? { message: error.message }
+    return Promise.reject(customError)
   },
 )
 

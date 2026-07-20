@@ -96,17 +96,16 @@ export default function ProductForm({ product, dialog }) {
       editProduct(
         { id: product._id, data: formData },
         {
-          onSuccess: (data) => {
-            toast.success(data.message)
+          onSuccess: () => {
             setValue('images', [])
           },
         },
       )
     } else {
       createProduct(formData, {
-        onSuccess: (data) => {
-          toast.success(data.message)
+        onSuccess: () => {
           setValue('images', [])
+          reset()
         },
       })
     }
@@ -489,7 +488,7 @@ export default function ProductForm({ product, dialog }) {
           )}
         </Button>
         <Button
-          type="button"
+          type="reset"
           variant="ghostDanger"
           onClick={() => {
             reset()

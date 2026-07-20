@@ -78,13 +78,7 @@ export default function EditUserDialog({ user, setUser }) {
           />
 
           <Button type="submit" disabled={updatingUser} variant="primary">
-            <span>
-              {updatingUser ? (
-                <LuLoaderCircle className="h-[1.5em] animate-spin" />
-              ) : (
-                'Save Changes'
-              )}
-            </span>
+            {updatingUser ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Save Changes'}
           </Button>
         </form>
       )}

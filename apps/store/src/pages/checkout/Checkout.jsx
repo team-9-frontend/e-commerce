@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { LuArrowLeft } from 'react-icons/lu'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -5,12 +7,9 @@ import { useGetCart } from '@repo/api'
 import { Button, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
-const EMPTY_ARRAY = []
-
 export default function Checkout() {
   const navigate = useNavigate()
-  const { data: cart, isLoading, isError, error } = useGetCart()
-  const products = cart?.items || EMPTY_ARRAY
+  const { data: cart } = useGetCart()
 
   const {
     register,
@@ -45,6 +44,10 @@ export default function Checkout() {
     })
   }
 
+  useEffect(() => {
+    if (!cart?.itemCount) return navigate('/cart')
+  }, [])
+
   return (
     <div className="flex flex-1 flex-col gap-4 py-8">
       <div className="card relative flex items-center justify-between gap-4 p-4">
@@ -69,7 +72,7 @@ export default function Checkout() {
 
       <div className="flex items-start gap-4 max-lg:flex-col">
         <form onSubmit={handleSubmit(onSubmit)} className="card flex w-full flex-col gap-4 p-4">
-          <h2 className="mb-4 text-2xl font-semibold text-gray-800">Shipping Address</h2>
+          <h2 className="text-xl font-bold sm:text-2xl">Shipping Address</h2>
 
           <FormField
             name="fullName"

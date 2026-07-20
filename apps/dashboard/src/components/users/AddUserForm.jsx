@@ -88,15 +88,19 @@ export default function AddUserForm() {
           'mt-4 flex justify-end gap-4 overflow-hidden border-t border-neutral-200 pt-4',
         )}
       >
-        <Button variant="ghostDanger" type="button" onClick={reset}>
+        <Button variant="ghostDanger" type="reset" onClick={reset}>
           <LuTrash2 /> clear
         </Button>
 
         <Button type="submit" disabled={addingUser} variant="primary">
-          <LuUserPlus />
-          <span>
-            {addingUser ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'create user'}
-          </span>
+          {addingUser ? (
+            <LuLoaderCircle className="h-[1.5em] animate-spin" />
+          ) : (
+            <>
+              <LuUserPlus />
+              create user
+            </>
+          )}
         </Button>
       </div>
     </form>

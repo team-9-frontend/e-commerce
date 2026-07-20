@@ -10,8 +10,6 @@ export default function Header() {
   const { data: user, isLoading } = useCurrentUser()
   const { data: cart } = useGetCart()
 
-  console.log(cart)
-
   return (
     <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 shadow dark:bg-neutral-100 dark:shadow-none">
       <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-sm:hidden">
