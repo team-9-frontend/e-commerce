@@ -29,6 +29,7 @@ export default function ProductForm({ product, dialog }) {
     watch,
     formState: { errors },
   } = useForm({
+    mode: 'onTouched',
     defaultValues: {
       name: product?.name || '',
       shortDescription: product?.shortDescription || '',

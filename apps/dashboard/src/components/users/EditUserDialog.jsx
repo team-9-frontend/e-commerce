@@ -16,7 +16,7 @@ export default function EditUserDialog({ user, setUser }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm()
+  } = useForm({ mode: 'onTouched' })
 
   useEffect(() => {
     if (user) {

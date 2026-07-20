@@ -1,4 +1,4 @@
-import { LuMinus, LuPlus, LuTrash2, LuX } from 'react-icons/lu'
+import { LuMinus, LuPlus, LuX } from 'react-icons/lu'
 
 import { useRemoveCartItem, useUpdateCartItem } from '@repo/api'
 import { Button, Skeleton } from '@repo/ui'

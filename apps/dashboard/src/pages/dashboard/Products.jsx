@@ -23,6 +23,7 @@ export default function AdminProducts() {
 
   const [searchParams] = useSearchParams()
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
+    mode: 'onTouched',
     unDebouncedFields: ['category'],
   })
 

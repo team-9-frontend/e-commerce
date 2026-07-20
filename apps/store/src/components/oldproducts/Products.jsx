@@ -17,7 +17,9 @@ export default function Products() {
   const [searchParams] = useSearchParams()
   const [filters, setFilters] = useState(false)
 
-  const { register, handleSubmit, setValue, updateParams, urlValues } = useSearchParamsForm()
+  const { register, handleSubmit, setValue, updateParams, urlValues } = useSearchParamsForm({
+    mode: 'onTouched',
+  })
   const { search, category, minprice, maxprice, sort } = urlValues
 
   const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
