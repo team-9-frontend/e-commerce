@@ -63,7 +63,7 @@ export default function Wishlist() {
         />
       ) : (
         <div className="flex items-start gap-4 max-lg:flex-col">
-          <div className="flex flex-1 flex-col gap-4">
+          <div className="flex w-full flex-col gap-4">
             {Array.from({ length: isLoading ? 3 : products?.length }).map((_, i) => {
               const product = products?.[i]
 
