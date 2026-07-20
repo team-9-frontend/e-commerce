@@ -1,20 +1,55 @@
 
 import { useCurrentUser } from '@repo/api'
+import { LoadingSpinner } from '@repo/ui'
 
 export default function Profile() {
   const { data, isLoading, error } = useCurrentUser()
 
-  if (isLoading) return <h2>Loading...</h2>
+  if (isLoading) return <LoadingSpinner />
 
-  if (error) return <h2>Error loading profile</h2>
+  if (error) {
+    return (
+      <div className="p-8 text-center text-red-500">
+        Error loading profile.
+      </div>
+    )
+  }
 
   return (
-    <div>
-      <h1>Profile Page</h1>
+    <div className="mx-auto max-w-4xl p-6">
+      <h1 className="mb-8 text-3xl font-bold">My Profile</h1>
 
-      <p>Name: {data?.username}</p>
-      <p>Email: {data?.email}</p>
-      <p>Role: {data?.role}</p>
+      <div className="rounded-xl border p-8 shadow-sm">
+        <div className="mb-8 flex flex-col items-center">
+          <img
+            src={data?.avatar}
+            alt={data?.username}
+            className="mb-4 h-28 w-28 rounded-full border object-cover"
+          />
+
+          <h2 className="text-2xl font-semibold">
+            {data?.username}
+          </h2>
+
+          <p className="text-neutral-500">
+            {data?.role}
+          </p>
+        </div>
+
+        <div className="space-y-5">
+          <div>
+            <p className="text-sm text-neutral-500">Email</p>
+            <p className="font-medium">{data?.email}</p>
+          </div>
+
+          <div>
+            <p className="text-sm text-neutral-500">Phone</p>
+            <p className="font-medium">
+              {data?.phone || 'No phone added'}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
