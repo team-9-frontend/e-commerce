@@ -1,16 +1,19 @@
 import { LuHeart, LuMoon, LuSearch, LuShoppingCart, LuSun, LuUser } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
-import { useCurrentUser } from '@repo/api'
+import { useCurrentUser, useGetCart } from '@repo/api'
 import { Button, Tooltip } from '@repo/ui'
 import { useTheme } from '@repo/utils'
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
   const { data: user, isLoading } = useCurrentUser()
+  const { data: cart } = useGetCart()
+
+  console.log(cart)
 
   return (
-    <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-2 shadow dark:bg-neutral-100 dark:shadow-none">
+    <header className="flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 shadow dark:bg-neutral-100 dark:shadow-none">
       <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-sm:hidden">
         LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
       </Link>
@@ -50,10 +53,15 @@ export default function Header() {
           </Button>
         </Link>
 
-        <Link to="/cart" className="text-inherit">
+        <Link to="/cart" className="group relative text-inherit">
           <Button variant="ghost" size="md-square">
             <LuShoppingCart />
             <Tooltip position="bottom">Cart</Tooltip>
+            {!!cart?.itemCount && (
+              <span className="bg-accent-600 dark:bg-accent-400 flex-center absolute -top-1.5 -right-2 aspect-square rounded-full px-1.5 text-xs text-neutral-50 transition-all group-hover:-top-2 dark:text-neutral-950">
+                {cart?.itemCount}
+              </span>
+            )}
           </Button>
         </Link>
 
