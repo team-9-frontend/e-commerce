@@ -12,7 +12,7 @@ import {
   useGetWishlist,
   useRemoveFromWishlist,
 } from '@repo/api'
-import { Button, Pagination, Skeleton } from '@repo/ui'
+import { Button, Pagination, Skeleton, Swiper } from '@repo/ui'
 import { cn } from '@repo/utils'
 import { toast } from '@repo/utils/toasts'
 
@@ -115,20 +115,11 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
   }
 
   return (
-    <Link
-      to={`/store/product/${product.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-neutral-800"
-    >
-      {/* Image  */}
-      <div className="relative aspect-square w-full overflow-hidden bg-neutral-50 dark:bg-neutral-800">
-        <img
-          src={product.images?.[0]?.url}
-          alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md dark:border-neutral-800">
+      {/* Image */}
+      <Swiper images={product?.images}>
         {/* Badges */}
-        <div className="inset-s-3 absolute top-3 z-10 flex flex-wrap gap-1.5">
+        <div className="absolute inset-s-3 top-3 z-10 flex flex-wrap gap-1.5">
           <span className="border-accent-200/30 bg-accent-100/80 text-accent-800 dark:border-accent-800/30 dark:bg-accent-950/80 dark:text-accent-200 rounded-lg border px-2.5 py-1 text-xs font-semibold capitalize shadow-xs backdrop-blur-sm">
             {product.category}
           </span>
@@ -142,7 +133,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
         {/* Wishlist Button */}
         <button
           onClick={handleWishlistToggle}
-          className="inset-e-3 absolute top-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-neutral-200 text-neutral-400 shadow-sm transition-colors hover:text-rose-500 dark:text-neutral-500 dark:shadow-none"
+          className="absolute inset-e-3 top-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-neutral-200 text-neutral-400 shadow-sm transition-colors hover:text-rose-500 dark:text-neutral-500 dark:shadow-none"
         >
           <LuHeart className={cn('h-4 w-4', isWishlisted && 'fill-rose-500 text-rose-500')} />
         </button>
@@ -155,42 +146,42 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
             </span>
           </div>
         )}
-      </div>
+      </Swiper>
 
       {/* Details */}
-      <div className="flex flex-1 flex-col justify-between p-4">
-        <div className="space-y-2">
+      <div className="flex flex-1 flex-col justify-between gap-2 p-4">
+        <Link to={`/store/product/${product.id}`}>
           <h3 className="line-clamp-1 text-base font-semibold text-neutral-950 dark:text-neutral-50">
             {product.name}
           </h3>
+        </Link>
 
-          {/* Rating */}
-          <div className="flex items-center gap-1.5">
-            <div className="flex text-amber-400">
-              {[...Array(5)].map((_, i) => (
-                <LuStar
-                  key={i}
-                  className={cn(
-                    'h-3.5 w-3.5',
-                    i < Math.round(product.averageRating || 0)
-                      ? 'fill-amber-400 text-amber-400'
-                      : 'text-neutral-300 dark:text-neutral-700',
-                  )}
-                />
-              ))}
-            </div>
-            <span className="text-xs text-neutral-400 dark:text-neutral-500">
-              ({product.numReviews || 0})
-            </span>
+        {/* Rating */}
+        <div className="flex items-center gap-1.5">
+          <div className="flex text-amber-400">
+            {[...Array(5)].map((_, i) => (
+              <LuStar
+                key={i}
+                className={cn(
+                  'h-3.5 w-3.5',
+                  i < Math.round(product.averageRating || 0)
+                    ? 'fill-amber-400 text-amber-400'
+                    : 'text-neutral-300 dark:text-neutral-700',
+                )}
+              />
+            ))}
           </div>
+          <span className="text-xs text-neutral-400 dark:text-neutral-500">
+            ({product.numReviews || 0})
+          </span>
+        </div>
 
-          {/* Price */}
-          <div className="flex items-baseline gap-2">
-            <span className="text-accent-500 text-lg font-bold">$ {product.discountPrice}</span>
-            <span className="text-xs text-neutral-400 line-through dark:text-neutral-500">
-              $ {product.price}
-            </span>
-          </div>
+        {/* Price */}
+        <div className="flex items-baseline gap-2">
+          <span className="text-accent-500 text-lg font-bold">$ {product.discountPrice}</span>
+          <span className="text-xs text-neutral-400 line-through dark:text-neutral-500">
+            $ {product.price}
+          </span>
         </div>
 
         {/* Action Button */}
@@ -224,7 +215,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
           )}
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -232,13 +223,13 @@ function CardSkeleton() {
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800">
       <div className="aspect-square w-full">
-        <Skeleton height="100%" containerClassName="h-full w-full block" />
+        <Skeleton height="100%" parentClassName="h-full w-full block" className="h-full" />
       </div>
       <div className="flex flex-1 flex-col justify-between p-4">
-        <div className="space-y-2">
+        <div className="flex flex-col gap-2">
           <Skeleton height={20} width="75%" />
-          <Skeleton height={14} width="35%" />
-          <Skeleton height={20} width="50%" />
+          <Skeleton height={16} width="35%" />
+          <Skeleton height={28} width="50%" />
         </div>
         <div className="mt-4">
           <Skeleton height={40} width="100%" />
