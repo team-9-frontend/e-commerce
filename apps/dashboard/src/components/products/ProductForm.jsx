@@ -332,7 +332,7 @@ export default function ProductForm({ product, dialog }) {
           error={errors.price}
           type="number"
           min={0}
-          className="flex-1"
+          parentClassName="w-full"
         />
 
         <FormField
@@ -343,7 +343,7 @@ export default function ProductForm({ product, dialog }) {
           error={errors.discountPrice}
           type="number"
           min={0}
-          className="flex-1"
+          parentClassName="w-full"
         />
       </div>
 
@@ -359,7 +359,7 @@ export default function ProductForm({ product, dialog }) {
           error={errors.stock}
           type="number"
           min={0}
-          className="flex-1"
+          parentClassName="w-full"
         />
 
         <FormField
@@ -368,7 +368,7 @@ export default function ProductForm({ product, dialog }) {
           placeholder="SKU"
           register={register}
           error={errors.sku}
-          className="flex-1"
+          parentClassName="w-full"
         />
       </div>
 
@@ -385,7 +385,7 @@ export default function ProductForm({ product, dialog }) {
           type="select"
           options={['electronics', 'phones', 'fashion', 'home', 'beauty', 'sports']}
           hiddenOption="Select Category"
-          className="flex-1"
+          parentClassName="w-full"
         />
 
         <FormField
@@ -394,7 +394,7 @@ export default function ProductForm({ product, dialog }) {
           placeholder="Subcategory"
           register={register}
           error={errors.subcategory}
-          className="flex-1"
+          parentClassName="w-full"
         />
       </div>
 
@@ -467,7 +467,7 @@ export default function ProductForm({ product, dialog }) {
           name="isActive"
           label="Active"
           register={register}
-          className="flex-row-reverse justify-end gap-4 [[type='checkbox']]:cursor-pointer"
+          parentClassName="flex-row-reverse justify-end gap-4 [[type='checkbox']]:cursor-pointer"
         />
 
         <FormField
@@ -475,7 +475,7 @@ export default function ProductForm({ product, dialog }) {
           name="featured"
           label="Featured"
           register={register}
-          className="flex-row-reverse justify-end gap-4 [[type='checkbox']]:cursor-pointer"
+          parentClassName="flex-row-reverse justify-end gap-4 [[type='checkbox']]:cursor-pointer"
         />
       </div>
 

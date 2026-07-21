@@ -121,7 +121,7 @@ export default function Products() {
           ) : !page?.length && !isLoading ? (
             <Error message="No products found" />
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {
                 const product = page?.[i]
 

@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 
 import { useCurrentUser } from '@repo/api'
+import { cn } from '@repo/utils'
 
 export default function MainLayout() {
   const { data: user, isLoading } = useCurrentUser()
@@ -22,7 +23,7 @@ export default function MainLayout() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="container flex flex-1 flex-col">
+      <div className={cn('flex flex-1 flex-col', pathname !== '/' && 'container')}>
         <Outlet />
       </div>
       <Footer />

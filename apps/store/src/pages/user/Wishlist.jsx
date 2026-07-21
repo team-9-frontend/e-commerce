@@ -59,7 +59,7 @@ export default function Wishlist() {
           linkMessage="Browse Products"
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {Array.from({ length: isLoading ? 6 : products.length }).map((_, i) => {
             const product = products?.[i]
 

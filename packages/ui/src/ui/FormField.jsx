@@ -1,6 +1,7 @@
 import { cn } from '@repo/utils'
 
 export function FormField({
+  parentClassName,
   className,
   name,
   icon,
@@ -18,7 +19,7 @@ export function FormField({
   const id = String(label).trim().toLowerCase()
 
   return (
-    <div className={cn('flex flex-col gap-1', className)}>
+    <div className={cn('flex flex-col gap-1', parentClassName)}>
       {label && (
         <label
           htmlFor={id}
@@ -35,7 +36,7 @@ export function FormField({
             name={name}
             {...(register && register(name, rules))}
             className={cn(
-              'accent-accent-500 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2 capitalize outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
+              'accent-accent-500 w-full rounded-lg border border-neutral-300 bg-neutral-50 px-4 py-2.5 capitalize outline-none placeholder:text-neutral-500 dark:bg-neutral-200',
               error && 'border-red-600 dark:border-red-400',
               className,
               icon && 'pl-10',

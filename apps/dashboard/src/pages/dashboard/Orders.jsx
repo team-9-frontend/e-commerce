@@ -135,7 +135,7 @@ export default function AdminOrders() {
           icon={<LuSearch />}
           placeholder="Search ID, customer..."
           register={register}
-          className="w-full"
+          parentClassName="w-full"
         />
 
         <div className="flex items-center gap-4 max-sm:w-full">
@@ -153,7 +153,8 @@ export default function AdminOrders() {
               'returned',
             ]}
             defaultOption="all statuses"
-            className="flex-1 sm:w-fit"
+            className="sm:w-fit"
+            parentClassName="w-full"
           />
 
           <FormField
@@ -162,7 +163,8 @@ export default function AdminOrders() {
             type="select"
             options={['pending', 'paid', 'failed', 'refunded']}
             defaultOption="all payments"
-            className="flex-1 sm:w-fit"
+            className="sm:w-fit"
+            parentClassName="w-full"
           />
 
           <FormField
@@ -171,7 +173,8 @@ export default function AdminOrders() {
             type="select"
             options={['cash', 'stripe']}
             defaultOption="all methods"
-            className="flex-1 sm:w-fit"
+            className="sm:w-fit"
+            parentClassName="w-full"
           />
         </div>
       </form>

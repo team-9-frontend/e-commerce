@@ -121,7 +121,8 @@ export default function Wishlist() {
                 <FormField
                   placeholder="Coupon Code"
                   value={coupon}
-                  className="flex-1 py-1 text-sm"
+                  className="py-1 text-sm"
+                  parentClassName="w-full"
                   onChange={(e) => setCoupon(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
@@ -162,7 +163,7 @@ export default function Wishlist() {
                 onClick={() => {
                   if (!cart?.itemCount)
                     return toast.error('Must have atleast 1 product in the cart to proceed')
-                  navigate('/cart')
+                  navigate('/checkout')
                 }}
               >
                 Proceed to Checkout

@@ -85,7 +85,7 @@ export default function AdminProducts() {
             icon={<LuSearch />}
             placeholder="Search products..."
             register={register}
-            className="w-full"
+            parentClassName="w-full"
           />
 
           <Button
@@ -115,7 +115,7 @@ export default function AdminProducts() {
               type="select"
               options={['electronics', 'phones', 'fashion', 'home', 'beauty', 'sports']}
               defaultOption="all categories"
-              className="w-full"
+              parentClassName="w-full"
             />
 
             <FormField
@@ -124,7 +124,7 @@ export default function AdminProducts() {
               labelIcon={<LuTag />}
               placeholder="e.g. smartphones"
               register={register}
-              className="w-full"
+              parentClassName="w-full"
             />
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function AdminProducts() {
       ) : !page?.length && !isLoading ? (
         <Error message="No products found" />
       ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {
             const product = page?.[i]
 

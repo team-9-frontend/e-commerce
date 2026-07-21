@@ -61,6 +61,10 @@
     @apply transition-colors duration-300;
   }
 
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
     @apply selection:bg-accent-500/20 font-sans-serif bg-neutral-50 text-neutral-950;
   }

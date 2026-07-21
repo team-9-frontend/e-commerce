@@ -142,7 +142,7 @@ export default function AdminUsers() {
             icon={<LuSearch />}
             placeholder="Search ID, customer..."
             register={register}
-            className="w-full"
+            parentClassName="w-full"
           />
 
           <Button
