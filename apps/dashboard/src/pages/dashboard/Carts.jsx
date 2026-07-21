@@ -1,8 +1,7 @@
-import { LuChevronDown, LuX } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
 import { useGetAdminCarts } from '@repo/api'
-import { Badge, Button, Error, Pagination, Table } from '@repo/ui'
+import { Error, Pagination, Table } from '@repo/ui'
 import { format } from '@repo/utils'
 
 const EMPTY_ARRAY = []

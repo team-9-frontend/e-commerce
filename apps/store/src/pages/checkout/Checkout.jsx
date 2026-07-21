@@ -46,7 +46,7 @@ export default function Checkout() {
 
   useEffect(() => {
     if (!cart?.itemCount) return navigate('/cart')
-  }, [])
+  }, [cart, navigate])
 
   return (
     <div className="flex flex-1 flex-col gap-4 py-8">

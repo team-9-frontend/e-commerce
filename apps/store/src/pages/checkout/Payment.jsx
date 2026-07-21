@@ -33,7 +33,7 @@ export default function Payment() {
 
   useEffect(() => {
     if (!shippingAddress) return navigate('/checkout')
-  }, [])
+  }, [shippingAddress, navigate])
 
   return (
     <div className="min-h-screen bg-gray-50 py-10">
