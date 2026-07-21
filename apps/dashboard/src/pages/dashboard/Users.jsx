@@ -37,7 +37,7 @@ export default function AdminUsers() {
 
   const { search } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllUsers({ limit: 100 })
+  const { data, isLoading, isError, error } = useGetAllUsers({ limit: 500 })
   const users = data?.users || EMPTY_ARRAY
 
   const filteredUsers = useMemo(() => {

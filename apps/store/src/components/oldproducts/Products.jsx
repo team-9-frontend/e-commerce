@@ -25,7 +25,7 @@ export default function Products() {
   const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
   const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
 
-  const { data, isLoading, isError, error } = useGetProducts({ limit: 100 })
+  const { data, isLoading, isError, error } = useGetProducts({ limit: 500 })
   const products = data?.products || EMPTY_ARRAY
 
   const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))

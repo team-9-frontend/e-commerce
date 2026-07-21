@@ -38,7 +38,7 @@ export default function AdminOrders() {
 
   const { search, status, payment, method } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllOrders({ limit: 100 })
+  const { data, isLoading, isError, error } = useGetAllOrders({ limit: 500 })
   const orders = data?.orders || EMPTY_ARRAY
 
   const filteredOrders = useMemo(() => {
@@ -116,7 +116,7 @@ export default function AdminOrders() {
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             orders
           </p>
-          <h2 className="text-2xl font-medium sm:text-3xl">orders</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">Orders</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>

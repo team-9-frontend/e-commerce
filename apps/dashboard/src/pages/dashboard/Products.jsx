@@ -30,7 +30,7 @@ export default function AdminProducts() {
   const { search, category, subcategory } = urlValues
 
   const { data, isLoading, isError, error } = useGetProducts({
-    limit: 100,
+    limit: 500,
   })
   const products = data?.products || EMPTY_ARRAY
 
