@@ -66,7 +66,7 @@ export default function AdminProducts() {
         </div>
         <Link to="/products/create">
           <Button variant="ghost">
-            <LuPlus size={20} /> Add Product
+            <LuPlus /> Add Product
           </Button>
         </Link>
       </div>

@@ -31,7 +31,7 @@ export default function VerifyOtp() {
       onSuccess: () => navigate('/login'),
       onError: (error) => {
         setError('root', {
-          message: error.response?.data?.message || 'Invalid OTP!',
+          message: error.message || 'Invalid OTP!',
         })
       },
     })

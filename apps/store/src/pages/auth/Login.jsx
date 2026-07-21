@@ -25,7 +25,7 @@ export default function Login() {
         },
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Login failed!',
+            message: error.message || 'Login failed!',
           })
         },
       },
@@ -63,7 +63,6 @@ export default function Login() {
             register={register}
             rules={{
               required: 'Password is required',
-              minLength: { value: 8, message: 'Must be at least 8 characters' },
             }}
             error={errors.password}
           />

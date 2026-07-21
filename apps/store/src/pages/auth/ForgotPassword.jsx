@@ -28,7 +28,7 @@ export default function ForgotPassword() {
         },
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Failed to send OTP!',
+            message: error.message || 'Failed to send OTP!',
           })
         },
       },

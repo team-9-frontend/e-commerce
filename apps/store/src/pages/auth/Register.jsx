@@ -28,7 +28,7 @@ export default function Register() {
         },
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Register failed!',
+            message: error.message || 'Register failed!',
           })
         },
       },
