@@ -55,8 +55,8 @@ export default function Header() {
           <Button variant="ghost" size="md-square">
             <LuShoppingCart />
             <Tooltip position="bottom">Cart</Tooltip>
-            {!!cart?.itemCount && (
-              <span className="bg-accent-600 dark:bg-accent-400 flex-center absolute -top-1.5 -right-2 aspect-square rounded-full px-1.5 text-xs text-neutral-50 transition-all group-hover:-top-2 dark:text-neutral-950">
+            {!!cart?.itemCount && !!user && (
+              <span className="bg-accent-600 dark:bg-accent-400 flex-center absolute -top-1.5 -right-2 aspect-square size-6 rounded-full text-xs text-neutral-50 transition-all group-hover:-top-2 dark:text-neutral-950">
                 {cart?.itemCount}
               </span>
             )}
@@ -72,23 +72,13 @@ export default function Header() {
           <Tooltip position="bottom">{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</Tooltip>
         </Button>
 
-        {!user && !isLoading ? (
-          <Link to="/login" className="text-inherit">
-            <Button variant="ghost" size="sm" className="text-md flex gap-2">
-              <LuUser />
+        <Link to={!user && !isLoading ? '/login' : '/profile'} className="text-inherit">
+          <Button variant="ghost" size="sm" className="text-md flex gap-2">
+            <LuUser />
 
-              <h3 className="font-medium">login</h3>
-            </Button>
-          </Link>
-        ) : (
-          <Link to="/profile" className="text-inherit">
-            <Button variant="ghost" size="sm" className="text-md flex gap-2">
-              <LuUser />
-
-              <h3 className="font-medium">{!isLoading ? user?.username : 'profile'}</h3>
-            </Button>
-          </Link>
-        )}
+            <h3 className="font-medium">{user?.username || 'login'}</h3>
+          </Button>
+        </Link>
       </div>
     </header>
   )

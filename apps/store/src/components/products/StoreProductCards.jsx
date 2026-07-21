@@ -231,7 +231,7 @@ function CardSkeleton() {
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800">
       <div className="aspect-square w-full">
-        <Skeleton height="100%" containerClassName="h-full w-full block" />
+        <Skeleton height="100%" className="block h-full w-full" />
       </div>
       <div className="flex flex-1 flex-col justify-between p-4">
         <div className="space-y-2">

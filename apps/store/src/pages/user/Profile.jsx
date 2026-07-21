@@ -1,4 +1,3 @@
-
 import { useCurrentUser } from '@repo/api'
 import { LoadingSpinner } from '@repo/ui'
 
@@ -8,11 +7,7 @@ export default function Profile() {
   if (isLoading) return <LoadingSpinner />
 
   if (error) {
-    return (
-      <div className="p-8 text-center text-red-500">
-        Error loading profile.
-      </div>
-    )
+    return <div className="p-8 text-center text-red-500">Error loading profile.</div>
   }
 
   return (
@@ -27,13 +22,9 @@ export default function Profile() {
             className="mb-4 h-28 w-28 rounded-full border object-cover"
           />
 
-          <h2 className="text-2xl font-semibold">
-            {data?.username}
-          </h2>
+          <h2 className="text-2xl font-semibold">{data?.username}</h2>
 
-          <p className="text-neutral-500">
-            {data?.role}
-          </p>
+          <p className="text-neutral-500">{data?.role}</p>
         </div>
 
         <div className="space-y-5">
@@ -44,9 +35,7 @@ export default function Profile() {
 
           <div>
             <p className="text-sm text-neutral-500">Phone</p>
-            <p className="font-medium">
-              {data?.phone || 'No phone added'}
-            </p>
+            <p className="font-medium">{data?.phone || 'No phone added'}</p>
           </div>
         </div>
       </div>
