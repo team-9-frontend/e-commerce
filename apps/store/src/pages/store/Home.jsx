@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom'
 
 import ProductCard from '@/components/oldproducts/ProductCard'
 
-import { useGetProducts, useGetWishlist } from '@repo/api'
+import { useGetProducts } from '@repo/api'
 import { Button, Error, FormField } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
@@ -26,9 +26,6 @@ export default function Home() {
   const categoriesRef = useRef(null)
 
   const { register, handleSubmit, reset } = useForm()
-
-  const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
-  const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
 
   const { data, isLoading, isError, error } = useGetProducts({
     limit: 500,
@@ -163,14 +160,7 @@ export default function Home() {
             {Array.from({ length: isLoading ? 6 : featuredProducts?.length }).map((_, i) => {
               const product = featuredProducts?.[i]
 
-              return (
-                <ProductCard
-                  key={i}
-                  isLoading={isLoading || isLoadingWishlist}
-                  product={product}
-                  wishlist={wishlist}
-                />
-              )
+              return <ProductCard key={i} isLoading={isLoading} product={product} />
             })}
           </div>
         )}
