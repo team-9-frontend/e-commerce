@@ -176,7 +176,7 @@ export default function Home() {
         )}
       </div>
 
-      <div className="bg-white dark:bg-neutral-100">
+      <div className="bg-white shadow dark:bg-neutral-100 dark:shadow-none">
         <div className="container flex flex-col items-center py-12 text-center">
           <h2 className="mb-8 text-3xl font-medium sm:text-4xl">How It Works</h2>
 
