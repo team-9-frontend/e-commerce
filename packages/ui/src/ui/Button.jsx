@@ -9,6 +9,7 @@ const variants = {
     'border border-neutral-300  bg-neutral-50 dark:bg-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-300',
   outlineDanger:
     'border border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/25 dark:hover:bg-red-500/25',
+  disabled: 'bg-neutral-200 text-neutral-600 cursor-not-allowed',
 }
 
 const sizes = {
