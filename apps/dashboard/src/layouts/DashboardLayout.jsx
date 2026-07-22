@@ -45,7 +45,7 @@ export default function DashboardLayout() {
       <button
         onClick={() => setOpen(!open)}
         className={cn(
-          'fixed inset-0 z-10 cursor-default bg-black/50 transition-all lg:hidden',
+          'fixed inset-0 z-10 cursor-default bg-neutral-50/50 backdrop-blur-sm transition-all lg:hidden',
           open ? 'opacity-100' : 'invisible opacity-0',
         )}
       ></button>
