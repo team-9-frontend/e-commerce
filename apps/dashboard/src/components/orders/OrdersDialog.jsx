@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { LuX } from 'react-icons/lu'
+import { LuLoaderCircle, LuX } from 'react-icons/lu'
 
 import { useUpdateOrderStatus } from '@repo/api'
 import { Badge, Button, Dialog, FormField } from '@repo/ui'
@@ -27,11 +27,7 @@ export default function OrdersDialog({ order, setOrder }) {
 
   const { mutate: updateStatus, isPending: updatingStatus } = useUpdateOrderStatus()
 
-  const { register, handleSubmit, reset } = useForm({
-    mode: 'onTouched',
-  })
-
-  console.log(order)
+  const { register, handleSubmit, reset } = useForm({ mode: 'onTouched' })
 
   useEffect(() => {
     if (order) {
@@ -162,9 +158,9 @@ export default function OrdersDialog({ order, setOrder }) {
               className="card flex flex-col gap-4 p-4"
             >
               <FormField
-                type="select"
                 name="status"
                 register={register}
+                type="select"
                 options={[
                   'pending',
                   'confirmed',
@@ -179,16 +175,20 @@ export default function OrdersDialog({ order, setOrder }) {
               />
 
               <FormField
-                type="textarea"
                 name="adminNote"
                 register={register}
                 placeholder="Admin Note (optional)..."
                 className="card overflow-visible shadow-xs outline-none"
+                type="textarea"
                 rows={3}
               />
 
               <Button type="submit" disabled={updatingStatus} variant="primary">
-                {!updatingStatus ? 'Save Changes' : 'Saving...'}
+                {updatingStatus ? (
+                  <LuLoaderCircle className="h-[1.5em] animate-spin" />
+                ) : (
+                  'Save Changes'
+                )}
               </Button>
             </form>
           </div>

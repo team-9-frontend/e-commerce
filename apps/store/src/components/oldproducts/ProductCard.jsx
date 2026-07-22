@@ -1,21 +1,28 @@
-import { LuHeart, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
+import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
-import { useAddToCart, useAddToWishlist, useRemoveFromWishlist } from '@repo/api'
+import { useAddToCart, useAddToWishlist, useGetWishlist, useRemoveFromWishlist } from '@repo/api'
 import { Badge, Button, Skeleton, Swiper } from '@repo/ui'
 import { cn } from '@repo/utils'
 
-export default function ProductCard({ isLoading, product, wishlist }) {
+const EMPTY_ARRAY = []
+
+export default function ProductCard({ isLoading: isLoadingProduct, product }) {
   const { mutate: addToWishlist, isPending: addingToWishlist } = useAddToWishlist()
   const { mutate: removeFromWishlist, isPending: removingFromWishlist } = useRemoveFromWishlist()
   const { mutate: addToCart, isPending: addingToCart } = useAddToCart()
+
+  const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
+  const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
+
+  const isWishlisted = wishlist?.products?.some((p) => p._id === product?._id)
 
   const discountPercentage =
     product?.price && product?.discountPrice
       ? Math.ceil((product?.discountPrice / product?.price) * 100)
       : 0
 
-  const isWishlisted = wishlist?.products?.some((p) => p._id === product?._id)
+  const isLoading = isLoadingWishlist || isLoadingProduct
 
   return (
     <div className="card group">
@@ -104,12 +111,12 @@ export default function ProductCard({ isLoading, product, wishlist }) {
             }
             className="normal-case"
           >
-            {!addingToCart ? (
+            {addingToCart ? (
+              <LuLoaderCircle className="h-[1.5em] animate-spin" />
+            ) : (
               <>
                 <LuShoppingCart /> Add to Card
               </>
-            ) : (
-              'Loading...'
             )}
           </Button>
         ) : (

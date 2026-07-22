@@ -1,3 +1,4 @@
+import { LuLoaderCircle } from 'react-icons/lu'
 import { useNavigate } from 'react-router-dom'
 
 import { useForgotPasswordOtp } from '@repo/api'
@@ -27,7 +28,7 @@ export default function ForgotPassword() {
         },
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Failed to send OTP!',
+            message: error.message || 'Failed to send OTP!',
           })
         },
       },
@@ -60,7 +61,7 @@ export default function ForgotPassword() {
           />
 
           <Button type="submit" disabled={sendingOtp} className="flex-center">
-            {sendingOtp ? 'Sending...' : 'Send OTP'}
+            {sendingOtp ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Send OTP'}
           </Button>
         </form>
 

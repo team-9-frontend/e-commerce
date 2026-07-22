@@ -30,7 +30,7 @@ export default function InputSearch() {
 
   return (
     <div className="relative w-full">
-      <LuSearch className="inset-s-3.5 absolute top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+      <LuSearch className="absolute inset-s-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
       <input
         type="text"
         placeholder="Search products..."

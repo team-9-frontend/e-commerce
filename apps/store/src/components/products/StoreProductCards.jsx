@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { BiLoaderAlt } from 'react-icons/bi'
-import { LuHeart, LuShoppingCart, LuStar } from 'react-icons/lu'
+import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import {
@@ -128,7 +127,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
         />
 
         {/* Badges */}
-        <div className="inset-s-3 absolute top-3 z-10 flex flex-wrap gap-1.5">
+        <div className="absolute inset-s-3 top-3 z-10 flex flex-wrap gap-1.5">
           <span className="border-accent-200/30 bg-accent-100/80 text-accent-800 dark:border-accent-800/30 dark:bg-accent-950/80 dark:text-accent-200 rounded-lg border px-2.5 py-1 text-xs font-semibold capitalize shadow-xs backdrop-blur-sm">
             {product.category}
           </span>
@@ -142,7 +141,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
         {/* Wishlist Button */}
         <button
           onClick={handleWishlistToggle}
-          className="inset-e-3 absolute top-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-neutral-200 text-neutral-400 shadow-sm transition-colors hover:text-rose-500 dark:text-neutral-500 dark:shadow-none"
+          className="absolute inset-e-3 top-3 z-10 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-neutral-200 text-neutral-400 shadow-sm transition-colors hover:text-rose-500 dark:text-neutral-500 dark:shadow-none"
         >
           <LuHeart className={cn('h-4 w-4', isWishlisted && 'fill-rose-500 text-rose-500')} />
         </button>
@@ -160,7 +159,7 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
       {/* Details */}
       <div className="flex flex-1 flex-col justify-between p-4">
         <div className="space-y-2">
-          <h3 className="line-clamp-1 text-base font-semibold text-neutral-950 dark:text-neutral-50">
+          <h3 className="text-md line-clamp-1 font-semibold text-neutral-950 dark:text-neutral-50">
             {product.name}
           </h3>
 
@@ -213,10 +212,10 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
               disabled={isAddingToCart}
             >
               {isAddingToCart ? (
-                <BiLoaderAlt className="h-4 w-4 animate-spin" />
+                <LuLoaderCircle className="h-[1.5em] animate-spin" />
               ) : (
                 <>
-                  <LuShoppingCart className="h-4 w-4" />
+                  <LuShoppingCart />
                   Add to Cart
                 </>
               )}
@@ -232,7 +231,7 @@ function CardSkeleton() {
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800">
       <div className="aspect-square w-full">
-        <Skeleton height="100%" containerClassName="h-full w-full block" />
+        <Skeleton height="100%" className="block h-full w-full" />
       </div>
       <div className="flex flex-1 flex-col justify-between p-4">
         <div className="space-y-2">

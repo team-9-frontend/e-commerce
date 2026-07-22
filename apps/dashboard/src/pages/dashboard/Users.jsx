@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { LuPen, LuPlus, LuSearch, LuTrash } from 'react-icons/lu'
+import { LuPen, LuPlus, LuSearch, LuTrash2 } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
 import AddUserForm from '@/components/users/AddUserForm'
@@ -8,7 +8,16 @@ import EditUserDialog from '@/components/users/EditUserDialog'
 import RoleToggleButton from '@/components/users/RoleToggleButton'
 
 import { useDeleteUser, useGetAllUsers } from '@repo/api'
-import { Badge, Button, ConfirmDialog, FormField, Pagination, Table, Tooltip } from '@repo/ui'
+import {
+  Badge,
+  Button,
+  ConfirmDialog,
+  Error,
+  FormField,
+  Pagination,
+  Table,
+  Tooltip,
+} from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -28,7 +37,7 @@ export default function AdminUsers() {
 
   const { search } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllUsers({ limit: 100 })
+  const { data, isLoading, isError, error } = useGetAllUsers({ limit: 500 })
   const users = data?.users || EMPTY_ARRAY
 
   const filteredUsers = useMemo(() => {
@@ -68,12 +77,12 @@ export default function AdminUsers() {
       ),
       role: (
         <Badge color={user.role === 'admin' ? 'amber' : 'sky'} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {user.role}
+          <span className="size-1 text-xl leading-0">•</span> {user.role}
         </Badge>
       ),
       verified: (
         <Badge color={user.isVerified ? 'emerald' : 'rose'} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span>
+          <span className="size-1 text-xl leading-0">•</span>
           {user.isVerified ? 'verified' : 'not verified'}
         </Badge>
       ),
@@ -98,7 +107,7 @@ export default function AdminUsers() {
               setDeleteUserId(user._id)
             }}
           >
-            <LuTrash />
+            <LuTrash2 />
             <Tooltip position="top">delete user</Tooltip>
           </Button>
         </div>
@@ -109,16 +118,16 @@ export default function AdminUsers() {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
-        <div className="w-full space-y-2">
+        <div className="space-y-2 max-sm:w-full">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             users
           </p>
-          <h2 className="text-3xl">users</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">users</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>
         </div>
-        <div className="card p-4 text-nowrap shadow-xs">
+        <div className="card p-4 shadow-xs">
           {data?.count || 0} <span className="text-sm text-neutral-600">total users</span>
         </div>
       </div>
@@ -133,7 +142,7 @@ export default function AdminUsers() {
             icon={<LuSearch />}
             placeholder="Search ID, customer..."
             register={register}
-            className="w-full"
+            parentClassName="w-full"
           />
 
           <Button
@@ -160,7 +169,7 @@ export default function AdminUsers() {
       </div>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : (
         <Table
           columns={['user', 'role', 'verified', 'actions']}

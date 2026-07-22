@@ -34,8 +34,8 @@ export default function AppRoutes() {
           <Route path="/products/:id" element={<ProductView />} />
 
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/orders" element={<Orders />} />
-          <Route path="/profile/orders/:id" element={<OrderView />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orders/:id" element={<OrderView />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/cart" element={<Cart />} />
 

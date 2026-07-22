@@ -11,17 +11,19 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@repo/ui": "*",
     "@repo/api": "*",
+    "@repo/ui": "*",
     "@repo/utils": "*",
+    "@stripe/react-stripe-js": "^6.8.0",
+    "@stripe/stripe-js": "^9.10.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-icons": "^5.7.0",
     "react-router-dom": "^7.18.1"
   },
   "devDependencies": {
-    "@repo/tailwind-config": "*",
     "@babel/core": "^7.29.7",
+    "@repo/tailwind-config": "*",
     "@rolldown/plugin-babel": "^0.2.3",
     "@tailwindcss/vite": "^4.3.2",
     "@types/react": "^19.2.17",

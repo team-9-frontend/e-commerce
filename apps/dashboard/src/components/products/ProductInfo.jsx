@@ -8,7 +8,9 @@ export default function ProductInfo({ isLoading, product }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="card space-y-2 p-4">
-        <h2 className="text-3xl">{!isLoading ? product.name : <Skeleton width="50%" />}</h2>
+        <h2 className="text-2xl font-medium sm:text-3xl">
+          {!isLoading ? product.name : <Skeleton width="50%" />}
+        </h2>
         <p className="text-sm wrap-anywhere text-neutral-500">
           {!isLoading ? (
             product.description

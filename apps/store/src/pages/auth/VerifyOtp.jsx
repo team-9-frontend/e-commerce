@@ -1,3 +1,4 @@
+import { LuLoaderCircle } from 'react-icons/lu'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useVerifyForgotPasswordOtp, useVerifyRegisterOtp } from '@repo/api'
@@ -20,9 +21,7 @@ export default function VerifyOtp() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm({ mode: 'onTouched' })
 
   const onSubmit = ({ otp, newPassword }) => {
     const mutate = mode === 'reset' ? verifyResetOtp : verifyRegisterOtp
@@ -32,7 +31,7 @@ export default function VerifyOtp() {
       onSuccess: () => navigate('/login'),
       onError: (error) => {
         setError('root', {
-          message: error.response?.data?.message || 'Invalid OTP!',
+          message: error.message || 'Invalid OTP!',
         })
       },
     })
@@ -70,11 +69,13 @@ export default function VerifyOtp() {
           )}
 
           <Button type="submit" disabled={verifyingResetOtp || verifyingRegisterOtp}>
-            {verifyingResetOtp || verifyingRegisterOtp
-              ? 'Loading...'
-              : mode === 'reset'
-                ? 'Reset Password'
-                : 'Verify'}
+            {verifyingResetOtp || verifyingRegisterOtp ? (
+              <LuLoaderCircle className="h-[1.5em] animate-spin" />
+            ) : mode === 'reset' ? (
+              'Reset Password'
+            ) : (
+              'Verify'
+            )}
           </Button>
         </form>
 

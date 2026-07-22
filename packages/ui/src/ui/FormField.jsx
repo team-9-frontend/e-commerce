@@ -1,6 +1,7 @@
 import { cn } from '@repo/utils'
 
 export function FormField({
+  parentClassName,
   className,
   name,
   icon,
@@ -9,6 +10,7 @@ export function FormField({
   type = 'text',
   options,
   defaultOption,
+  hiddenOption,
   register,
   rules,
   error,
@@ -17,11 +19,11 @@ export function FormField({
   const id = String(label).trim().toLowerCase()
 
   return (
-    <div className={cn('flex flex-col gap-1', className)}>
+    <div className={cn('flex flex-col gap-1', parentClassName)}>
       {label && (
         <label
           htmlFor={id}
-          className="flex-center w-fit cursor-pointer gap-1 text-sm font-medium capitalize"
+          className="flex-center w-fit cursor-pointer gap-1 text-sm font-medium text-neutral-600 capitalize"
         >
           {labelIcon} {label}
         </label>
@@ -41,6 +43,11 @@ export function FormField({
             )}
             {...rest}
           >
+            {hiddenOption && (
+              <option value="" hidden>
+                {String(hiddenOption).replace(/\b\w/g, (char) => char.toUpperCase())}
+              </option>
+            )}
             {defaultOption && (
               <option value="">
                 {String(defaultOption).replace(/\b\w/g, (char) => char.toUpperCase())}

@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom'
 import OrdersDialog from '@/components/orders/OrdersDialog'
 
 import { useGetAllOrders } from '@repo/api'
-import { Badge, FormField, Pagination, Table } from '@repo/ui'
+import { Badge, Error, FormField, Pagination, Table } from '@repo/ui'
 import { filterData, format } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -38,7 +38,7 @@ export default function AdminOrders() {
 
   const { search, status, payment, method } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllOrders({ limit: 100 })
+  const { data, isLoading, isError, error } = useGetAllOrders({ limit: 500 })
   const orders = data?.orders || EMPTY_ARRAY
 
   const filteredOrders = useMemo(() => {
@@ -88,17 +88,17 @@ export default function AdminOrders() {
       ),
       status: (
         <Badge color={statusColors[order.status]} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {order.status}
+          <span className="size-1 text-xl leading-0">•</span> {order.status}
         </Badge>
       ),
       payment: (
         <Badge color={statusColors[order.paymentStatus]} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {order.paymentStatus}
+          <span className="size-1 text-xl leading-0">•</span> {order.paymentStatus}
         </Badge>
       ),
       method: (
         <Badge color={statusColors[order.paymentMethod]} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {order.paymentMethod}
+          <span className="size-1 text-xl leading-0">•</span> {order.paymentMethod}
         </Badge>
       ),
       total: (
@@ -112,11 +112,11 @@ export default function AdminOrders() {
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
-        <div className="w-full space-y-2">
+        <div className="space-y-2 max-sm:w-full">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             orders
           </p>
-          <h2 className="text-3xl">orders</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">Orders</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>
@@ -135,14 +135,14 @@ export default function AdminOrders() {
           icon={<LuSearch />}
           placeholder="Search ID, customer..."
           register={register}
-          className="w-full"
+          parentClassName="w-full"
         />
 
         <div className="flex items-center gap-4 max-sm:w-full">
           <FormField
-            type="select"
             name="status"
             register={register}
+            type="select"
             options={[
               'pending',
               'confirmed',
@@ -153,31 +153,34 @@ export default function AdminOrders() {
               'returned',
             ]}
             defaultOption="all statuses"
-            className="flex-1 sm:w-fit"
+            className="sm:w-fit"
+            parentClassName="w-full"
           />
 
           <FormField
-            type="select"
             name="payment"
             register={register}
+            type="select"
             options={['pending', 'paid', 'failed', 'refunded']}
             defaultOption="all payments"
-            className="flex-1 sm:w-fit"
+            className="sm:w-fit"
+            parentClassName="w-full"
           />
 
           <FormField
-            type="select"
             name="method"
             register={register}
+            type="select"
             options={['cash', 'stripe']}
             defaultOption="all methods"
-            className="flex-1 sm:w-fit"
+            className="sm:w-fit"
+            parentClassName="w-full"
           />
         </div>
       </form>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : (
         <Table
           columns={['order', 'customer', 'date', 'status', 'payment', 'method', 'total']}

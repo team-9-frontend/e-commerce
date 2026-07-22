@@ -7,11 +7,7 @@ export default function Profile() {
   if (isLoading) return <LoadingSpinner />
 
   if (error) {
-    return (
-      <div className="p-8 text-center text-red-500">
-        Error loading profile.
-      </div>
-    )
+    return <div className="p-8 text-center text-red-500">Error loading profile.</div>
   }
 
  return (

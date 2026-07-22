@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const quickLinks = [
   { label: 'Shop', to: '/products' },
-  { label: 'My Orders', to: '/profile/orders' },
+  { label: 'My Orders', to: '/orders' },
   { label: 'Wishlist', to: '/wishlist' },
   { label: 'Profile', to: '/profile' },
 ]
@@ -19,11 +19,9 @@ export default function Footer() {
     <footer className="flex border-t border-neutral-200 bg-white shadow dark:bg-neutral-100 dark:shadow-none">
       <div className="container flex flex-col gap-8 py-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-          <div className="flex flex-col gap-2">
-            <Link to="/" className="w-fit text-neutral-950">
-              <h1 className="font-fancy text-xl font-bold">
-                LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
-              </h1>
+          <div className="flex flex-col items-start gap-2">
+            <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950">
+              LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
             </Link>
 
             <p className="max-w-sm text-sm text-neutral-500">
@@ -32,7 +30,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-start gap-4">
             <h2 className="font-medium capitalize">quick links</h2>
 
             <div className="flex flex-col gap-2">

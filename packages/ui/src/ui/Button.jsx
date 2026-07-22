@@ -9,6 +9,7 @@ const variants = {
     'border border-neutral-300  bg-neutral-50 dark:bg-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-300',
   outlineDanger:
     'border border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/25 dark:hover:bg-red-500/25',
+  disabled: 'bg-neutral-200 text-neutral-600 cursor-default',
 }
 
 const sizes = {
@@ -20,18 +21,18 @@ const sizes = {
   'lg-square': 'px-3 py-3 text-lg rounded-xl',
 }
 
-export function Button({ children, className, variant = 'primary', size = 'md', icon, ...rest }) {
+export function Button({ children, className, variant = 'primary', size = 'md', ...rest }) {
   return (
     <button
       className={cn(
-        'group flex-center relative cursor-pointer gap-2 px-4 py-2 text-left font-medium text-nowrap text-neutral-950 capitalize transition-all disabled:pointer-events-none disabled:opacity-50',
+        'group flex-center relative cursor-pointer gap-2 px-4 py-2 font-medium text-nowrap text-neutral-950 capitalize transition-all disabled:pointer-events-none disabled:opacity-50',
         variants[variant],
         sizes[size],
         className,
       )}
       {...rest}
     >
-      {icon} {children}
+      {children}
     </button>
   )
 }
