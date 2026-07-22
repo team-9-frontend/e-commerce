@@ -9,6 +9,8 @@ import { Elements, stripePromise } from '@/lib/stripe'
 import { useCreateOrder } from '@repo/api'
 import { Button } from '@repo/ui'
 
+import { toast } from '@repo/utils/toasts'
+
 export default function Payment() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -25,19 +27,44 @@ export default function Payment() {
         paymentMethod: method,
         ...extra,
       },
-      {
-        onSuccess: () => navigate('/order-success'),
-      },
+      // {
+      //   onSuccess: () => navigate('/order-success'),
+      // },
+          {
+            onSuccess: () => {
+              navigate('/order-success')
+            },
+
+            onError: (error) => {
+              toast.error(
+                error?.message || 'Failed to place order. Please try again.'
+              )
+            },
+          }
     )
   }
 
-  useEffect(() => {
-    if (!shippingAddress) return navigate('/checkout')
-  }, [shippingAddress, navigate])
+  // useEffect(() => {
+  //   if (!shippingAddress) return navigate('/checkout')
+  // }, [shippingAddress, navigate])
+
+
+useEffect(() => {
+  if (!shippingAddress) {
+    navigate('/checkout')
+  }
+}, [shippingAddress, navigate])
+
+
+
+
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-10">
-      <div className="mx-auto max-w-2xl px-6">
+      {/* <div className="mx-auto max-w-2xl px-6"> */}
+        <div className="mx-auto max-w-2xl px-4 sm:px-6">
         <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">Payment</h1>
 
         <div className="space-y-6 rounded-2xl bg-white p-8 shadow-md">
