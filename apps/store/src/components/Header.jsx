@@ -19,7 +19,7 @@ export default function Header() {
   const { pathname } = useLocation()
 
   return (
-    <header className="border-b border-neutral-200 bg-white shadow dark:bg-neutral-100 dark:shadow-none">
+    <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white shadow dark:bg-neutral-100 dark:shadow-none">
       <div className="container flex items-center justify-between gap-8 py-4">
         <Link to="/" className="font-fancy pt-1 text-xl font-bold text-neutral-950 max-lg:hidden">
           LOOM <span className="text-yellow-500 italic">&amp;</span> LININ
@@ -147,7 +147,7 @@ export default function Header() {
               )}
             >
               <LuUser />
-              <span className="font-medium">{user?.username || 'login'}</span>
+              <span className="font-medium normal-case">{user?.username || 'Login'}</span>
             </Button>
           </Link>
         </div>

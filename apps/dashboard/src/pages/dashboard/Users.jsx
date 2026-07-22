@@ -34,10 +34,19 @@ export default function AdminUsers() {
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
   })
-
   const { search } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllUsers({ limit: 500 })
+  const currentPage = searchParams.get('page') || 1
+  const limit = 15
+  const apiLimit = 180
+  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
+  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
+  const startIndex = localPageIndex * limit
+
+  const { data, isLoading, isError, error } = useGetAllUsers({
+    page: apiPage,
+    limit: apiLimit,
+  })
   const users = data?.users || EMPTY_ARRAY
 
   const filteredUsers = useMemo(() => {
@@ -46,25 +55,21 @@ export default function AdminUsers() {
     ])
   }, [users, search])
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 14
-  const page = filteredUsers.slice((currentPage - 1) * limit, currentPage * limit)
+  const page = filteredUsers.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredUsers.length / limit)
 
   const mappedusers = useMemo(() => {
     return page.map((user) => ({
       user: (
         <div className="flex items-center gap-4">
-          {user.avatar ? (
-            <div className="flex-center size-8 overflow-hidden rounded-full bg-neutral-50 text-xs">
-              <img
-                src={user?.avatar}
-                alt={String(user?.username).slice(0, 1)}
-                className="size-full object-cover"
-              />
-            </div>
+          {user?.avatar ? (
+            <img
+              src={user?.avatar}
+              alt={String(user?.username).slice(0, 1)}
+              className="flex-center size-8 rounded-full bg-neutral-200 object-cover text-xs"
+            />
           ) : (
-            <div className="flex-center size-8 rounded-full bg-neutral-50 text-xs">
+            <div className="flex-center size-8 rounded-full bg-neutral-200 text-xs">
               {String(user?.username).slice(0, 1)}
             </div>
           )}
@@ -76,14 +81,15 @@ export default function AdminUsers() {
         </div>
       ),
       role: (
-        <Badge color={user.role === 'admin' ? 'amber' : 'sky'} className="flex-center w-fit gap-2">
-          <span className="size-1 text-xl leading-0">•</span> {user.role}
+        <Badge color={user.role === 'admin' ? 'amber' : 'sky'}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {user.role}</span>
         </Badge>
       ),
       verified: (
-        <Badge color={user.isVerified ? 'emerald' : 'rose'} className="flex-center w-fit gap-2">
-          <span className="size-1 text-xl leading-0">•</span>
-          {user.isVerified ? 'verified' : 'not verified'}
+        <Badge color={user.isVerified ? 'emerald' : 'rose'}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {user.isVerified ? 'verified' : 'not verified'}</span>
         </Badge>
       ),
       actions: (

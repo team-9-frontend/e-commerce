@@ -27,7 +27,7 @@ export default function Wishlist() {
           <div className="bg-accent-600 dark:bg-accent-400 w-2 rounded-full" />
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-bold sm:text-3xl">My Wishlist</h2>
-            <p className="flex items-center gap-2 text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500">
               {isLoading ? (
                 'Loading your wishlist...'
               ) : (

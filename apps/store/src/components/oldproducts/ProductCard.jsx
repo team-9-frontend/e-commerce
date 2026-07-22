@@ -16,7 +16,7 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
   const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
 
   const isWishlisted = wishlist?.products?.some((p) => p._id === product?._id)
-
+  const isOutOfStock = product?.stock === 0
   const discountPercentage =
     product?.price && product?.discountPrice
       ? Math.ceil((product?.discountPrice / product?.price) * 100)
@@ -102,7 +102,8 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
 
         {!isLoading ? (
           <Button
-            disabled={addingToCart}
+            variant={isOutOfStock ? 'disabled' : 'primary'}
+            disabled={addingToCart || isOutOfStock}
             onClick={() =>
               addToCart({
                 productId: product._id,

@@ -23,7 +23,7 @@ export default function DashboardLayout() {
   }, [user, isLoading, navigate])
 
   return isLoading ? (
-    <div className="flex-center min-h-screen">
+    <div className="flex-center min-h-screen py-8">
       <LoadingSpinner className="size-24" />
     </div>
   ) : (

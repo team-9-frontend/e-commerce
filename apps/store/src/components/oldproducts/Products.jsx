@@ -22,7 +22,17 @@ export default function Products() {
   })
   const { search, category, minprice, maxprice, sort } = urlValues
 
-  const { data, isLoading, isError, error } = useGetProducts({ limit: 500 })
+  const currentPage = searchParams.get('page') || 1
+  const limit = 6
+  const apiLimit = 180
+  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
+  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
+  const startIndex = localPageIndex * limit
+
+  const { data, isLoading, isError, error } = useGetProducts({
+    page: apiPage,
+    limit: apiLimit,
+  })
   const products = data?.products || EMPTY_ARRAY
 
   const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
@@ -46,9 +56,7 @@ export default function Products() {
     ])
   }, [products, search, category, minprice, maxprice, sort])
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 20
-  const page = filteredProducts.slice((currentPage - 1) * limit, currentPage * limit)
+  const page = filteredProducts.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredProducts.length / limit)
 
   return (

@@ -28,7 +28,7 @@ export default function Home() {
   const { register, handleSubmit, reset } = useForm()
 
   const { data, isLoading, isError, error } = useGetProducts({
-    limit: 500,
+    limit: 90,
   })
   const products = data?.products || EMPTY_ARRAY
 

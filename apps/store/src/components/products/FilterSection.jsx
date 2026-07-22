@@ -127,12 +127,12 @@ export default function FilterSection() {
 
       <div
         className={cn(
-          'fixed inset-y-0 inset-s-0 z-50 h-screen w-64 shrink-0 space-y-6 bg-neutral-100 p-6 shadow-2xl transition-transform duration-300 ease-in-out md:relative md:h-auto md:w-60 md:translate-x-0 md:rounded-xl md:border md:border-neutral-200 md:bg-transparent md:shadow-none',
+          'inset-s-0 fixed inset-y-0 z-20 h-screen w-64 shrink-0 space-y-6 bg-neutral-100 p-6 shadow-2xl transition-transform duration-300 ease-in-out md:relative md:h-auto md:w-60 md:translate-x-0 md:rounded-xl md:border md:border-neutral-200 md:bg-transparent md:shadow-none',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
         )}
       >
         <button
-          className="absolute inset-e-4 top-4 cursor-pointer md:hidden"
+          className="inset-e-4 absolute top-4 cursor-pointer md:hidden"
           onClick={() => setIsOpen(false)}
         >
           <BiX className="h-6 w-6" />
