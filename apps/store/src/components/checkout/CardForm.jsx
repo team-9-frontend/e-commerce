@@ -11,12 +11,22 @@ export default function CardForm({ onSuccess, isSubmitting }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!stripe || !elements) return
+    if (!stripe || !elements) {
+      setError('Stripe is not ready. Please try another payment method.')
+      return
+    }
 
     setError('')
+
+    const cardElement = elements.getElement(CardElement)
+    if (!cardElement) {
+      setError('Card information is missing.')
+      return
+    }
+
     const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
-      card: elements.getElement(CardElement),
+      card: cardElement,
     })
 
     if (stripeError) {
