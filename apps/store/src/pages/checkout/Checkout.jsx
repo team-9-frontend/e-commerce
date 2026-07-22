@@ -9,7 +9,14 @@ import { useForm } from '@repo/utils/forms'
 
 export default function Checkout() {
   const navigate = useNavigate()
-  const { data: cart } = useGetCart()
+  // const { data: cart } = useGetCart()
+
+  const {
+  data: cart,
+  isLoading,
+  isError,
+  error,
+} = useGetCart()
 
   const {
     register,
@@ -44,13 +51,53 @@ export default function Checkout() {
     })
   }
 
-  useEffect(() => {
-    if (!cart?.itemCount) return navigate('/cart')
-  }, [cart, navigate])
+  // useEffect(() => {
+  //   if (!cart?.itemCount) return navigate('/cart')
+  // }, [cart, navigate])
+
+useEffect(() => {
+  if (!isLoading && !cart?.itemCount) {
+    navigate('/cart')
+  }
+}, [cart, navigate, isLoading])
+
+
+
+if (isLoading) {
+  return (
+    <div className="flex min-h-96 items-center justify-center">
+      Loading cart...
+    </div>
+  )
+}
+
+if (isError) {
+  return (
+    <div className="flex min-h-96 flex-col items-center justify-center gap-3 text-center">
+      <h2 className="text-xl font-bold text-red-600">
+        Failed to load cart
+      </h2>
+
+      <p className="text-sm text-neutral-500">
+        {error?.message || 'Something went wrong. Please try again.'}
+      </p>
+
+      <Link to="/cart">
+        <Button variant="outline">
+          Back to Cart
+        </Button>
+      </Link>
+    </div>
+  )
+}
+
+
+
 
   return (
     <div className="flex flex-1 flex-col gap-4 py-8">
-      <div className="card relative flex items-center justify-between gap-4 p-4">
+      {/* <div className="card relative flex items-center justify-between gap-4 p-4"> */}
+      <div className="card flex w-full flex-col gap-4 p-4 lg:w-1/4">
         <div className="from-accent-500/10 pointer-events-none absolute inset-0 bg-linear-to-l via-transparent to-transparent" />
 
         <div className="flex gap-4">
