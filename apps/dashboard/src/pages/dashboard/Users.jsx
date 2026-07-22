@@ -38,7 +38,7 @@ export default function AdminUsers() {
 
   const currentPage = searchParams.get('page') || 1
   const limit = 15
-  const apiLimit = 180
+  const apiLimit = 120
   const apiPage = Math.ceil((currentPage * limit) / apiLimit)
   const localPageIndex = (currentPage - 1) % (apiLimit / limit)
   const startIndex = localPageIndex * limit

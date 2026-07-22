@@ -28,11 +28,12 @@ export default function Home() {
   const { register, handleSubmit, reset } = useForm()
 
   const { data, isLoading, isError, error } = useGetProducts({
-    limit: 90,
+    limit: 120,
   })
   const products = data?.products || EMPTY_ARRAY
 
-  const featuredProducts = products.filter((product) => product.featured).slice(0, 4)
+  const limit = 4
+  const featuredProducts = products.filter((product) => product.featured).slice(0, limit)
 
   const categoryCounts = products.reduce((acc, product) => {
     const cat = product.category
@@ -157,7 +158,7 @@ export default function Home() {
           <Error message="No products found" />
         ) : (
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {Array.from({ length: isLoading ? 6 : featuredProducts?.length }).map((_, i) => {
+            {Array.from({ length: isLoading ? limit : featuredProducts?.length }).map((_, i) => {
               const product = featuredProducts?.[i]
 
               return <ProductCard key={i} isLoading={isLoading} product={product} />
