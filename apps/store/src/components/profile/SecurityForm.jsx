@@ -59,7 +59,7 @@ export default function AddressForm() {
 
   return (
     <div className="card flex flex-col gap-4 p-4">
-      <h2 className="text-xl font-bold sm:text-2xl">Address</h2>
+      <h2 className="text-xl font-bold sm:text-2xl">Security</h2>
 
       {formState === 0 && (
         <Button className="w-fit" onClick={() => setFormState(1)}>
