@@ -19,7 +19,7 @@ export function FormField({
   const id = String(label).trim().toLowerCase()
 
   return (
-    <div className={cn('flex flex-col gap-1', parentClassName)}>
+    <div className={cn('flex flex-col gap-1 text-start', parentClassName)}>
       {label && (
         <label
           htmlFor={id}

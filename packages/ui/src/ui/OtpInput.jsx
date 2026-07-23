@@ -88,7 +88,9 @@ export function OtpInput({
       />
 
       {error && (
-        <span className="text-sm font-medium text-red-600 dark:text-red-400">{error.message}</span>
+        <span className="text-start text-sm font-medium text-red-600 dark:text-red-400">
+          {error.message}
+        </span>
       )}
     </div>
   )

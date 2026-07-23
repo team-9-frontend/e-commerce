@@ -17,7 +17,7 @@ export default function DynamicOrder() {
   const order = data?.order
 
   return isLoading ? (
-    <div className="flex-center flex-1 py-8 text-center">
+    <div className="flex-center flex-1 py-8 ">
       <LoadingSpinner className="size-24" />
     </div>
   ) : (

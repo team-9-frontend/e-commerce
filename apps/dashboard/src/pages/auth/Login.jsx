@@ -33,7 +33,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex-center min-h-screen">
+    <div className="flex-center min-h-screen text-center">
       <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-3xl font-bold">Welcome Back!</h1>
         <p className="mb-6 text-neutral-500">Please log in to continue.</p>
