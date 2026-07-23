@@ -36,7 +36,7 @@ export default function AdminCarts() {
 
   const mappedCarts = useMemo(() => {
     return page.map((cart) => ({
-      cart: <span className="text-sm text-neutral-600 uppercase">#{cart._id}</span>,
+      cart: <span className="text-sm text-neutral-600 uppercase">#{cart._id?.slice(-8)}</span>,
       customer: (
         <div className="flex items-center gap-4">
           <div className="flex-center size-8 rounded-full bg-neutral-200 text-xs">
@@ -64,8 +64,8 @@ export default function AdminCarts() {
           )}
         </span>
       ),
-      total: (
-        <span className="font-bold text-emerald-600 dark:text-emerald-400">${cart.total}</span>
+      subtotal: (
+        <span className="font-bold text-emerald-600 dark:text-emerald-400">${cart.subtotal}</span>
       ),
     }))
   }, [carts, currentPage])
@@ -91,7 +91,7 @@ export default function AdminCarts() {
         <Error message={error?.message} />
       ) : (
         <Table
-          columns={['cart', 'customer', 'date', 'item count', 'coupon', 'total']}
+          columns={['cart', 'customer', 'date', 'item count', 'coupon', 'subtotal']}
           data={mappedCarts}
           isLoading={isLoading}
           noDataMsg="No carts found"

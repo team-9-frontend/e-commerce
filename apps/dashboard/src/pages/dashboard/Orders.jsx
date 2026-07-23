@@ -77,7 +77,7 @@ export default function AdminOrders() {
       onClick: () => {
         setSelected(order)
       },
-      order: <span className="text-sm text-neutral-600 uppercase">#{order._id}</span>,
+      order: <span className="text-sm text-neutral-600 uppercase">#{order._id?.slice(-8)}</span>,
       customer: (
         <div className="flex items-center gap-4">
           <div className="flex-center size-8 rounded-full bg-neutral-200 text-xs">
