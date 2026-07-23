@@ -62,6 +62,7 @@ export const useUpdateUserRole = () => {
     mutationFn: (data) => authService.updateUserRole(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: usersKeys.all })
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
     },
   })
 }

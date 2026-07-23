@@ -33,7 +33,7 @@ export default function AdminDashboard() {
         <Error message={error?.message} />
       ) : (
         <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <TotalOrders totalOrders={stats?.orders?.total} isLoading={isLoading} />
             <PendingOrders pendingOrders={stats?.orders?.pending} isLoading={isLoading} />
             <Revenue revenue={stats?.revenue?.total} isLoading={isLoading} />

@@ -1,22 +1,31 @@
 import { useState } from 'react'
 
 import { LuTrash2 } from 'react-icons/lu'
+import { useSearchParams } from 'react-router-dom'
 
 import ProductCard from '@/components/oldproducts/ProductCard'
 
 import { useClearWishlist, useGetWishlist } from '@repo/api'
-import { Badge, Button, ConfirmDialog, Error } from '@repo/ui'
+import { Badge, Button, ConfirmDialog, Error, Pagination } from '@repo/ui'
 
 const EMPTY_ARRAY = []
 
 export default function Wishlist() {
+  const [searchParams] = useSearchParams()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const { mutate: clearWishlist, isPending: clearingWishlist } = useClearWishlist()
 
+  const currentPage = searchParams.get('page') || 1
+  const limit = 8
+  const startIndex = (currentPage - 1) * limit
+
   const { data, isLoading, isError, error } = useGetWishlist()
   const wishlist = data?.wishlist
-  const products = wishlist?.products || EMPTY_ARRAY
+  const productsData = wishlist?.products || EMPTY_ARRAY
+
+  const products = productsData.slice(startIndex, startIndex + limit)
+  const totalPages = Math.ceil(productsData.length / limit)
 
   return (
     <div className="flex flex-1 flex-col gap-4 py-8">
@@ -27,7 +36,7 @@ export default function Wishlist() {
           <div className="bg-accent-600 dark:bg-accent-400 w-2 rounded-full" />
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-bold sm:text-3xl">My Wishlist</h2>
-            <p className="flex items-center gap-2 text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500">
               {isLoading ? (
                 'Loading your wishlist...'
               ) : (
@@ -60,7 +69,7 @@ export default function Wishlist() {
         />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {Array.from({ length: isLoading ? 6 : products.length }).map((_, i) => {
+          {Array.from({ length: isLoading ? limit : products.length }).map((_, i) => {
             const product = products?.[i]
 
             return (
@@ -69,6 +78,8 @@ export default function Wishlist() {
           })}
         </div>
       )}
+
+      <Pagination totalPages={totalPages} />
 
       <ConfirmDialog
         isOpen={isDialogOpen}

@@ -57,7 +57,7 @@ export default function Checkout() {
           <div className="bg-accent-600 dark:bg-accent-400 w-2 rounded-full" />
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-bold sm:text-3xl">Checkout</h2>
-            <p className="products-center flex gap-2 text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500">
               Complete your shipping details and continue to payment
             </p>
           </div>
@@ -74,53 +74,61 @@ export default function Checkout() {
         <form onSubmit={handleSubmit(onSubmit)} className="card flex w-full flex-col gap-4 p-4">
           <h2 className="text-xl font-bold sm:text-2xl">Shipping Address</h2>
 
-          <FormField
-            name="fullName"
-            label="Full Name"
-            placeholder="Full Name"
-            register={register}
-            rules={{
-              required: 'Full name is required',
-            }}
-            error={errors.fullName}
-          />
+          <div className="flex gap-4">
+            <FormField
+              name="fullName"
+              label="Full Name"
+              placeholder="Full Name"
+              register={register}
+              rules={{
+                required: 'Full name is required',
+              }}
+              error={errors.fullName}
+              parentClassName="w-full"
+            />
 
-          <FormField
-            name="phone"
-            label="Phone"
-            placeholder="Phone"
-            register={register}
-            rules={{
-              required: 'Phone number is required',
-              pattern: {
-                value: /^\d{1,14}$/i,
-                message: 'Invalid phone number',
-              },
-            }}
-            error={errors.phone}
-          />
+            <FormField
+              name="phone"
+              label="Phone"
+              placeholder="Phone"
+              register={register}
+              rules={{
+                required: 'Phone number is required',
+                pattern: {
+                  value: /^\d{1,14}$/i,
+                  message: 'Invalid phone number',
+                },
+              }}
+              error={errors.phone}
+              parentClassName="w-full"
+            />
+          </div>
 
-          <FormField
-            name="country"
-            label="Country"
-            placeholder="Country"
-            register={register}
-            rules={{
-              required: 'Country is required',
-            }}
-            error={errors.country}
-          />
+          <div className="flex gap-4">
+            <FormField
+              name="country"
+              label="Country"
+              placeholder="Country"
+              register={register}
+              rules={{
+                required: 'Country is required',
+              }}
+              error={errors.country}
+              parentClassName="w-full"
+            />
 
-          <FormField
-            name="city"
-            label="City"
-            placeholder="City"
-            register={register}
-            rules={{
-              required: 'City is required',
-            }}
-            error={errors.city}
-          />
+            <FormField
+              name="city"
+              label="City"
+              placeholder="City"
+              register={register}
+              rules={{
+                required: 'City is required',
+              }}
+              error={errors.city}
+              parentClassName="w-full"
+            />
+          </div>
 
           <FormField
             name="address"
@@ -139,17 +147,17 @@ export default function Checkout() {
             name="postalCode"
             label="Postal Code"
             placeholder="Postal Code"
+            register={register}
             rules={{
               required: 'Postal code is required',
             }}
-            register={register}
             error={errors.postalCode}
           />
 
           <FormField
             name="customerNote"
-            label="Customer Note"
-            placeholder="Customer Note"
+            label="Order Notes (Optional)"
+            placeholder="Order Notes"
             register={register}
             type="textarea"
             rows={2}
@@ -163,12 +171,12 @@ export default function Checkout() {
           <h2 className="text-lg">Order Summary</h2>
 
           <div className="flex flex-col gap-2">
-            <div className="products-center flex justify-between text-sm text-neutral-600">
+            <div className="flex items-center justify-between text-sm text-neutral-600">
               <span>Subtotal</span>
               <span>${cart?.subtotal || 0}</span>
             </div>
 
-            <div className="products-center flex justify-between border-t border-neutral-200 pt-2 text-sm font-medium text-neutral-950">
+            <div className="flex items-center justify-between border-t border-neutral-200 pt-2 text-sm font-medium text-neutral-950">
               <span>Total</span>
               <span className="text-accent-600 dark:text-accent-400">${cart?.total || 0}</span>
             </div>

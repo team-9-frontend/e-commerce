@@ -33,7 +33,7 @@ export default function Wishlist() {
           <div className="bg-accent-600 dark:bg-accent-400 w-2 rounded-full" />
           <div className="flex flex-col gap-1">
             <h2 className="text-2xl font-bold sm:text-3xl">My Cart</h2>
-            <p className="products-center flex gap-2 text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500">
               {isLoading ? (
                 'Loading your cart...'
               ) : (
@@ -78,17 +78,17 @@ export default function Wishlist() {
             <h2 className="text-lg">Order Summary</h2>
 
             <div className="flex flex-col gap-2">
-              <div className="products-center flex justify-between text-sm text-neutral-600">
+              <div className="flex items-center justify-between text-sm text-neutral-600">
                 <span>Subtotal</span>
                 <span>${cart?.subtotal || 0}</span>
               </div>
 
-              <div className="products-center flex justify-between text-sm text-neutral-600">
+              <div className="flex items-center justify-between text-sm text-neutral-600">
                 <span>Discount</span>
                 <span>${cart?.discountAmount || 0}</span>
               </div>
 
-              <div className="products-center flex justify-between text-sm text-neutral-600">
+              <div className="flex items-center justify-between text-sm text-neutral-600">
                 <span>Shipping</span>
                 <span>${cart?.shipping || 0}</span>
               </div>
@@ -97,7 +97,7 @@ export default function Wishlist() {
                 Free shipping on orders over EGP 1,000
               </span>
 
-              <div className="products-center flex justify-between border-t border-neutral-200 pt-2 text-sm font-medium text-neutral-950">
+              <div className="flex items-center justify-between border-t border-neutral-200 pt-2 text-sm font-medium text-neutral-950">
                 <span>Total</span>
                 <span className="text-accent-600 dark:text-accent-400">${cart?.total || 0}</span>
               </div>

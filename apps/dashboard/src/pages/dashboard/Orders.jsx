@@ -35,10 +35,19 @@ export default function AdminOrders() {
     mode: 'onTouched',
     unDebouncedFields: ['status', 'payment', 'method'],
   })
-
   const { search, status, payment, method } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllOrders({ limit: 500 })
+  const currentPage = searchParams.get('page') || 1
+  const limit = 15
+  const apiLimit = 120
+  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
+  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
+  const startIndex = localPageIndex * limit
+
+  const { data, isLoading, isError, error } = useGetAllOrders({
+    page: apiPage,
+    limit: apiLimit,
+  })
   const orders = data?.orders || EMPTY_ARRAY
 
   const filteredOrders = useMemo(() => {
@@ -60,9 +69,7 @@ export default function AdminOrders() {
     ])
   }, [orders, search, status, payment, method])
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 14
-  const page = filteredOrders.slice((currentPage - 1) * limit, currentPage * limit)
+  const page = filteredOrders.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredOrders.length / limit)
 
   const mappedOrders = useMemo(() => {
@@ -73,7 +80,7 @@ export default function AdminOrders() {
       order: <span className="text-sm text-neutral-600 uppercase">#{order._id}</span>,
       customer: (
         <div className="flex items-center gap-4">
-          <div className="flex-center size-8 rounded-full bg-neutral-50 text-xs">
+          <div className="flex-center size-8 rounded-full bg-neutral-200 text-xs">
             {String(order.user?.username).slice(0, 1)}
           </div>
 
@@ -87,18 +94,21 @@ export default function AdminOrders() {
         <span className="text-sm text-neutral-600">{format(order.createdAt, 'MMM d, yyyy')}</span>
       ),
       status: (
-        <Badge color={statusColors[order.status]} className="flex-center w-fit gap-2">
-          <span className="size-1 text-xl leading-0">•</span> {order.status}
+        <Badge color={statusColors[order.status]}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {order.status}</span>
         </Badge>
       ),
       payment: (
-        <Badge color={statusColors[order.paymentStatus]} className="flex-center w-fit gap-2">
-          <span className="size-1 text-xl leading-0">•</span> {order.paymentStatus}
+        <Badge color={statusColors[order.paymentStatus]}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {order.paymentStatus}</span>
         </Badge>
       ),
       method: (
-        <Badge color={statusColors[order.paymentMethod]} className="flex-center w-fit gap-2">
-          <span className="size-1 text-xl leading-0">•</span> {order.paymentMethod}
+        <Badge color={statusColors[order.paymentMethod]}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {order.paymentMethod}</span>
         </Badge>
       ),
       total: (
