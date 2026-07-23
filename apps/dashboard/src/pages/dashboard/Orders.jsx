@@ -117,7 +117,7 @@ export default function AdminOrders() {
         </span>
       ),
     }))
-  }, [page])
+  }, [page, currentPage])
 
   return (
     <div className="flex flex-1 flex-col gap-4">

@@ -13,15 +13,9 @@ export default function AdminCarts() {
 
   const currentPage = searchParams.get('page') || 1
   const limit = 15
-  const apiLimit = 120
-  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
-  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
-  const startIndex = localPageIndex * limit
+  const startIndex = (currentPage - 1) * limit
 
-  const { data, isLoading, isError, error } = useGetAdminCarts({
-    page: apiPage,
-    limit: apiLimit,
-  })
+  const { data, isLoading, isError, error } = useGetAdminCarts()
   const carts = data?.carts || EMPTY_ARRAY
 
   const filteredCarts = useMemo(() => {
@@ -70,11 +64,11 @@ export default function AdminCarts() {
           )}
         </span>
       ),
-      subtotal: (
-        <span className="font-bold text-emerald-600 dark:text-emerald-400">${cart.subtotal}</span>
+      total: (
+        <span className="font-bold text-emerald-600 dark:text-emerald-400">${cart.total}</span>
       ),
     }))
-  }, [carts])
+  }, [carts, currentPage])
 
   return (
     <div className="flex flex-1 flex-col gap-4">
@@ -97,7 +91,7 @@ export default function AdminCarts() {
         <Error message={error?.message} />
       ) : (
         <Table
-          columns={['cart', 'customer', 'date', 'item count', 'coupon', 'subtotal']}
+          columns={['cart', 'customer', 'date', 'item count', 'coupon', 'total']}
           data={mappedCarts}
           isLoading={isLoading}
           noDataMsg="No carts found"
