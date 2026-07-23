@@ -13,7 +13,7 @@ export default function Profile() {
   const { mutate: logout, isPending: logingout } = useLogout()
 
   return isLoading ? (
-    <div className="flex-center flex-1 py-8  text-center">
+    <div className="flex-center flex-1 py-8 text-center">
       <LoadingSpinner className="size-24" />
     </div>
   ) : (

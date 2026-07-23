@@ -7,43 +7,29 @@ import CardForm from '@/components/checkout/CardForm'
 import PaymentMethodSelector from '@/components/checkout/PaymentMethodSelector'
 import { Elements, stripePromise } from '@/lib/stripe'
 
-import { useCreateOrder, useGetCart } from '@repo/api'
+import { useCreateOrder } from '@repo/api'
 import { Button } from '@repo/ui'
 
 export default function Payment() {
+  const [method, setMethod] = useState('cash')
   const navigate = useNavigate()
   const location = useLocation()
-  const { shippingAddress, customerNote } = location.state || {}
-  const { data: cart } = useGetCart()
 
-  const [method, setMethod] = useState('cash')
+  const { shippingAddress, customerNote } = location.state || {}
+
   const { mutate: createOrder, isPending } = useCreateOrder()
 
-  const placeOrder = (extra = {}) => {
-    if (!shippingAddress) {
-      navigate('/checkout')
-      return
-    }
-
-    const payload = {
-      shippingAddress,
-      customerNote,
-      paymentMethod: method,
-      paymentStatus: method === 'stripe' ? 'paid' : 'pending',
-      totalAmount: cart?.total ?? 0,
-      cartId: cart?._id,
-      items: (cart?.items ?? []).map((item) => ({
-        productId: item?.product?._id || item?.product?.id || item?.productId || item?.id,
-        name: item?.product?.name || item?.name,
-        quantity: item?.quantity ?? 1,
-        price: item?.price ?? item?.product?.price ?? 0,
-      })),
-      ...extra,
-    }
-
-    createOrder(payload, {
-      onSuccess: (data) => navigate('/order-success', { state: { order: data } }),
-    })
+  const placeOrder = () => {
+    createOrder(
+      {
+        shippingAddress,
+        customerNote,
+        paymentMethod: method,
+      },
+      {
+        onSuccess: (data) => navigate(`/order-success/${data.order._id}`),
+      },
+    )
   }
 
   useEffect(() => {
@@ -65,22 +51,16 @@ export default function Payment() {
             </Button>
           )}
 
-          {method === 'stripe' && (
-            stripePromise ? (
+          {method === 'stripe' &&
+            (true ? (
               <Elements stripe={stripePromise}>
-                <CardForm
-                  isSubmitting={isPending}
-                  onSuccess={(paymentMethodId) =>
-                    placeOrder({ stripePaymentMethodId: paymentMethodId })
-                  }
-                />
+                <CardForm isSubmitting={isPending} onSuccess={() => placeOrder()} />
               </Elements>
             ) : (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-700">
+              <p className="mt-2 text-center text-sm font-medium text-red-600 capitalize dark:text-red-400">
                 Stripe is not configured yet. Use cash on delivery for now.
-              </div>
-            )
-          )}
+              </p>
+            ))}
         </div>
       </div>
     </div>

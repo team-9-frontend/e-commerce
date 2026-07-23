@@ -42,7 +42,7 @@ export default function CardForm({ onSuccess, isSubmitting }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:bg-neutral-800">
         <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
       </div>
@@ -52,7 +52,7 @@ export default function CardForm({ onSuccess, isSubmitting }) {
       </Button>
 
       {error && (
-        <p className="mt-6 text-center text-sm font-medium text-red-600 capitalize dark:text-red-400">
+        <p className="mt-2 text-center text-sm font-medium text-red-600 capitalize dark:text-red-400">
           {error}
         </p>
       )}

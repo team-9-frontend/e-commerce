@@ -1,10 +1,13 @@
+import { useEffect } from 'react'
+
+import { LuSearch } from 'react-icons/lu'
+
 import ActiveFilters from '@/components/products/ActiveFilters'
 import FilterSection from '@/components/products/FilterSection'
 import StoreProductCards from '@/components/products/StoreProductCards'
-import { useSearchParamsForm } from '@repo/utils/forms'
-import { LuSearch } from 'react-icons/lu'
+
 import { FormField } from '@repo/ui'
-import { useEffect } from 'react'
+import { useSearchParamsForm } from '@repo/utils/forms'
 
 export default function Products() {
   const form = useSearchParamsForm({
@@ -39,10 +42,7 @@ export default function Products() {
   }, [minPrice, maxPrice, trigger])
 
   return (
-    <form
-      onSubmit={handleSubmit(updateParams)}
-      className="space-y-6 py-6 md:py-10"
-    >
+    <form onSubmit={handleSubmit(updateParams)} className="space-y-6 py-6 md:py-10">
       <div className="w-full space-y-4">
         <FormField
           name="search"
@@ -55,12 +55,7 @@ export default function Products() {
       </div>
 
       <div className="flex flex-col items-start gap-6 md:flex-row">
-        <FilterSection
-          register={register}
-          setValue={setValue}
-          sort={sort}
-          errors={errors}
-        />
+        <FilterSection register={register} setValue={setValue} sort={sort} errors={errors} />
         <StoreProductCards />
       </div>
     </form>

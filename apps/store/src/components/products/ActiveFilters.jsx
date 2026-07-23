@@ -1,4 +1,5 @@
 import { BiX } from 'react-icons/bi'
+
 import { Badge } from '@repo/ui'
 
 export default function ActiveFilters({ urlValues = {}, setValue }) {
