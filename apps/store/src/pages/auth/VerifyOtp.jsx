@@ -38,10 +38,10 @@ export default function VerifyOtp() {
   }
 
   return (
-    <div className="flex-center flex-1">
+    <div className="flex-center flex-1 py-8 text-center">
       <div className="card w-full max-w-md p-6">
-        <h1 className="mb-2 text-center text-3xl font-bold">Verify OTP</h1>
-        <p className="mb-6 text-center text-neutral-500">
+        <h1 className="mb-2 text-3xl font-bold">Verify OTP</h1>
+        <p className="mb-6 text-neutral-500">
           {mode === 'reset'
             ? 'Enter the OTP sent to your email and your new password.'
             : 'Enter the OTP sent to your email to verify.'}

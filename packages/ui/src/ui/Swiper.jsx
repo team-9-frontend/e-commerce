@@ -12,7 +12,7 @@ import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react'
 
 import { Skeleton } from './Skeleton'
 
-export function Swiper({ children, className, isLoading, images, showImages, isCard }) {
+export function Swiper({ children, className, isLoading, images, showImages, isCard, ...rest }) {
   const [swiperInstance, setSwiperInstance] = useState(null)
   const [activeIndex, setactiveIndex] = useState(0)
   const shouldLoop = images?.length > 1
@@ -47,6 +47,7 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
           style={{
             '--swiper-pagination-color': 'var(--color-accent-500)',
           }}
+          {...rest}
         >
           {!isLoading ? (
             images.map((image, i) => (

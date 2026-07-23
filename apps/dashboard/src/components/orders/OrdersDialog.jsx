@@ -47,7 +47,7 @@ export default function OrdersDialog({ order, setOrder }) {
       title={
         <div className="flex flex-col">
           order detail
-          <h2 className="text-xs font-medium text-neutral-600">#{order?._id}</h2>
+          <h2 className="text-xs font-medium text-neutral-600">#{order?._id?.slice(-8)}</h2>
         </div>
       }
     >

@@ -1,36 +1,42 @@
-import { Link, useLocation } from 'react-router-dom'
+import { LuCircleCheckBig, LuPackage, LuShoppingBag } from 'react-icons/lu'
+import { Link, useParams } from 'react-router-dom'
 
 import { Button } from '@repo/ui'
 
 export default function OrderSuccess() {
-  const { state } = useLocation()
-  const order = state?.order
+  const { id } = useParams()
+  const orderId = id?.slice(-8)
 
   return (
-    <div className="flex flex-1 items-center justify-center px-6 py-16">
-      <div className="w-full max-w-xl rounded-2xl bg-white p-8 text-center shadow-md">
-        <h1 className="mb-3 text-3xl font-bold text-gray-900">Order placed successfully</h1>
-        <p className="mb-6 text-gray-600">
-          Thank you for your purchase. Your order is being processed and a confirmation will be
-          sent to you shortly.
-        </p>
+    <div className="flex-center flex-1 flex-col py-8 text-center">
+      <div className="flex-center mb-8 size-20 rounded-full bg-emerald-500/15 text-emerald-600 dark:bg-emerald-500/25 dark:text-emerald-400">
+        <LuCircleCheckBig className="size-10" />
+      </div>
 
-        {order?.id && (
-          <p className="mb-6 rounded-lg bg-gray-50 px-4 py-3 text-sm text-gray-700">
-            Order ID: <span className="font-semibold">{order.id}</span>
-          </p>
-        )}
+      <h1 className="mb-2 text-3xl font-bold">Order Placed Successfully!</h1>
+      <p className="mb-6 text-neutral-500">
+        Thank you for your purchase. Your order has been confirmed.
+      </p>
 
-        <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <Link to="/orders">
-            <Button className="w-full">View Orders</Button>
-          </Link>
-          <Link to="/products">
-            <Button variant="outline" className="w-full">
-              Continue Shopping
-            </Button>
-          </Link>
-        </div>
+      <div className="flex-center mb-8 flex-wrap gap-2">
+        <span className="text-sm font-medium text-neutral-500">Order ID:</span>
+        <span className="text-accent-600 dark:text-accent-400 text-sm font-medium uppercase">
+          #{orderId}
+        </span>
+      </div>
+
+      <div className="flex-center flex-wrap gap-4">
+        <Link to={`/profile/orders/${id}`} className="text-inherit">
+          <Button>
+            <LuPackage /> Track My Order
+          </Button>
+        </Link>
+
+        <Link to="/products" className="text-inherit">
+          <Button variant="outline">
+            <LuShoppingBag /> Continue Shopping
+          </Button>
+        </Link>
       </div>
     </div>
   )

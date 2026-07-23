@@ -1,8 +1,11 @@
 ﻿import { useState } from 'react'
 
+import { LuLoaderCircle } from 'react-icons/lu'
+
 import { CardElement, useElements, useStripe } from '@/lib/stripe'
 
 import { Button } from '@repo/ui'
+import { toast } from '@repo/utils/toasts'
 
 export default function CardForm({ onSuccess, isSubmitting }) {
   const stripe = useStripe()
@@ -31,6 +34,7 @@ export default function CardForm({ onSuccess, isSubmitting }) {
 
     if (stripeError) {
       setError(stripeError.message)
+      toast.error(stripeError.message)
       return
     }
 
@@ -39,15 +43,19 @@ export default function CardForm({ onSuccess, isSubmitting }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-gray-300 bg-white p-4">
+      <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:bg-neutral-800">
         <CardElement options={{ style: { base: { fontSize: '16px' } } }} />
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
-
       <Button type="submit" disabled={!stripe || isSubmitting} className="w-full">
-        {isSubmitting ? 'Processing...' : 'Pay Now'}
+        {isSubmitting ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Pay Now'}
       </Button>
+
+      {error && (
+        <p className="mt-6 text-center text-sm font-medium text-red-600 capitalize dark:text-red-400">
+          {error}
+        </p>
+      )}
     </form>
   )
 }

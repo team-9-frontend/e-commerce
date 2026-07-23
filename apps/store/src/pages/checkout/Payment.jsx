@@ -1,6 +1,7 @@
 ﻿import { useEffect, useState } from 'react'
 
-import { useLocation, useNavigate } from 'react-router-dom'
+import { LuArrowLeft, LuLoaderCircle } from 'react-icons/lu'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import CardForm from '@/components/checkout/CardForm'
 import PaymentMethodSelector from '@/components/checkout/PaymentMethodSelector'
@@ -50,16 +51,17 @@ export default function Payment() {
   }, [shippingAddress, navigate])
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
-      <div className="mx-auto max-w-2xl px-6">
-        <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">Payment</h1>
+    <div className="flex-center flex-1 py-8 text-center">
+      <div className="card w-full max-w-md p-6">
+        <h1 className="mb-2 text-3xl font-bold">Payment</h1>
+        <p className="mb-6 text-neutral-500">Choose your payment method.</p>
 
-        <div className="space-y-6 rounded-2xl bg-white p-8 shadow-md">
-          <PaymentMethodSelector value={method} onChange={setMethod} />
+        <div className="flex flex-col gap-4">
+          <PaymentMethodSelector value={method} setValue={setMethod} />
 
           {method === 'cash' && (
             <Button onClick={() => placeOrder()} disabled={isPending} className="w-full">
-              {isPending ? 'Placing Order...' : 'Place Order'}
+              {isPending ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Place Order'}
             </Button>
           )}
 

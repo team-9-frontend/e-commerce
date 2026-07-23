@@ -65,15 +65,13 @@ export default function Navbar({ className, open, setOpen, minimized, setMinimiz
 
         <div className="flex min-w-32 items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-2 py-1 dark:border-neutral-300 dark:bg-neutral-200">
           {user?.avatar ? (
-            <div className="flex-center size-8 overflow-hidden rounded-full bg-neutral-50 text-xs">
-              <img
-                src={user?.avatar}
-                alt={String(user?.username).slice(0, 1)}
-                className="size-full object-cover"
-              />
-            </div>
+            <img
+              src={user?.avatar}
+              alt={String(user?.username).slice(0, 1)}
+              className="flex-center size-8 rounded-full bg-neutral-200 object-cover text-xs dark:bg-neutral-100"
+            />
           ) : (
-            <div className="flex-center size-8 rounded-full bg-neutral-50 text-xs">
+            <div className="flex-center size-8 rounded-full bg-neutral-200 text-xs dark:bg-neutral-100">
               {String(user?.username).slice(0, 1)}
             </div>
           )}

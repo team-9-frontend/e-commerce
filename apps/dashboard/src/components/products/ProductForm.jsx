@@ -48,9 +48,6 @@ export default function ProductForm({ product, dialog }) {
     },
   })
 
-  // Cache object URLs per File so we don't regenerate/leak them on every
-  // unrelated re-render (typing in another field, etc). Revoke anything
-  // that's no longer part of the current selection.
   const objectUrlCacheRef = useRef(new Map())
   const watchedUploadedImages = watch('images') || EMPTY_ARRAY
 

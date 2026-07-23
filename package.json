@@ -5,20 +5,13 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "test": "vitest run",
     "format": "prettier --write ."
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@vitest/coverage-v8": "^4.1.10",
-    "jsdom": "^29.1.1",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "turbo": "^2.10.4",
-    "vitest": "^4.1.10"
+    "turbo": "^2.10.4"
   },
   "engines": {
     "node": ">=18"
@@ -29,8 +22,5 @@
       "version": "11.16.0"
     }
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "workspaces": ["apps/*", "packages/*"]
 }

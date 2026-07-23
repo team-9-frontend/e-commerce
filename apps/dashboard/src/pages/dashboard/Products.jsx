@@ -26,11 +26,18 @@ export default function AdminProducts() {
     mode: 'onTouched',
     unDebouncedFields: ['category'],
   })
-
   const { search, category, subcategory } = urlValues
 
+  const currentPage = searchParams.get('page') || 1
+  const limit = 8
+  const apiLimit = 120
+  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
+  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
+  const startIndex = localPageIndex * limit
+
   const { data, isLoading, isError, error } = useGetProducts({
-    limit: 500,
+    page: apiPage,
+    limit: apiLimit,
   })
   const products = data?.products || EMPTY_ARRAY
 
@@ -47,9 +54,7 @@ export default function AdminProducts() {
     ])
   }, [products, search, category, subcategory])
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 20
-  const page = filteredProducts.slice((currentPage - 1) * limit, currentPage * limit)
+  const page = filteredProducts.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredProducts.length / limit)
 
   return (
@@ -136,7 +141,7 @@ export default function AdminProducts() {
         <Error message="No products found" />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {
+          {Array.from({ length: isLoading ? limit : page?.length }).map((_, i) => {
             const product = page?.[i]
 
             return <ProductCard key={i} isLoading={isLoading} product={product} />
