@@ -1,95 +1,147 @@
-import { LuPlus } from 'react-icons/lu'
+import { useState } from 'react'
 
-import { Button, FormField } from '@repo/ui'
+import { LuLoaderCircle, LuLock } from 'react-icons/lu'
+
+import { useCurrentUser, useForgotPasswordOtp, useVerifyForgotPasswordOtp } from '@repo/api'
+import { Button, FormField, OtpInput } from '@repo/ui'
 import { useForm } from '@repo/utils/forms'
 
 export default function AddressForm() {
+  const [formState, setFormState] = useState(0)
+
+  const { data: user } = useCurrentUser()
+  const { mutate: sendOtp, isPending: sendingOtp } = useForgotPasswordOtp()
+  const { mutate: verifyResetOtp, isPending: verifyingResetOtp } = useVerifyForgotPasswordOtp()
+
   const {
-    register: addressRegister,
-    handleSubmit: addressHandleSubmit,
-    formState: { errors: addressErrors },
+    register,
+    handleSubmit,
+    control,
+    reset,
+    setError,
+    formState: { errors },
   } = useForm({
     mode: 'onTouched',
     defaultValues: {
-      country: '',
-      city: '',
-      street: '',
-      building: '',
-      postalCode: '',
+      email: user?.email || '',
+      otp: '',
+      newPassword: '',
     },
   })
 
-  const onAddressSubmit = () => {
-    toast.success('Address added')
+  const onResetSubmit = ({ email }) => {
+    sendOtp(
+      { email },
+      {
+        onSuccess: () => setFormState(2),
+        onError: (error) => {
+          setError('root', {
+            message: error.message || 'Failed to send OTP!',
+          })
+        },
+      },
+    )
+  }
+
+  const onVerifySubmit = ({ otp, newPassword }) => {
+    verifyResetOtp(
+      { otp, newPassword },
+      {
+        onSuccess: () => setFormState(0),
+        onError: (error) => {
+          setError('root', {
+            message: error.message || 'Invalid OTP!',
+          })
+        },
+      },
+    )
   }
 
   return (
-    <form onSubmit={addressHandleSubmit(onAddressSubmit)} className="card flex flex-col gap-4 p-4">
-      <h2 className="text-xl font-bold sm:text-2xl">Security</h2>
-      <p className="text-sm text-neutral-500">
-        We'll send an OTP to your email to verify your identity.
-      </p>
+    <div className="card flex flex-col gap-4 p-4">
+      <h2 className="text-xl font-bold sm:text-2xl">Address</h2>
 
-      <div className="flex gap-4">
-        <FormField
-          name="country"
-          placeholder="Country"
-          register={addressRegister}
-          rules={{
-            required: 'Country is required',
-          }}
-          error={addressErrors.country}
-          parentClassName="w-full"
-        />
+      {formState === 0 && (
+        <Button className="w-fit" onClick={() => setFormState(1)}>
+          <LuLock /> Change Password
+        </Button>
+      )}
 
-        <FormField
-          name="city"
-          placeholder="City"
-          register={addressRegister}
-          rules={{
-            required: 'City is required',
-          }}
-          error={addressErrors.city}
-          parentClassName="w-full"
-        />
-      </div>
-      <div className="flex gap-4">
-        <FormField
-          name="street"
-          placeholder="Street"
-          register={addressRegister}
-          rules={{
-            required: 'Street is required',
-          }}
-          error={addressErrors.address}
-          parentClassName="w-full"
-        />
+      {formState === 1 && (
+        <form onSubmit={handleSubmit(onResetSubmit)} className="flex flex-col gap-4">
+          <FormField
+            name="email"
+            label="email"
+            type="email"
+            placeholder="email"
+            register={register}
+            rules={{
+              required: 'Email is required',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Invalid email address',
+              },
+            }}
+            error={errors.email}
+          />
 
-        <FormField
-          name="building"
-          placeholder="Postal Code"
-          register={addressRegister}
-          rules={{
-            required: 'Postal code is required',
-          }}
-          error={addressErrors.postalCode}
-          parentClassName="w-full"
-        />
-      </div>
+          <div className="flex gap-2">
+            <Button type="submit" disabled={sendingOtp}>
+              {sendingOtp ? <LuLoaderCircle className="h-[1.4em] animate-spin" /> : 'Send OTP'}
+            </Button>
 
-      <FormField
-        name="postalCode"
-        placeholder="Postal Code"
-        register={addressRegister}
-        rules={{
-          required: 'Postal code is required',
-        }}
-        error={addressErrors.postalCode}
-      />
+            <Button
+              type="reset"
+              variant="ghost"
+              onClick={() => {
+                reset()
+                setFormState(0)
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      )}
 
-      <Button type="submit" className="w-fit">
-        <LuPlus /> Add Address
-      </Button>
-    </form>
+      {formState === 2 && (
+        <form onSubmit={handleSubmit(onVerifySubmit)} className="flex flex-col gap-4">
+          <OtpInput control={control} error={errors.otp} parentClassName="sm:max-w-md" />
+
+          <FormField
+            label="New Password"
+            name="newPassword"
+            type="password"
+            placeholder="Enter new password"
+            register={register}
+            rules={{
+              required: 'New password is required',
+              minLength: {
+                value: 8,
+                message: 'Must be at least 8 characters',
+              },
+            }}
+            error={errors.newPassword}
+          />
+
+          <div className="flex gap-2">
+            <Button type="submit" disabled={verifyResetOtp}>
+              {verifyingResetOtp ? <LuLoaderCircle className="h-[1.4em] animate-spin" /> : 'Verify'}
+            </Button>
+
+            <Button
+              type="reset"
+              variant="ghost"
+              onClick={() => {
+                reset()
+                setFormState(0)
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      )}
+    </div>
   )
 }

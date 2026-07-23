@@ -5,6 +5,7 @@ import { cn } from '@repo/utils'
 import { FormField } from './FormField'
 
 export function OtpInput({
+  parentClassName,
   className,
   label = 'Verification Code',
   labelIcon,
@@ -14,7 +15,7 @@ export function OtpInput({
   error,
 }) {
   return (
-    <div className={cn('flex flex-col gap-1', className)}>
+    <div className={cn('flex flex-col gap-1', parentClassName)}>
       {label && (
         <label
           htmlFor={id}
@@ -75,7 +76,7 @@ export function OtpInput({
                   type="text"
                   maxLength={1}
                   value={digit}
-                  className="text-center text-lg font-bold"
+                  className={cn('text-center text-lg font-bold', className)}
                   onChange={(e) => handleChange(e.target.value, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
                   onPaste={handlePaste}
