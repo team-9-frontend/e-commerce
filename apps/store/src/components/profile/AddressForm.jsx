@@ -25,7 +25,7 @@ export default function AddressForm() {
 
   return (
     <form onSubmit={addressHandleSubmit(onAddressSubmit)} className="card flex flex-col gap-4 p-4">
-      <h2 className="text-xl font-bold sm:text-2xl">Address</h2>
+      <h2 className="text-xl font-bold">Address</h2>
       <p className="text-sm text-neutral-500">No address added yet.</p>
 
       <div className="flex gap-4">

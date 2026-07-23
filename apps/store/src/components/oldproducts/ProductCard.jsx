@@ -85,7 +85,7 @@ export default function ProductCard({ isLoading: isLoadingProduct, product }) {
                 <LuStar />
                 <LuStar />
                 <LuStar />
-                <div className="text-accent-500 absolute top-0 left-0 flex gap-1 text-lg">
+                <div className="text-accent-600 dark:text-accent-400 absolute top-0 left-0 flex gap-1 text-lg">
                   {Array.from({ length: 5 }).map((_, i) => {
                     const rating = Math.round(product?.averageRating * 2) / 2 || 0
 

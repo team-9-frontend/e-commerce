@@ -18,15 +18,15 @@ export default function OrderSuccess() {
         Thank you for your purchase. Your order has been confirmed.
       </p>
 
-      <div className="flex-center mb-8 flex-wrap gap-2">
-        <span className="text-sm font-medium text-neutral-500">Order ID:</span>
-        <span className="text-accent-600 dark:text-accent-400 text-sm font-medium uppercase">
+      <p className="mb-8 text-sm text-neutral-500">
+        Order ID:{' '}
+        <span className="text-accent-600 dark:text-accent-400 font-medium uppercase">
           #{orderId}
         </span>
-      </div>
+      </p>
 
       <div className="flex-center flex-wrap gap-4">
-        <Link to={`/profile/orders/${id}`} className="text-inherit">
+        <Link to={`/orders/${id}`} className="text-inherit">
           <Button>
             <LuPackage /> Track My Order
           </Button>

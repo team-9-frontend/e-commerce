@@ -38,8 +38,6 @@ export default function Profile() {
 
       {isError ? (
         <Error message={error?.message} />
-      ) : !user && !isLoading ? (
-        <Error message="Error loading profile." />
       ) : (
         <>
           <ProfileInfo user={user} />
@@ -49,7 +47,7 @@ export default function Profile() {
           <SecurityForm />
 
           <div className="card flex flex-col items-start gap-4 p-4">
-            <h2 className="text-xl font-bold sm:text-2xl">Account</h2>
+            <h2 className="text-xl font-bold">Account</h2>
 
             <Button onClick={() => logout()} disabled={logingout} variant="outlineDanger">
               <LuLogOut />

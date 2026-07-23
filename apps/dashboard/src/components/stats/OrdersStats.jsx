@@ -1,6 +1,15 @@
 import { Badge, Skeleton } from '@repo/ui'
 import { cn, format } from '@repo/utils'
 
+const statusColors = {
+  pending: 'amber',
+  processing: 'sky',
+  confirmed: 'teal',
+  shipped: 'purple',
+  delivered: 'emerald',
+  cancelled: 'rose',
+}
+
 export default function OrdersStatus({ className, isLoading, stats }) {
   const colorClasses = {
     teal: 'border-teal-500/25 before:bg-teal-500/15 text-teal-700 dark:text-teal-400',
@@ -12,15 +21,6 @@ export default function OrdersStatus({ className, isLoading, stats }) {
       'border-emerald-500/25 before:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400',
   }
 
-  const statusColors = {
-    pending: 'amber',
-    processing: 'sky',
-    confirmed: 'teal',
-    shipped: 'purple',
-    delivered: 'emerald',
-    cancelled: 'rose',
-  }
-
   return (
     <div className={cn('card flex flex-col gap-4 p-4', className)}>
       <div className="flex items-center justify-between">
@@ -28,7 +28,7 @@ export default function OrdersStatus({ className, isLoading, stats }) {
           <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
             orders status
           </p>
-          <h2 className="text-lg">Live fulfillment breakdown</h2>
+          <h2 className="text-xl font-bold">Live fulfillment breakdown</h2>
         </div>
         <Badge>Updated {format(new Date(), 'h:mm a')}</Badge>
       </div>

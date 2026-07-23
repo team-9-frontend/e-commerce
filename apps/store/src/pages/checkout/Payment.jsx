@@ -1,7 +1,7 @@
 ﻿import { useEffect, useState } from 'react'
 
-import { LuArrowLeft, LuLoaderCircle } from 'react-icons/lu'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { LuLoaderCircle } from 'react-icons/lu'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import CardForm from '@/components/checkout/CardForm'
 import PaymentMethodSelector from '@/components/checkout/PaymentMethodSelector'
@@ -52,7 +52,7 @@ export default function Payment() {
           )}
 
           {method === 'stripe' &&
-            (true ? (
+            (stripePromise ? (
               <Elements stripe={stripePromise}>
                 <CardForm isSubmitting={isPending} onSuccess={() => placeOrder()} />
               </Elements>

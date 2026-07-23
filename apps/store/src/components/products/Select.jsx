@@ -75,7 +75,7 @@ export default function Select({
                   className={cn(
                     'flex w-full cursor-pointer items-center rounded-md px-3 py-2 text-start text-sm transition duration-150',
                     isSelected
-                      ? 'bg-accent-500/10 text-accent-500 font-semibold'
+                      ? 'bg-accent-500/10 text-accent-600 dark:text-accent-400 font-semibold'
                       : 'text-neutral-700 hover:bg-neutral-200/50 hover:text-neutral-950',
                     optionClassName,
                   )}

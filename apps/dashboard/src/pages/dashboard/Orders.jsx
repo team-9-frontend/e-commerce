@@ -39,7 +39,7 @@ export default function AdminOrders() {
 
   const currentPage = searchParams.get('page') || 1
   const limit = 15
-  const apiLimit = 120
+  const apiLimit = 480
   const apiPage = Math.ceil((currentPage * limit) / apiLimit)
   const localPageIndex = (currentPage - 1) % (apiLimit / limit)
   const startIndex = localPageIndex * limit
@@ -117,7 +117,7 @@ export default function AdminOrders() {
         </span>
       ),
     }))
-  }, [page, currentPage])
+  }, [page])
 
   return (
     <div className="flex flex-1 flex-col gap-4">

@@ -64,7 +64,7 @@ export default function ProfileInfo({ user }) {
 
         <div className="flex flex-col justify-between gap-6 border-neutral-200 max-sm:border-t max-sm:pt-4 sm:border-l sm:pl-4">
           <div>
-            <h2 className="mb-1 text-xl font-bold sm:text-2xl">{user?.username}</h2>
+            <h2 className="mb-1 text-xl font-bold">{user?.username}</h2>
 
             <p className="text-sm text-neutral-500">{user?.email}</p>
             <p className="text-sm text-neutral-500">{user?.role}</p>

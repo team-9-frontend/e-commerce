@@ -9,7 +9,7 @@ export default function TopProducts({ className, isLoading, topProducts }) {
           <p className="text-accent-600 dark:text-accent-400 mb-1 font-mono text-sm tracking-wider uppercase">
             top products
           </p>
-          <h2 className="text-lg">Best sellers</h2>
+          <h2 className="text-xl font-bold">Best sellers</h2>
         </div>
         <Badge>{topProducts?.length || 0} products</Badge>
       </div>
@@ -24,8 +24,6 @@ export default function TopProducts({ className, isLoading, topProducts }) {
                 <img
                   src={product?.image}
                   alt={product?.name}
-                  width={48}
-                  height={48}
                   className="size-12 rounded-lg bg-neutral-300 object-cover"
                 />
               ) : (

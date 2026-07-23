@@ -1,46 +1,67 @@
-import { useParams } from 'react-router-dom'
+import { LuArrowLeft } from 'react-icons/lu'
+import { Link, useParams } from 'react-router-dom'
 
-import CancelOrderButton from '@/components/orders/CancelOrderButton'
-import OrderItems from '@/components/orders/OrderItems'
-import OrderProgress from '@/components/orders/OrderProgress'
-import PaymentSummary from '@/components/orders/PaymentSummary'
-import ShippingAddress from '@/components/orders/ShippingAddress'
+import CancelOrderButton from '@/components/order/CancelOrderButton'
+import OrderItems from '@/components/order/OrderItems'
+import OrderProgress from '@/components/order/OrderProgress'
+import PaymentSummary from '@/components/order/PaymentSummary'
+import ShippingAddress from '@/components/order/ShippingAddress'
 
 import { useGetOrderById } from '@repo/api'
-import { LoadingSpinner } from '@repo/ui'
+import { Button, Error, LoadingSpinner } from '@repo/ui'
 
 export default function DynamicOrder() {
   const { id } = useParams()
 
-  const { data, isLoading, isError } = useGetOrderById(id)
-
-  if (isLoading) return <LoadingSpinner />
-
-  if (isError) return <h2>Something went wrong.</h2>
-
+  const { data, isLoading, isError, error } = useGetOrderById(id)
   const order = data?.order
 
-  return (
-    <div className="mx-auto w-3/4 p-6">
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200">Order Details</h1>
+  return isLoading ? (
+    <div className="flex-center flex-1 py-8 text-center">
+      <LoadingSpinner className="size-24" />
+    </div>
+  ) : (
+    <div className="flex flex-1 flex-col gap-4 py-8">
+      <div className="card relative flex items-center justify-between gap-4 p-4">
+        <div className="from-accent-500/10 pointer-events-none absolute inset-0 bg-linear-to-l via-transparent to-transparent" />
 
-          <p className="mt-1 text-sm text-slate-500">Order #{order._id.slice(-8).toUpperCase()}</p>
+        <div className="flex gap-4">
+          <div className="bg-accent-600 dark:bg-accent-400 w-2 rounded-full" />
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-bold sm:text-3xl">Order Details</h2>
+            <p className="text-sm text-neutral-500">
+              Order ID:{' '}
+              <span className="text-accent-600 dark:text-accent-400 font-medium uppercase">
+                #{order._id.slice(-8)}
+              </span>
+            </p>
+          </div>
         </div>
 
-        <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-          {order.status}
-        </span>
+        <Link to="/orders">
+          <Button variant="ghost">
+            <LuArrowLeft /> Go Back
+          </Button>
+        </Link>
       </div>
-      {order.status !== 'cancelled' && <OrderProgress status={order.status} />}
-      <OrderItems items={order.items} />
-      <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <ShippingAddress address={order.shippingAddress} />
 
-        <PaymentSummary order={order} />
-      </div>
-      <CancelOrderButton order={order} />
+      {isError ? (
+        <Error message={error?.message} />
+      ) : (
+        <>
+          <OrderProgress status={order.status} />
+
+          <OrderItems items={order.items} />
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <ShippingAddress address={order.shippingAddress} />
+
+            <PaymentSummary order={order} />
+          </div>
+
+          <CancelOrderButton order={order} />
+        </>
+      )}
     </div>
   )
 }
