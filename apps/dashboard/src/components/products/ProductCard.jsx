@@ -4,10 +4,13 @@ import { LuStar } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
 import { useDeleteProduct } from '@repo/api'
-import { Badge, Button, ConfirmDialog, Skeleton, Swiper } from '@repo/ui'
+import { Badge, Button, ConfirmDialog, Dialog, Skeleton, Swiper } from '@repo/ui'
+
+import ProductForm from './ProductForm'
 
 export default function ProductCard({ isLoading, product }) {
   const { mutate: deleteProduct, isPending: deletingProduct } = useDeleteProduct()
+  const [editProduct, setEditProduct] = useState(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
@@ -101,6 +104,7 @@ export default function ProductCard({ isLoading, product }) {
             <Button
               variant="outline"
               size="sm"
+              onClick={() => setEditProduct(product)}
               className="line-clamp-1 hover:border-amber-500/50 hover:bg-amber-500/15 hover:text-amber-600 dark:hover:bg-amber-500/15 dark:hover:text-amber-400"
             >
               quick edit
@@ -116,6 +120,15 @@ export default function ProductCard({ isLoading, product }) {
             >
               delete
             </Button>
+
+            <Dialog
+              isOpen={editProduct}
+              setIsOpen={setEditProduct}
+              title="Edit Product"
+              className="max-h-[80vh] max-w-300 overflow-y-scroll"
+            >
+              <ProductForm product={product} dialog />
+            </Dialog>
 
             <ConfirmDialog
               isOpen={isDialogOpen}

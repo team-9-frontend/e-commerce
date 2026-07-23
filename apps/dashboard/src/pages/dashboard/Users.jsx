@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import { LuPen, LuPlus, LuSearch, LuTrash } from 'react-icons/lu'
+import { LuPen, LuPlus, LuSearch, LuTrash2 } from 'react-icons/lu'
 import { useSearchParams } from 'react-router-dom'
 
 import AddUserForm from '@/components/users/AddUserForm'
@@ -8,7 +8,16 @@ import EditUserDialog from '@/components/users/EditUserDialog'
 import RoleToggleButton from '@/components/users/RoleToggleButton'
 
 import { useDeleteUser, useGetAllUsers } from '@repo/api'
-import { Badge, Button, ConfirmDialog, FormField, Pagination, Table, Tooltip } from '@repo/ui'
+import {
+  Badge,
+  Button,
+  ConfirmDialog,
+  Error,
+  FormField,
+  Pagination,
+  Table,
+  Tooltip,
+} from '@repo/ui'
 import { cn, filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -25,10 +34,19 @@ export default function AdminUsers() {
   const { register, handleSubmit, updateParams, urlValues } = useSearchParamsForm({
     mode: 'onTouched',
   })
-
   const { search } = urlValues
 
-  const { data, isLoading, isError, error } = useGetAllUsers({ limit: 100 })
+  const currentPage = searchParams.get('page') || 1
+  const limit = 15
+  const apiLimit = 120
+  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
+  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
+  const startIndex = localPageIndex * limit
+
+  const { data, isLoading, isError, error } = useGetAllUsers({
+    page: apiPage,
+    limit: apiLimit,
+  })
   const users = data?.users || EMPTY_ARRAY
 
   const filteredUsers = useMemo(() => {
@@ -37,25 +55,21 @@ export default function AdminUsers() {
     ])
   }, [users, search])
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 14
-  const page = filteredUsers.slice((currentPage - 1) * limit, currentPage * limit)
+  const page = filteredUsers.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredUsers.length / limit)
 
   const mappedusers = useMemo(() => {
     return page.map((user) => ({
       user: (
         <div className="flex items-center gap-4">
-          {user.avatar ? (
-            <div className="flex-center size-8 overflow-hidden rounded-full bg-neutral-50 text-xs">
-              <img
-                src={user?.avatar}
-                alt={String(user?.username).slice(0, 1)}
-                className="size-full object-cover"
-              />
-            </div>
+          {user?.avatar ? (
+            <img
+              src={user?.avatar}
+              alt={String(user?.username).slice(0, 1)}
+              className="flex-center size-8 rounded-full bg-neutral-200 object-cover text-xs"
+            />
           ) : (
-            <div className="flex-center size-8 rounded-full bg-neutral-50 text-xs">
+            <div className="flex-center size-8 rounded-full bg-neutral-200 text-xs">
               {String(user?.username).slice(0, 1)}
             </div>
           )}
@@ -67,14 +81,15 @@ export default function AdminUsers() {
         </div>
       ),
       role: (
-        <Badge color={user.role === 'admin' ? 'amber' : 'sky'} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span> {user.role}
+        <Badge color={user.role === 'admin' ? 'amber' : 'sky'}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {user.role}</span>
         </Badge>
       ),
       verified: (
-        <Badge color={user.isVerified ? 'emerald' : 'rose'} className="flex-center w-fit gap-2">
-          <span className="text-xl leading-0">•</span>
-          {user.isVerified ? 'verified' : 'not verified'}
+        <Badge color={user.isVerified ? 'emerald' : 'rose'}>
+          <span className="align-middle text-2xl leading-0">•</span>
+          <span> {user.isVerified ? 'verified' : 'not verified'}</span>
         </Badge>
       ),
       actions: (
@@ -98,27 +113,27 @@ export default function AdminUsers() {
               setDeleteUserId(user._id)
             }}
           >
-            <LuTrash />
+            <LuTrash2 />
             <Tooltip position="top">delete user</Tooltip>
           </Button>
         </div>
       ),
     }))
-  }, [page])
+  }, [page, currentPage])
 
   return (
     <div className="flex flex-1 flex-col gap-4">
       <div className="card flex items-center justify-between gap-8 p-4 max-sm:flex-col max-sm:items-end">
-        <div className="w-full space-y-2">
+        <div className="space-y-2 max-sm:w-full">
           <p className="text-accent-600 dark:text-accent-400 font-mono text-sm tracking-wider uppercase">
             users
           </p>
-          <h2 className="text-3xl">users</h2>
+          <h2 className="text-2xl font-medium sm:text-3xl">users</h2>
           <p className="text-sm text-neutral-500">
             Manage your product inventory, view details, and update listings.
           </p>
         </div>
-        <div className="card p-4 text-nowrap shadow-xs">
+        <div className="card p-4 shadow-xs">
           {data?.count || 0} <span className="text-sm text-neutral-600">total users</span>
         </div>
       </div>
@@ -133,7 +148,7 @@ export default function AdminUsers() {
             icon={<LuSearch />}
             placeholder="Search ID, customer..."
             register={register}
-            className="w-full"
+            parentClassName="w-full"
           />
 
           <Button
@@ -160,7 +175,7 @@ export default function AdminUsers() {
       </div>
 
       {isError ? (
-        <div className="card p-4 text-neutral-500">{error?.message}</div>
+        <Error message={error?.message} />
       ) : (
         <Table
           columns={['user', 'role', 'verified', 'actions']}

@@ -4,7 +4,7 @@ import { Button, FormField } from '@repo/ui'
 import { cn } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
-export default function FiltersForm({ className, categories }) {
+export default function FiltersForm({ className }) {
   const {
     register,
     handleSubmit,
@@ -14,7 +14,7 @@ export default function FiltersForm({ className, categories }) {
     urlValues,
     formState: { errors },
   } = useSearchParamsForm({
-    mode: 'onTouched',
+    mode: 'onChange',
     unDebouncedFields: ['category', 'sort'],
     defaultValues: {
       category: '',
@@ -30,7 +30,7 @@ export default function FiltersForm({ className, categories }) {
     if (minprice || maxprice) {
       trigger(['minprice', 'maxprice'])
     }
-  }, [minprice, maxprice, urlValues])
+  }, [minprice, maxprice, urlValues, trigger])
 
   return (
     <form
@@ -49,7 +49,7 @@ export default function FiltersForm({ className, categories }) {
           className="flex-row-reverse justify-end gap-4 [[type='radio']]:cursor-pointer"
         />
 
-        {categories.map((category) => (
+        {['electronics', 'phones', 'fashion', 'home', 'beauty', 'sports'].map((category) => (
           <FormField
             key={category}
             type="radio"
@@ -95,7 +95,7 @@ export default function FiltersForm({ className, categories }) {
               validate: (value, formValues) => {
                 if (!value || !formValues.minprice) return true
                 return (
-                  Number(value) >= Number(formValues.minprice) || 'Max cannot be smaller than Min'
+                  Number(value) >= Number(formValues.minprice) || 'Min cannot be bigger than Max'
                 )
               },
             }}
@@ -114,9 +114,9 @@ export default function FiltersForm({ className, categories }) {
         <h2 className="font-medium capitalize">sort by</h2>
 
         <FormField
-          type="select"
           name="sort"
           register={register}
+          type="select"
           options={['newest', 'top rated', 'price: low to high', 'price: high to low']}
           defaultOption="default"
           className="w-full"
@@ -124,7 +124,7 @@ export default function FiltersForm({ className, categories }) {
       </div>
 
       <Button
-        type="reset"
+        type="button"
         onClick={() => {
           setValue('category', '')
           setValue('minprice', '')

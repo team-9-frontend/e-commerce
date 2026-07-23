@@ -12,7 +12,7 @@ export function Table({
   return (
     <div className="card scrollbar-thin overflow-x-auto">
       <table className="min-w-full border-collapse">
-        <thead className="bg-neutral-50 dark:bg-neutral-200">
+        <thead className="bg-neutral-50 text-nowrap dark:bg-neutral-200">
           <tr>
             {columns.map((column, i) => (
               <th key={i} className="px-4 py-3 text-left font-medium capitalize">

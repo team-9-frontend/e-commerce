@@ -21,7 +21,7 @@ export function Dialog({
   return (
     <div
       className={cn(
-        'fixed inset-0 z-100 flex bg-black/50 transition-all',
+        'fixed inset-0 z-100 flex bg-neutral-50/50 backdrop-blur-sm transition-all',
         position === 'bottom' && 'items-end justify-stretch',
         position === 'top' && 'items-start justify-stretch',
         position === 'right' && 'items-stretch justify-end',

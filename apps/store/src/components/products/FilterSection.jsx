@@ -35,14 +35,14 @@ export default function FilterSection({
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          className="fixed inset-0 z-40 bg-neutral-50/50 backdrop-blur-sm md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       <div
         className={cn(
-          'fixed inset-y-0 inset-s-0 z-50 h-screen w-64 shrink-0 space-y-6 bg-neutral-100 p-6 shadow-2xl transition-transform duration-300 ease-in-out md:relative md:h-auto md:w-60 md:translate-x-0 md:rounded-xl md:border md:border-neutral-200 md:bg-transparent md:shadow-none',
+          'fixed inset-y-0 inset-s-0 z-20 h-screen w-64 shrink-0 space-y-6 bg-neutral-100 p-6 shadow-2xl transition-transform duration-300 ease-in-out md:relative md:h-auto md:w-60 md:translate-x-0 md:rounded-xl md:border md:border-neutral-200 md:bg-transparent md:shadow-none',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
         )}
       >

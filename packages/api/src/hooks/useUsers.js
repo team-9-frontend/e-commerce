@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { authKeys } from '../keys/authKeys'
 import { usersKeys } from '../keys/usersKeys'
 import { usersService } from '../services/usersService'
 
@@ -35,6 +36,7 @@ const useUserMutation = (mutationFn) => {
     mutationFn,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: usersKeys.all })
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser })
     },
   })
 }

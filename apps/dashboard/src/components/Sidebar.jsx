@@ -22,37 +22,37 @@ export default function Sidebar({ className, open, minimized }) {
     {
       title: 'Dashboard',
       path: '/',
-      icon: <LuHouse size={20} />,
+      icon: <LuHouse />,
     },
     {
       title: 'Users',
       path: '/users',
-      icon: <LuUsers size={20} />,
+      icon: <LuUsers />,
     },
     {
       title: 'Products',
       path: '/products',
-      icon: <LuPackage size={20} />,
+      icon: <LuPackage />,
     },
     {
       title: 'Add Product',
       path: '/products/create',
-      icon: <LuPlus size={20} />,
+      icon: <LuPlus />,
     },
     {
       title: 'Orders',
       path: '/orders',
-      icon: <LuFileText size={20} />,
+      icon: <LuFileText />,
     },
     {
       title: 'Carts',
       path: '/carts',
-      icon: <LuShoppingCart size={20} />,
+      icon: <LuShoppingCart />,
     },
     {
       title: 'Settings',
       path: '/settings',
-      icon: <LuSettings size={20} />,
+      icon: <LuSettings />,
     },
   ]
 
@@ -65,14 +65,14 @@ export default function Sidebar({ className, open, minimized }) {
       )}
     >
       {sidebarData.map((item) => (
-        <Link key={item.path} to={item.path}>
+        <Link key={item.path} to={item.path} className="">
           <Button
             variant={pathname === item.path ? 'primary' : 'ghost'}
             size={minimized ? 'lg-square' : 'lg'}
             className="w-full justify-start"
           >
             {item.icon}
-            <span className={cn('min-w-36 leading-none', minimized ? 'lg:hidden' : '')}>
+            <span className={cn('min-w-36 text-left leading-none', minimized ? 'lg:hidden' : '')}>
               {item.title}
             </span>
             <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
@@ -89,7 +89,7 @@ export default function Sidebar({ className, open, minimized }) {
         size={minimized ? 'lg-square' : 'lg'}
         className="justify-start"
       >
-        <LuLogOut size={20} />
+        <LuLogOut />
         <span className={cn('leading-none', minimized ? 'lg:hidden' : '')}>Logout</span>
         <Tooltip position="right" className={cn('hidden', minimized ? 'lg:block' : '')}>
           Logout

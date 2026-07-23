@@ -6,8 +6,8 @@ import { useSearchParams } from 'react-router-dom'
 import FiltersForm from '@/components/products/FiltersForm'
 import ProductCard from '@/components/products/ProductCard'
 
-import { useGetProducts, useGetWishlist } from '@repo/api'
-import { Badge, Button, Dialog, FormField, Pagination } from '@repo/ui'
+import { useGetProducts } from '@repo/api'
+import { Badge, Button, Dialog, Error, FormField, Pagination } from '@repo/ui'
 import { filterData } from '@repo/utils'
 import { useSearchParamsForm } from '@repo/utils/forms'
 
@@ -22,10 +22,18 @@ export default function Products() {
   })
   const { search, category, minprice, maxprice, sort } = urlValues
 
-  const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
-  const { data, isLoading, isError, error } = useGetProducts({ limit: 100 })
+  const currentPage = searchParams.get('page') || 1
+  const limit = 8
+  const apiLimit = 120
+  const apiPage = Math.ceil((currentPage * limit) / apiLimit)
+  const localPageIndex = (currentPage - 1) % (apiLimit / limit)
+  const startIndex = localPageIndex * limit
+
+  const { data, isLoading, isError, error } = useGetProducts({
+    page: apiPage,
+    limit: apiLimit,
+  })
   const products = data?.products || EMPTY_ARRAY
-  const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
 
   const categories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)))
 
@@ -48,9 +56,7 @@ export default function Products() {
     ])
   }, [products, search, category, minprice, maxprice, sort])
 
-  const currentPage = searchParams.get('page') || 1
-  const limit = 20
-  const page = filteredProducts.slice((currentPage - 1) * limit, currentPage * limit)
+  const page = filteredProducts.slice(startIndex, startIndex + limit)
   const totalPages = Math.ceil(filteredProducts.length / limit)
 
   return (
@@ -112,26 +118,19 @@ export default function Products() {
       )}
 
       <div className="flex items-start gap-4">
-        <FiltersForm categories={categories} className="max-lg:hidden" />
+        <FiltersForm className="max-lg:hidden" />
 
         <div className="flex-1">
           {isError ? (
-            <div className="card p-4 text-neutral-500">{error?.message}</div>
+            <Error message={error?.message} />
           ) : !page?.length && !isLoading ? (
-            <div className="card p-4 text-neutral-500">No products found</div>
+            <Error message="No products found" />
           ) : (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {Array.from({ length: isLoading ? 6 : page?.length }).map((_, i) => {
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {Array.from({ length: isLoading ? limit : page?.length }).map((_, i) => {
                 const product = page?.[i]
 
-                return (
-                  <ProductCard
-                    key={i}
-                    isLoading={isLoading || isLoadingWishlist}
-                    product={product}
-                    wishlist={wishlist}
-                  />
-                )
+                return <ProductCard key={i} isLoading={isLoading} product={product} />
               })}
             </div>
           )}

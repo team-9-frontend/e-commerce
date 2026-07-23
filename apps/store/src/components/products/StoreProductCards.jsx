@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { BiLoaderAlt } from 'react-icons/bi'
-import { LuHeart, LuShoppingCart, LuStar } from 'react-icons/lu'
+import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar } from 'react-icons/lu'
 import { Link, useSearchParams } from 'react-router-dom'
 
 import {
@@ -204,10 +203,10 @@ function StoreProductCard({ product, currentUser, wishlistData }) {
               disabled={isAddingToCart}
             >
               {isAddingToCart ? (
-                <BiLoaderAlt className="h-4 w-4 animate-spin" />
+                <LuLoaderCircle className="h-[1.5em] animate-spin" />
               ) : (
                 <>
-                  <LuShoppingCart className="h-4 w-4" />
+                  <LuShoppingCart />
                   Add to Cart
                 </>
               )}

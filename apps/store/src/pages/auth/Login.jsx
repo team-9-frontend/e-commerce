@@ -1,3 +1,4 @@
+import { LuLoaderCircle } from 'react-icons/lu'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useLogin } from '@repo/api'
@@ -13,9 +14,7 @@ export default function Login() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm({
-    mode: 'onTouched',
-  })
+  } = useForm({ mode: 'onTouched' })
 
   const onSubmit = ({ email, password }) => {
     login(
@@ -26,7 +25,7 @@ export default function Login() {
         },
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Login failed!',
+            message: error.message || 'Login failed!',
           })
         },
       },
@@ -34,7 +33,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex-center flex-1">
+    <div className="flex-center flex-1 py-8">
       <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Welcome Back!</h1>
         <p className="mb-6 text-center text-neutral-500">Please log in to continue.</p>
@@ -64,7 +63,6 @@ export default function Login() {
             register={register}
             rules={{
               required: 'Password is required',
-              minLength: { value: 8, message: 'Must be at least 8 characters' },
             }}
             error={errors.password}
           />
@@ -77,7 +75,7 @@ export default function Login() {
           </div>
 
           <Button type="submit" disabled={logingin}>
-            {logingin ? 'Loading...' : 'Login'}
+            {logingin ? <LuLoaderCircle className="h-[1.5em] animate-spin" /> : 'Login'}
           </Button>
         </form>
 

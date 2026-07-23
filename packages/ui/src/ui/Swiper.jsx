@@ -12,7 +12,7 @@ import { Swiper as SwiperReact, SwiperSlide } from 'swiper/react'
 
 import { Skeleton } from './Skeleton'
 
-export function Swiper({ children, className, isLoading, images, showImages, isCard }) {
+export function Swiper({ children, className, isLoading, images, showImages, isCard, ...rest }) {
   const [swiperInstance, setSwiperInstance] = useState(null)
   const [activeIndex, setactiveIndex] = useState(0)
   const shouldLoop = images?.length > 1
@@ -47,6 +47,7 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
           style={{
             '--swiper-pagination-color': 'var(--color-accent-500)',
           }}
+          {...rest}
         >
           {!isLoading ? (
             images.map((image, i) => (
@@ -70,14 +71,14 @@ export function Swiper({ children, className, isLoading, images, showImages, isC
           <>
             <button
               ref={(node) => setPrevEl(node)}
-              className="text-accent-600 dark:text-accent-400 absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:-translate-x-1/3"
+              className="text-accent-600 dark:text-accent-400 absolute top-1/2 left-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 opacity-50 shadow transition-all hover:bg-neutral-50 hover:opacity-100 active:-translate-x-1/3"
             >
               <LuChevronLeft />
             </button>
 
             <button
               ref={(node) => setNextEl(node)}
-              className="text-accent-600 dark:text-accent-400 absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 opacity-50 shadow transition-all hover:bg-neutral-50/85 hover:opacity-100 active:translate-x-1/3"
+              className="text-accent-600 dark:text-accent-400 absolute top-1/2 right-4 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-neutral-50/85 p-2 opacity-50 shadow transition-all hover:bg-neutral-50 hover:opacity-100 active:translate-x-1/3"
             >
               <LuChevronRight />
             </button>

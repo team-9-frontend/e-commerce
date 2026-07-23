@@ -1,3 +1,4 @@
+import { LuLoaderCircle } from 'react-icons/lu'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useSendRegisterOtp } from '@repo/api'
@@ -27,7 +28,7 @@ export default function Register() {
         },
         onError: (error) => {
           setError('root', {
-            message: error.response?.data?.message || 'Register failed!',
+            message: error.message || 'Register failed!',
           })
         },
       },
@@ -35,7 +36,7 @@ export default function Register() {
   }
 
   return (
-    <div className="flex-center flex-1">
+    <div className="flex-center flex-1 py-8">
       <div className="card w-full max-w-md p-6">
         <h1 className="mb-2 text-center text-3xl font-bold">Create Account</h1>
         <p className="mb-6 text-center text-neutral-500">Join us and start shopping.</p>
@@ -106,7 +107,11 @@ export default function Register() {
           </span>
 
           <Button type="submit" disabled={sendingRegisterOtp}>
-            {sendingRegisterOtp ? 'Loading...' : 'Register'}
+            {sendingRegisterOtp ? (
+              <LuLoaderCircle className="h-[1.5em] animate-spin" />
+            ) : (
+              'Register'
+            )}
           </Button>
         </form>
 

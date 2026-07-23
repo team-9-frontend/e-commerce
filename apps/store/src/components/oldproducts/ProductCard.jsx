@@ -1,26 +1,42 @@
-import { LuHeart, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
+import { LuHeart, LuLoaderCircle, LuShoppingCart, LuStar, LuStarHalf } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
 
-import { useAddToCart, useAddToWishlist, useRemoveFromWishlist } from '@repo/api'
+import { useAddToCart, useAddToWishlist, useGetWishlist, useRemoveFromWishlist } from '@repo/api'
 import { Badge, Button, Skeleton, Swiper } from '@repo/ui'
 import { cn } from '@repo/utils'
 
-export default function ProductCard({ isLoading, product, wishlist }) {
+const EMPTY_ARRAY = []
+
+export default function ProductCard({ isLoading: isLoadingProduct, product }) {
   const { mutate: addToWishlist, isPending: addingToWishlist } = useAddToWishlist()
   const { mutate: removeFromWishlist, isPending: removingFromWishlist } = useRemoveFromWishlist()
   const { mutate: addToCart, isPending: addingToCart } = useAddToCart()
 
+  const { data: wishlistData, isLoading: isLoadingWishlist } = useGetWishlist()
+  const wishlist = wishlistData?.wishlist || EMPTY_ARRAY
+
+  const isWishlisted = wishlist?.products?.some((p) => p._id === product?._id)
+  const isOutOfStock = product?.stock === 0
   const discountPercentage =
     product?.price && product?.discountPrice
       ? Math.ceil((product?.discountPrice / product?.price) * 100)
       : 0
 
-  const isWishlisted = wishlist?.products?.some((p) => p._id === product?._id)
+  const isLoading = isLoadingWishlist || isLoadingProduct
 
   return (
     <div className="card group">
-      <Swiper images={product?.images} isLoading={isLoading}>
-        <div className="flex-center absolute top-0 z-10 mt-4 ml-4 gap-2">
+      <Swiper
+        images={isOutOfStock ? product?.images.slice(0, 1) : product?.images}
+        isLoading={isLoading}
+        autoplay={!isOutOfStock}
+      >
+        <div
+          className={cn(
+            'flex-center absolute top-0 z-10 mt-4 ml-4 gap-2',
+            isOutOfStock && 'hidden',
+          )}
+        >
           {product?.category && <Badge color="sky">{product.category}</Badge>}
 
           {discountPercentage > 0 && <Badge color="emerald">-{discountPercentage}%</Badge>}
@@ -33,6 +49,7 @@ export default function ProductCard({ isLoading, product, wishlist }) {
             className={cn(
               'invisible absolute top-0 right-0 z-10 mt-4 mr-4 rounded-full border-none bg-neutral-50 opacity-0 transition-all group-hover:visible group-hover:opacity-100 hover:text-red-600 dark:hover:text-red-400',
               isWishlisted && 'text-red-600 dark:text-red-400',
+              isOutOfStock && 'hidden',
             )}
             disabled={addingToWishlist || removingFromWishlist}
             onClick={() =>
@@ -41,6 +58,14 @@ export default function ProductCard({ isLoading, product, wishlist }) {
           >
             <LuHeart fill={isWishlisted ? 'currentColor' : 'none'} />
           </Button>
+        )}
+
+        {isOutOfStock && (
+          <div className="flex-center absolute inset-0 z-10 cursor-default bg-neutral-50/50 backdrop-blur-sm transition-all">
+            <span className="absolute rounded-lg bg-neutral-950 px-4 py-2 whitespace-nowrap text-neutral-50">
+              Out of Stock
+            </span>
+          </div>
         )}
       </Swiper>
 
@@ -95,6 +120,7 @@ export default function ProductCard({ isLoading, product, wishlist }) {
 
         {!isLoading ? (
           <Button
+            variant={isOutOfStock ? 'disabled' : 'primary'}
             disabled={addingToCart}
             onClick={() =>
               addToCart({
@@ -102,14 +128,16 @@ export default function ProductCard({ isLoading, product, wishlist }) {
                 quantity: 1,
               })
             }
-            className="normal-case"
+            className={cn('normal-case', isOutOfStock && 'pointer-events-none')}
           >
-            {!addingToCart ? (
+            {addingToCart ? (
+              <LuLoaderCircle className="h-[1.5em] animate-spin" />
+            ) : isOutOfStock ? (
+              'Out of Stock'
+            ) : (
               <>
                 <LuShoppingCart /> Add to Card
               </>
-            ) : (
-              'Loading...'
             )}
           </Button>
         ) : (
