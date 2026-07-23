@@ -36,10 +36,10 @@ export default function Register() {
   }
 
   return (
-    <div className="flex-center flex-1 py-8">
+    <div className="flex-center flex-1 py-8 text-center">
       <div className="card w-full max-w-md p-6">
-        <h1 className="mb-2 text-center text-3xl font-bold">Create Account</h1>
-        <p className="mb-6 text-center text-neutral-500">Join us and start shopping.</p>
+        <h1 className="mb-2 text-3xl font-bold">Create Account</h1>
+        <p className="mb-6 text-neutral-500">Join us and start shopping.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField

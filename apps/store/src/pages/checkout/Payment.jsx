@@ -37,10 +37,10 @@ export default function Payment() {
   }, [shippingAddress, navigate])
 
   return (
-    <div className="flex-center flex-1 py-8">
+    <div className="flex-center flex-1 py-8 text-center">
       <div className="card w-full max-w-md p-6">
-        <h1 className="mb-2 text-center text-3xl font-bold">Payment</h1>
-        <p className="mb-6 text-center text-neutral-500">Choose your payment method.</p>
+        <h1 className="mb-2 text-3xl font-bold">Payment</h1>
+        <p className="mb-6 text-neutral-500">Choose your payment method.</p>
 
         <div className="flex flex-col gap-4">
           <PaymentMethodSelector value={method} setValue={setMethod} />
