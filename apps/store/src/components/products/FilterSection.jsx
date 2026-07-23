@@ -1,17 +1,14 @@
 import { useState } from 'react'
+
 import { BiX } from 'react-icons/bi'
 import { LuFilter } from 'react-icons/lu'
+
 import { FormField } from '@repo/ui'
 import { cn } from '@repo/utils'
 
 import Select from './Select'
 
-export default function FilterSection({
-  register,
-  setValue,
-  sort,
-  errors = {},
-}) {
+export default function FilterSection({ register, setValue, sort, errors = {} }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const categories = ['', 'electronics', 'fashion', 'phones', 'beauty', 'sports']

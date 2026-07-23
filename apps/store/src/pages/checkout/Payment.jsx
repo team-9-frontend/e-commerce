@@ -11,23 +11,23 @@ import { useCreateOrder } from '@repo/api'
 import { Button } from '@repo/ui'
 
 export default function Payment() {
+  const [method, setMethod] = useState('cash')
   const navigate = useNavigate()
   const location = useLocation()
+
   const { shippingAddress, customerNote } = location.state || {}
 
-  const [method, setMethod] = useState('cash')
   const { mutate: createOrder, isPending } = useCreateOrder()
 
-  const placeOrder = (extra = {}) => {
+  const placeOrder = () => {
     createOrder(
       {
         shippingAddress,
         customerNote,
         paymentMethod: method,
-        ...extra,
       },
       {
-        onSuccess: () => navigate('/order-success'),
+        onSuccess: (data) => navigate(`/order-success/${data.order._id}`),
       },
     )
   }
@@ -51,16 +51,16 @@ export default function Payment() {
             </Button>
           )}
 
-          {method === 'stripe' && (
-            <Elements stripe={stripePromise}>
-              <CardForm
-                isSubmitting={isPending}
-                onSuccess={(paymentMethodId) =>
-                  placeOrder({ stripePaymentMethodId: paymentMethodId })
-                }
-              />
-            </Elements>
-          )}
+          {method === 'stripe' &&
+            (true ? (
+              <Elements stripe={stripePromise}>
+                <CardForm isSubmitting={isPending} onSuccess={() => placeOrder()} />
+              </Elements>
+            ) : (
+              <p className="mt-2 text-center text-sm font-medium text-red-600 capitalize dark:text-red-400">
+                Stripe is not configured yet. Use cash on delivery for now.
+              </p>
+            ))}
         </div>
       </div>
     </div>
