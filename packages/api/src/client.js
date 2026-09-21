@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://e-commerce-api-3wara.vercel.app/',
+  baseURL: import.meta.env.VITE_API_URL ,
   withCredentials: true,
 })
 
