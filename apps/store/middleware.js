@@ -12,6 +12,7 @@ export default async function middleware(request) {
 
   const headers = new Headers(request.headers)
   headers.set('host', targetUrl.host)
+  headers.set('accept-encoding', 'identity')
   const reqBody = ['GET', 'HEAD'].includes(request.method) ? null : await request.text()
 
   return fetch(targetUrl, {
